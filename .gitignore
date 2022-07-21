@@ -1,0 +1,7 @@
+.idea/
+
+truffle/.env
+truffle/node_modules/
+
+client/node_modules/
+client/build/

@@ -1,0 +1,20 @@
+{
+  "name": "truffle",
+  "version": "1.0.0",
+  "author": "Benjamin Reynes, Xavier Combs, Yves Toiser",
+  "license": "MIT",
+  "description": "Truffle project for deFi dApp",
+  "main": "truffle-config.js",
+  "scripts": {
+    "test": "truffle test"
+  },
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^2.0.10",
+    "dotenv": "^16.0.1",
+    "eth-gas-reporter": "^0.2.25"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/test-helpers": "latest"
+  }
+}
