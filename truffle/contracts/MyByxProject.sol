@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
+// MyByxProject.sol
 
-// MyDeFiProject.sol
 pragma solidity 0.8.14;
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract MyByxProject {
     IERC20 byx;
