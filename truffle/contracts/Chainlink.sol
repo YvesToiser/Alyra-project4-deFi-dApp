@@ -15,6 +15,12 @@ contract Chainlink {
         );
     }
 
+    /**Si on veut pouvoir set l'addresse d'une autre pair sur chainlink. A tester! */
+
+    function setAddr(address _pair) public {
+        priceFeed = AggregatorV3Interface(_pair);
+    }
+
     /** * Returns the latest price */
     function getLatestPrice() public view returns (int256) {
         (
