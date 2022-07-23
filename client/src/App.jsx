@@ -1,25 +1,17 @@
-import { EthProvider } from "./contexts/EthContext";
-import Intro from "./components/Intro/";
-import Setup from "./components/Setup";
-import Demo from "./components/Demo";
-import Footer from "./components/Footer";
+import Authenticated from "pages/Authenticated";
+import Unauthenticated from "pages/Unauthenticated";
+import useAuth from "./hooks/useAuth";
+
+import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
 function App() {
+  const { user } = useAuth();
+
   return (
-    <EthProvider>
-      <div id="App">
-        <div className="container">
-          <Intro />
-          <hr />
-          <Setup />
-          <hr />
-          <Demo />
-          <hr />
-          <Footer />
-        </div>
-      </div>
-    </EthProvider>
+    <div id="App">
+      <div className="app-container">{user.address ? <Authenticated /> : <Unauthenticated />}</div>
+    </div>
   );
 }
 

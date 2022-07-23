@@ -1,0 +1,59 @@
+@import "style/_config.scss";
+
+$btn-bg: $backgroundColor;
+$btn-color: $defaultColor;
+$btn-box-shadow: $boxshadow;
+$btn-font-size: 14px;
+$btn-font-weight: bold;
+$btn-line-height: 1.42857143;
+$btn-hover-bg: $btn-bg;
+$btn-hover-color: $defaultColor;
+$btn-disabled-bg: $btn-bg;
+$btn-disabled-color: $defaultColor;
+$btn-active-bg: $btn-bg;
+$btn-active-color: $defaultColor;
+
+.btn {
+  background-color: $btn-bg;
+  border-radius: 8px;
+  border: 4px solid black;
+  color: $btn-color;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $btn-font-size;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
+  margin: 20px;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  user-select: none;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: $btn-hover-bg;
+    box-shadow: $boxshadow;
+    color: $btn-hover-color;
+    transform: translate3d(-2px, -2px, 0);
+    -moz-transform: translate3d(-2px, -2px, 0);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    background-color: $btn-active-bg;
+    box-shadow: $boxshadowActive;
+    color: $btn-active-color;
+    transform: translate3d(0px, 0px, 0);
+    -moz-transform: translate3d(0px, 0px, 0);
+    transition: all 0.1s ease-in-out;
+  }
+
+  &:disabled {
+    background-color: $btn-disabled-bg;
+    color: $btn-disabled-color;
+  }
+}
