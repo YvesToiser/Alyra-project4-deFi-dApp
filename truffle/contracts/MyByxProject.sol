@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 // MyDeFiProject.sol
 pragma solidity 0.8.14;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";

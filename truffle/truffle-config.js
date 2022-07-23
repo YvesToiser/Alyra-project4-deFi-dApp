@@ -57,6 +57,15 @@ module.exports = {
       },
       network_id:3,
     },
+    rinkeby:{
+      provider : function() {
+        return new HDWalletProvider(
+            {mnemonic:{phrase:`${process.env.MNEMONIC}`},
+              providerOrUrl:`https://rinkeby.io/v3/${process.env.INFURA_ID}`}
+        )
+      },
+      network_id:4,
+    },
 
     kovan:{
       provider : function() {
