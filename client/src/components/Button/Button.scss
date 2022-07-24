@@ -15,8 +15,8 @@ $btn-active-color: $defaultColor;
 
 .btn {
   background-color: $btn-bg;
-  border-radius: 8px;
-  border: 4px solid black;
+  border-radius: $borderRadius;
+  border: $border;
   color: $btn-color;
   cursor: pointer;
   display: inline-block;

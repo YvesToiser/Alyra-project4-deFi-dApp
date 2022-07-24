@@ -1,10 +1,15 @@
 // Colors
-$backgroundColor: white;
-$defaultColor: black;
+$backgroundColor: #fffcff;
+$defaultColor: #50514f;
+$secondColor: #a9e5bb;
 
 // Shadow effect
-$boxshadow: 14px 14px 0 -4px gold, 14px 14px 0 0 black;
-$boxshadowActive: 8px 8px 0 -4px gold, 8px 8px 0 0 black;
+$boxshadow: 10px 10px 0 -2px gold, 10px 10px 0 0 black;
+$boxshadowActive: 8px 8px 0 -1px gold, 8px 8px 0 0 black;
 
 // Spacing
 $spacing: 20px;
+
+// shape
+$border: 1px solid $defaultColor;
+$borderRadius: 4px;

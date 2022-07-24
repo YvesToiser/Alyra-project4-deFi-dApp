@@ -6,7 +6,7 @@ export const networks = {
   6: "Tobaly",
   7: "Rinkeby",
   42: "Kovan",
-  56: "Binance Samrt Chain",
+  56: "Binance Smart Chain",
   137: "Polygon Mainnet",
   1337: "Localhost"
 };

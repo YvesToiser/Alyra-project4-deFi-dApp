@@ -21,13 +21,20 @@ export default function Unauthenticated({ getAccount, askAccount }) {
   useEffect(() => {
     setLoading(true);
     if (web3) {
-      getAccount().then((account) => {
-        if (account) {
-          setUser(account).then(() => {
-            setLoading(false);
-          });
-        }
-      });
+      getAccount()
+        .then((account) => {
+          if (account) {
+            setUser(account).then(() => {
+              setLoading(false);
+            });
+          }
+        })
+        .catch(() => {
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [dispatch, getAccount, setUser, web3]);
 

@@ -1,0 +1,13 @@
+.vault-header {
+  margin-top: 4rem;
+  width: 80%;
+  height: 30px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 3fr 3fr 3fr 3fr;
+  align-items: center;
+  place-items: center;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+}
