@@ -8,8 +8,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Byx is ERC20 {
     constructor() ERC20("Byx Stablecoin", "BYX") {}
 
-    // fonction faucet pour créer des Dai tokens
-    function faucet(address recipient, uint256 amount) external {
-        _mint(recipient, amount);
+    // fonction faucet pour créer des Byx tokens
+    function faucet(address _recipient, uint256 _amount) external {
+        _mint(_recipient, _amount);
     }
 }
