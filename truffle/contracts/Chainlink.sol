@@ -7,11 +7,11 @@ contract Chainlink {
     AggregatorV3Interface internal priceFeed;
 
     /** * Network: Kovan
-     * Aggregator: BNB/USD
-     * Address: 0x8993ED705cdf5e84D0a3B754b5Ee0e1783fcdF16 */
+     * Aggregator: ETH/USD
+     * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331 */
     constructor() {
         priceFeed = AggregatorV3Interface(
-            0x8993ED705cdf5e84D0a3B754b5Ee0e1783fcdF16
+            0x9326BFA02ADD2366b30bacB125260Af641031331
         );
     }
 
