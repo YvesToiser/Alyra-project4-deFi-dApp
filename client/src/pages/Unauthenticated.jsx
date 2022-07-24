@@ -48,7 +48,6 @@ export default function Unauthenticated() {
       ) : (
         <Fragment>
           <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
-          <h1>Unauthenticated</h1>
           <ToastContainer transition={Flip} />
         </Fragment>
       )}

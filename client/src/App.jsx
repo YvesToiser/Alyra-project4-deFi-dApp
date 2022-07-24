@@ -1,4 +1,4 @@
-import Authenticated from "pages/Authenticated";
+import Authenticated from "pages/Authenticated/Authenticated";
 import Unauthenticated from "pages/Unauthenticated";
 import useAuth from "./hooks/useAuth";
 

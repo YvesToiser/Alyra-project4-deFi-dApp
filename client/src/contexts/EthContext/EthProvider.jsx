@@ -8,38 +8,6 @@ import { networks } from "helpers/chainId";
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const init = useCallback(async (artifact) => {
-    if (artifact) {
-      const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-      const networkID = await web3.eth.net.getId();
-      const { abi } = artifact;
-      let address, contract;
-      try {
-        address = artifact.networks[networkID].address;
-        contract = new web3.eth.Contract(abi, address);
-      } catch (err) {
-        console.error("Contract not found");
-      }
-      dispatch({
-        type: actions.init,
-        data: { artifact, web3, networkID, contract }
-      });
-    }
-  }, []);
-
-  const tryInit = useCallback(async () => {
-    try {
-      const artifact = require("../../contracts/SimpleStorage.json");
-      init(artifact);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [init]);
-
-  useEffect(() => {
-    tryInit();
-  }, [tryInit]);
-
   const setUserAdressAndBalance = useCallback(async (address) => {
     //getBalance
     dispatch({ type: "SET_USER", data: { address: address }, balance: 0 });
@@ -62,9 +30,54 @@ function EthProvider({ children }) {
 
   const handleNetworkChange = useCallback((_chainId) => {
     const chainId = parseInt(_chainId, 16);
-    const network = networks.find((network) => network.chainId === chainId);
-    console.log(network.name);
+
+    let network;
+    if (networks.hasOwnProperty(chainId)) {
+      network = networks[chainId];
+    } else {
+      network = "Unknown";
+    }
+    dispatch({ type: "SET_NETWORK", data: network });
   }, []);
+
+  const init = useCallback(
+    async (artifact) => {
+      if (artifact) {
+        const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+        const networkID = await web3.eth.net.getId();
+        const chainId = await web3.eth.getChainId();
+        const { abi } = artifact;
+
+        handleNetworkChange(chainId.toString(16));
+
+        let address, contract;
+        try {
+          address = artifact.networks[networkID].address;
+          contract = new web3.eth.Contract(abi, address);
+        } catch (err) {
+          console.error("Contract not found");
+        }
+        dispatch({
+          type: actions.init,
+          data: { artifact, web3, networkID, contract }
+        });
+      }
+    },
+    [handleNetworkChange]
+  );
+
+  const tryInit = useCallback(async () => {
+    try {
+      const artifact = require("../../contracts/SimpleStorage.json");
+      init(artifact);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [init]);
+
+  useEffect(() => {
+    tryInit();
+  }, [tryInit]);
 
   useEffect(() => {
     window.ethereum.on("accountsChanged", handleAccountsChanged);

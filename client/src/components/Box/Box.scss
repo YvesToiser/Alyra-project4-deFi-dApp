@@ -1,0 +1,26 @@
+@import "style/_config.scss";
+
+.box {
+  background-color: $backgroundColor;
+  border-radius: 8px;
+  border: 4px solid black;
+  color: $defaultColor;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.42857143;
+  margin: $spacing;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  user-select: none;
+  vertical-align: middle;
+  box-shadow: $boxshadowActive;
+
+  &:hover {
+    transform: translate3d(-2px, -2px, 0);
+    -moz-transform: translate3d(-2px, -2px, 0);
+  }
+}

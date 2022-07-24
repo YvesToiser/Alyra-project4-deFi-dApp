@@ -1,7 +1,8 @@
 const actions = {
   init: "INIT",
   setUser: "SET_USER",
-  resetUser: "RESET_USER"
+  resetUser: "RESET_USER",
+  setNetwork: "SET_NETWORK"
 };
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   accounts: null,
   networkID: null,
   contract: null,
+  network: null,
   user: {
     address: null,
     balance: null
@@ -25,6 +27,8 @@ const reducer = (state, action) => {
       return { ...state, user: { address: data.address, balance: data.balance } };
     case actions.resetUser:
       return { ...state, user: { address: null, balance: null } };
+    case actions.setNetwork:
+      return { ...state, network: data };
     default:
       throw new Error("Undefined reducer action type");
   }
