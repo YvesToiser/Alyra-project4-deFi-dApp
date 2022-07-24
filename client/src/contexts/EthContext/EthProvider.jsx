@@ -2,16 +2,20 @@ import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
+import { getBalance } from "api/web3";
 
 import { networks } from "helpers/chainId";
 
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setUserAdressAndBalance = useCallback(async (address) => {
-    //getBalance
-    dispatch({ type: "SET_USER", data: { address: address }, balance: 0 });
-  }, []);
+  const setUser = useCallback(
+    async (address) => {
+      const balance = await getBalance(state.web3, address);
+      dispatch({ type: "SET_USER", data: { address: address, balance: balance } });
+    },
+    [state.web3]
+  );
 
   const resetUser = useCallback(() => {
     dispatch({ type: "RESET_USER" });
@@ -23,13 +27,15 @@ function EthProvider({ children }) {
         resetUser();
         return;
       }
-      setUserAdressAndBalance(accounts[0]);
+      setUser(accounts[0]);
     },
-    [setUserAdressAndBalance, resetUser]
+    [setUser, resetUser]
   );
 
-  const handleNetworkChange = useCallback((_chainId) => {
+  const handleNetworkChange = useCallback(async (_chainId) => {
     const chainId = parseInt(_chainId, 16);
+
+    await setUser(state.user.address);
 
     let network;
     if (networks.hasOwnProperty(chainId)) {
@@ -66,7 +72,7 @@ function EthProvider({ children }) {
     [handleNetworkChange]
   );
 
-  const tryInit = useCallback(async () => {
+  useEffect(() => {
     try {
       const artifact = require("../../contracts/SimpleStorage.json");
       init(artifact);
@@ -76,10 +82,6 @@ function EthProvider({ children }) {
   }, [init]);
 
   useEffect(() => {
-    tryInit();
-  }, [tryInit]);
-
-  useEffect(() => {
     window.ethereum.on("accountsChanged", handleAccountsChanged);
     window.ethereum.on("chainChanged", handleNetworkChange);
 
@@ -87,13 +89,14 @@ function EthProvider({ children }) {
       window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
       window.ethereum.removeListener("chainChanged", handleNetworkChange);
     };
-  }, [handleAccountsChanged, handleNetworkChange]);
+  }, [handleAccountsChanged, handleNetworkChange, state.web3]);
 
   return (
     <EthContext.Provider
       value={{
         state,
-        dispatch
+        dispatch,
+        setUser
       }}
     >
       {children}

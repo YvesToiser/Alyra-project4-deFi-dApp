@@ -1,37 +1,42 @@
-import useAuth from "../hooks/useAuth";
-import useWallet from "hooks/useWallet";
 import Button from "components/Button/Button";
 import { ToastContainer, Flip } from "react-toastify";
 import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../helpers/toast";
 import { Fragment, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader";
 import ContainerCenter from "../components/Containers/ContainerCenter/ConstainerCenter";
+import useEth from "hooks/useEth";
 
 function ConnectButton(props) {
   return <Button onClick={props.onClick}>{props.children}</Button>;
 }
 
-export default function Unauthenticated() {
-  const { askAccount, getAccount } = useWallet();
+export default function Unauthenticated({ getAccount, askAccount }) {
   const [loading, setLoading] = useState(false);
-  const { dispatch } = useAuth();
+  const {
+    dispatch,
+    setUser,
+    state: { web3 }
+  } = useEth();
 
   useEffect(() => {
     setLoading(true);
-    getAccount().then((account) => {
-      if (account) {
-        dispatch({ type: "SET_USER", data: { address: account, balance: 0 } });
-      }
-      setLoading(false);
-    });
-  }, [dispatch, getAccount]);
+    if (web3) {
+      getAccount().then((account) => {
+        if (account) {
+          setUser(account).then(() => {
+            setLoading(false);
+          });
+        }
+      });
+    }
+  }, [dispatch, getAccount, setUser, web3]);
 
   const handleConnect = async () => {
     if (window.ethereum) {
       try {
         const account = await askAccount();
         if (account) {
-          dispatch({ type: "SET_USER", data: { address: account.address, balance: 0 } });
+          await setUser();
           toastConnected();
         }
       } catch (err) {
