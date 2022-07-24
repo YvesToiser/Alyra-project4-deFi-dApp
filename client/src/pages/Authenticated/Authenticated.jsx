@@ -1,3 +1,4 @@
+import ContainerCenter from "components/Containers/ContainerCenter/ConstainerCenter";
 import Box from "components/Box/Box";
 import useEth from "hooks/useEth";
 import "./Authenticated.scss";
@@ -7,12 +8,12 @@ export default function Authenticated() {
     state: { user, network }
   } = useEth();
   return (
-    <div className="authenticated-container">
-      <Box>
+    <ContainerCenter>
+      <Box className="box--shadow">
         <h1>Authenticated</h1>
         <p>{user.address}</p>
         <p>{network}</p>
       </Box>
-    </div>
+    </ContainerCenter>
   );
 }

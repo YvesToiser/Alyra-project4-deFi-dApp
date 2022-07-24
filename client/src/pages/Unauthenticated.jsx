@@ -5,6 +5,7 @@ import { ToastContainer, Flip } from "react-toastify";
 import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../helpers/toast";
 import { Fragment, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader";
+import ContainerCenter from "../components/Containers/ContainerCenter/ConstainerCenter";
 
 function ConnectButton(props) {
   return <Button onClick={props.onClick}>{props.children}</Button>;
@@ -47,7 +48,9 @@ export default function Unauthenticated() {
         <Loader />
       ) : (
         <Fragment>
-          <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
+          <ContainerCenter>
+            <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
+          </ContainerCenter>
           <ToastContainer transition={Flip} />
         </Fragment>
       )}
