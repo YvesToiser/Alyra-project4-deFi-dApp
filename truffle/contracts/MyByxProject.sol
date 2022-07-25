@@ -13,7 +13,7 @@ contract MyByxProject {
     }
 
     // fonction qui permet d'effectuer un transfer de Byx vers le recipient
-    function foo(address recipient, uint256 amount) external {
+    function byxTransfer(address recipient, uint256 amount) external {
         // quelques instructions
         byx.transfer(recipient, amount);
     }

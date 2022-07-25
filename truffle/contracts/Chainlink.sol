@@ -15,7 +15,7 @@ contract Chainlink {
         );
     }
 
-    /**Si on veut pouvoir set l'addresse d'une autre pair sur chainlink. A tester! */
+    /**to set the adress of another pair on chainlink data feed */
 
     function setAddr(address _pair) public {
         priceFeed = AggregatorV3Interface(_pair);
