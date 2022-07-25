@@ -13,9 +13,9 @@ export default function VaultItem({ logo, name, apr, tvl }) {
   return (
     <Box>
       <div className="vault-item">
-        <p className="vault-item__element">
+        <div className="vault-item__element">
           <Logo logoUrl={logo} />
-        </p>
+        </div>
         <p className="vault-item__element">{name || "?"}</p>
         <p className="vault-item__element">{apr || "?"}</p>
         <p className="vault-item__element">{tvl || "?"} ETH</p>
