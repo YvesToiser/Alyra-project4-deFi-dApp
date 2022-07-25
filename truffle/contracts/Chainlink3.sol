@@ -38,7 +38,7 @@ contract Chainlink3 is ChainlinkClient {
         );
 
         // Set the URL to perform the GET request on
-        request.add("get", "URL");
+        request.add("get", "https://api.agify.io/?name=cyril");
 
         // Set the path to find the desired data in the API response, where the response format is:
         // {"RAW":
@@ -51,7 +51,7 @@ contract Chainlink3 is ChainlinkClient {
         //   }
         //  }
         // request.add("path", "RAW.ETH.USD.VOLUME24HOUR"); // Chainlink nodes prior to 1.0.0 support this format
-        request.add("get", "https://api.agify.io?name=cyril"); // Chainlink nodes 1.0.0 and later support this format
+        request.add("path", "age"); // Chainlink nodes 1.0.0 and later support this format
 
         // Multiply the result by 1000000000000000000 to remove decimals if necessary
         request.addInt("times", 1);
