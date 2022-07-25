@@ -1,10 +1,10 @@
 import ContainerCenter from "components/Containers/ContainerCenter/ContainerCenter";
 import Box from "components/Box/Box";
+import VaultItem from "components/VaultItem/VaulItem";
+import VaultHeader from "components/VaultHeader/VaultHeader";
 import useEth from "hooks/useEth";
 import { pools } from "data/fakePool";
 import "./Authenticated.scss";
-import VaultItem from "../../components/VaultItem/VaulItem";
-import VaultHeader from "components/VaultHeader/VaultHeader";
 
 function UserInformations({ address, balance, network }) {
   return (

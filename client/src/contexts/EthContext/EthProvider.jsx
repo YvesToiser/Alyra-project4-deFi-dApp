@@ -82,12 +82,16 @@ function EthProvider({ children }) {
   }, [init]);
 
   useEffect(() => {
-    window.ethereum.on("accountsChanged", handleAccountsChanged);
-    window.ethereum.on("chainChanged", handleNetworkChange);
+    try {
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+      window.ethereum.on("chainChanged", handleNetworkChange);
+    } catch (error) {}
 
     return () => {
-      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
-      window.ethereum.removeListener("chainChanged", handleNetworkChange);
+      try {
+        window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+        window.ethereum.removeListener("chainChanged", handleNetworkChange);
+      } catch (error) {}
     };
   }, [handleAccountsChanged, handleNetworkChange, state.web3]);
 
