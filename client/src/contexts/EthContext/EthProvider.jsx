@@ -49,6 +49,8 @@ function EthProvider({ children }) {
   const init = useCallback(
     async (artifact) => {
       if (artifact) {
+        if (!window.ethereum) return;
+
         const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
         const networkID = await web3.eth.net.getId();
         const chainId = await web3.eth.getChainId();
@@ -82,16 +84,14 @@ function EthProvider({ children }) {
   }, [init]);
 
   useEffect(() => {
-    try {
-      window.ethereum.on("accountsChanged", handleAccountsChanged);
-      window.ethereum.on("chainChanged", handleNetworkChange);
-    } catch (error) {}
+    if (!window.ethereum) return;
+
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+    window.ethereum.on("chainChanged", handleNetworkChange);
 
     return () => {
-      try {
-        window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
-        window.ethereum.removeListener("chainChanged", handleNetworkChange);
-      } catch (error) {}
+      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+      window.ethereum.removeListener("chainChanged", handleNetworkChange);
     };
   }, [handleAccountsChanged, handleNetworkChange, state.web3]);
 

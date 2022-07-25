@@ -19,9 +19,7 @@ export default function Unauthenticated({ getAccount, askAccount }) {
   } = useEth();
 
   useEffect(() => {
-    if (!window.ethereum) {
-      return;
-    }
+    if (!window.ethereum) return;
 
     setLoading(true);
     if (web3) {
