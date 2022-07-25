@@ -3,7 +3,7 @@
 pragma solidity 0.8.14;
 import "../node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-contract Chainlink {
+contract EthUsdPrice {
     AggregatorV3Interface internal priceFeed;
 
     /** * Network: Kovan

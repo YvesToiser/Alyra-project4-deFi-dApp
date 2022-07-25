@@ -4,12 +4,12 @@
 pragma solidity 0.8.14;
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract MyByxProject {
+contract ByxManager {
     IERC20 byx;
 
-    constructor(address byxAddress) {
+    constructor(address _byxAddress) {
         // injecter l'address du token Byx à utiliser
-        byx = IERC20(byxAddress);
+        byx = IERC20(_byxAddress);
     }
 
     // fonction qui permet d'effectuer un transfer de Byx vers le recipient
