@@ -1,4 +1,4 @@
-import ContainerCenter from "components/Containers/ContainerCenter/ConstainerCenter";
+import ContainerCenter from "components/Containers/ContainerCenter/ContainerCenter";
 import Box from "components/Box/Box";
 import useEth from "hooks/useEth";
 import "./Authenticated.scss";

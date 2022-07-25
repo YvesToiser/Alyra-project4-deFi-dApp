@@ -3,7 +3,7 @@ import { ToastContainer, Flip } from "react-toastify";
 import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../helpers/toast";
 import { Fragment, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader";
-import ContainerCenter from "../components/Containers/ContainerCenter/ConstainerCenter";
+import ContainerCenter from "../components/Containers/ContainerCenter/ContainerCenter";
 import useEth from "hooks/useEth";
 
 function ConnectButton(props) {
