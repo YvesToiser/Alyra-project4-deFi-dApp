@@ -1,25 +1,23 @@
-import { EthProvider } from "./contexts/EthContext";
-import Intro from "./components/Intro/";
-import Setup from "./components/Setup";
-import Demo from "./components/Demo";
-import Footer from "./components/Footer";
+import Authenticated from "pages/Authenticated/Authenticated";
+import Unauthenticated from "pages/Unauthenticated";
+import useAuth from "./hooks/useAuth";
+
+import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
+import useWallet from "hooks/useWallet";
+import useEth from "hooks/useEth";
+import Loader from "./components/Loader/Loader";
 
 function App() {
+  const { user } = useAuth();
+  const { askAccount, getAccount } = useWallet();
+
   return (
-    <EthProvider>
-      <div id="App">
-        <div className="container">
-          <Intro />
-          <hr />
-          <Setup />
-          <hr />
-          <Demo />
-          <hr />
-          <Footer />
-        </div>
+    <div id="App">
+      <div className="app-container">
+        {user.address ? <Authenticated /> : <Unauthenticated getAccount={getAccount} askAccount={askAccount} />}
       </div>
-    </EthProvider>
+    </div>
   );
 }
 
