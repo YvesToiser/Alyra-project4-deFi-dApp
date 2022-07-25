@@ -15,13 +15,29 @@ contract EthUsdPrice {
         );
     }
 
-    /**to set the adress of another pair on chainlink data feed */
+    /**
+     * @notice set a pair address
+     *
+     * @dev to set the adress of another pair on chainlink data feed
+     *
+     * @param _pair the address of the pair you want to set
+     *
+     *
+     */
 
     function setAddr(address _pair) public {
         priceFeed = AggregatorV3Interface(_pair);
     }
 
-    /** * Returns the latest price */
+    /**
+     *
+     * @dev to set the adress of another pair on chainlink data feed
+     *
+     * @return Returns the latest price
+     *
+     *@dev returns an int256 of latest price
+     */
+
     function getLatestPrice() public view returns (int256) {
         (
             ,
