@@ -32,10 +32,23 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^4.0.3",
+    "react-toastify": "9.0.3",
+    "sass": "^1.54.0",
+    "web3": "^1.7.3"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "react-error-overlay": "6.0.9"
   }
 }
