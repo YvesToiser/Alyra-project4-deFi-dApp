@@ -15,6 +15,10 @@ contract BYXStakingManager is Ownable {
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
 
+    /*************************************************************************************************/
+    /*                                        SPECIAL FUNCTIONS                                      */
+    /*************************************************************************************************/
+
     constructor(address _byxAddress) {
         // inject BYX address in the deploy
         BYX = IERC20(_byxAddress);

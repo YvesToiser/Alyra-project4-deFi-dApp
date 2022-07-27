@@ -1,25 +1,33 @@
 // SPDX-License-Identifier: MIT
-/// Byx.sol
+/// BYX.sol
 
 pragma solidity 0.8.14;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Byx is ERC20, Ownable {
+contract BYX is ERC20, Ownable {
 
+    // Custom variables
     uint maxTotalSupply = 100000000;
-    uint supplyMinted;
 
+    // ERC20 variables
+    uint256 private _totalSupply;
+
+    // Custom Events
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
+
+    /*************************************************************************************************/
+    /*                                        SPECIAL FUNCTIONS                                      */
+    /*************************************************************************************************/
 
     constructor() ERC20("Byx", "BYX") {}
 
     /**
     * @dev receive function will emit event in case of ether sent to the contract.
     */
-        receive() external payable {
+    receive() external payable {
         emit LogDepot(msg.sender, msg.value);
     }
 
@@ -29,6 +37,10 @@ contract Byx is ERC20, Ownable {
     fallback() external {
         emit LogBadCall(msg.sender);
     }
+
+    /*************************************************************************************************/
+    /*                                        EXTERNAL FUNCTIONS                                     */
+    /*************************************************************************************************/
 
     /**
      * @notice withdraw function. Can only be used by the owner of the contract.
@@ -51,8 +63,7 @@ contract Byx is ERC20, Ownable {
      * @param _amount the amount
      */
     function faucet(address _recipient, uint256 _amount) external onlyOwner {
-        require(_amount <= maxTotalSupply - supplyMinted, "Not enough coins remaining");
-        supplyMinted += _amount;
+        require(_amount <= maxTotalSupply - _totalSupply, "Not enough coins remaining");
         _mint(_recipient, _amount);
     }
 }

@@ -1,4 +1,4 @@
-const Byx = artifacts.require("Byx");
+const BYX = artifacts.require("BYX");
 const ETHUSDPriceProvider = artifacts.require("ETHUSDPriceProvider");
 const BYXStakingManager = artifacts.require("BYXStakingManager");
 
@@ -9,8 +9,8 @@ const TOTAL_SUPPLY = 100*1000*1000;
 module.exports = async function(deployer, _network, accounts) {
 
 	// Deploy BYX token contract
-	await deployer.deploy(Byx);
-    const byxInstance = await Byx.deployed();
+	await deployer.deploy(BYX);
+    const byxInstance = await BYX.deployed();
 
 	// Deploy Staking Contract
 	await deployer.deploy(BYXStakingManager, byxInstance.address);
