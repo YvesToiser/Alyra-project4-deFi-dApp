@@ -34,6 +34,27 @@ contract BYXStakingManager is Ownable {
         emit LogBadCall(msg.sender);
     }
 
+    /*************************************************************************************************/
+    /*                                          VIEW FUNCTIONS                                       */
+    /*************************************************************************************************/
+
+    /**
+     * @notice user BYX staked amount getter.
+     *
+     * @dev user BYX staked amount getter.
+     *
+     * @param _addr the user address.
+     *
+     * @return _amount the amount staked by the user.
+     */
+    function getBYXAmountStaked(address _addr) external view returns(uint _amount){
+        return BYXStaked[_addr];
+    }
+
+    /*************************************************************************************************/
+    /*                                        EXTERNAL FUNCTIONS                                     */
+    /*************************************************************************************************/
+
     /**
      * @notice withdraw function. Can only be used by the owner of the contract.
      *
@@ -48,12 +69,39 @@ contract BYXStakingManager is Ownable {
     /**
      * @notice deposit stake function.
      *
-     * @dev deposit stake function.
+     * @dev deposit stake function. Call internal function for gas optimisation.
      *
      * @param _amount the amount to deposit in staking.
      */
     function depositStake(uint _amount) external {
-        require(BYX.balanceOf(msg.sender) >= _amount, "Not enough BYX staked");
+        _depositStake(_amount);
+    }
+
+    /**
+     * @notice withdraw stake function.
+     *
+     * @dev withdraw stake function. Call internal function for gas optimisation.
+     *
+     * @param _amount the amount to withdraw from staking.
+     */
+    function withdrawStake(uint _amount) external {
+        _withdrawStake(_amount);
+    }
+
+    /*************************************************************************************************/
+    /*                                        INTERNAL FUNCTIONS                                     */
+    /*************************************************************************************************/
+
+    /**
+     * @notice deposit stake function.
+     *
+     * @dev deposit stake function.
+     *
+     * @param _amount the amount to deposit in staking.
+     */
+    function _depositStake(uint _amount) internal {
+        require(BYX.balanceOf(msg.sender) >= _amount, "Not enough BYX in wallet");
+        require(_amount > 0, "Amount must be positive");
         totalBYXStaked += _amount;
         BYXStaked[msg.sender] += _amount;
         BYX.transferFrom(msg.sender, address(this), _amount);  // TODO check if we need allowance
@@ -66,10 +114,10 @@ contract BYXStakingManager is Ownable {
      *
      * @param _amount the amount to withdraw from staking.
      */
-    function withdrawStake(uint _amount) external {
+    function _withdrawStake(uint _amount) internal {
         require(BYXStaked[msg.sender] >= _amount, "Not enough BYX staked");
-        totalBYXStaked += _amount;
-        BYXStaked[msg.sender] += _amount;
+        totalBYXStaked -= _amount;
+        BYXStaked[msg.sender] -= _amount;
         BYX.transferFrom(address(this), msg.sender, _amount);
     }
 }
