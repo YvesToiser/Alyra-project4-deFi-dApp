@@ -1,24 +1,38 @@
-// 2_deploy_contracts.js
-const Byx = artifacts.require("Byx");
-const ByxManager = artifacts.require("ByxManager");
-const EthUsdPrice = artifacts.require("EthUsdPrice");
+const BYX = artifacts.require("BYX");
+const ETHUSDPriceProvider = artifacts.require("ETHUSDPriceProvider");
+const BYXStakingManager = artifacts.require("BYXStakingManager");
+
+const AIRDROP_SUPPLY = 1000;
+const STAKING_REWARDS_SUPPLY = 50*1000*1000;
+const TOTAL_SUPPLY = 100*1000*1000;
 
 module.exports = async function(deployer, _network, accounts) {
-    await deployer.deploy(EthUsdPrice)
-	const ethUsdPrice = await EthUsdPrice.deployed();
-	
-	await deployer.deploy(Byx);
-    const byx = await Byx.deployed();
 
-	await deployer.deploy(ByxManager, byx.address);
-	const byxManager = await ByxManager.deployed();
+	// Deploy BYX token contract
+	await deployer.deploy(BYX);
+    const byxInstance = await BYX.deployed();
 
-	await byx.faucet(ByxManager.address, 100);
-	await byxManager.byxTransfer(accounts[1], 100);
- 
-	const balance0 = await byx.balanceOf(ByxManager.address);
-	const balance1 = await byx.balanceOf(accounts[1]);
- 
-	console.log(balance0.toString());
+	// Deploy Staking Contract
+	await deployer.deploy(BYXStakingManager, byxInstance.address);
+	const BYXstakingManagerInstance = await BYXStakingManager.deployed();
+
+	// Mint tokens and send them to BYXManager
+	await byxInstance.faucet(BYXstakingManagerInstance.address, STAKING_REWARDS_SUPPLY);
+	await byxInstance.faucet(accounts[1], AIRDROP_SUPPLY);
+	await byxInstance.faucet(accounts[2], AIRDROP_SUPPLY);
+	await byxInstance.faucet(accounts[3], AIRDROP_SUPPLY);
+	await byxInstance.faucet(accounts[4], AIRDROP_SUPPLY);
+	await byxInstance.faucet(accounts[5], AIRDROP_SUPPLY);
+	await byxInstance.faucet(accounts[6], AIRDROP_SUPPLY);
+
+	//Check balances
+	const balance1 = await byxInstance.balanceOf(accounts[1]);
+	const balance2 = await byxInstance.balanceOf(BYXstakingManagerInstance.address);
 	console.log(balance1.toString());
+	console.log(balance2.toString());
+
+	// Deploy ETH/USD price provider
+	await deployer.deploy(ETHUSDPriceProvider);
+	const ethUsdPrice = await ETHUSDPriceProvider.deployed();
+	console.log(ethUsdPrice.toString());
 };
