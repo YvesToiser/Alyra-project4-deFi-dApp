@@ -3,18 +3,16 @@ pragma solidity 0.8.14;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./interfaces/IERC20MintableAndBurnable.sol";
 
 contract BYXStakingManager is Ownable {
 
     IERC20 BYX;
-    IERC20 sBYX;
+    IERC20MintableAndBurnable sBYX;
 
     uint BYXFund = 50000000;
-    uint BYXPool = 1000;
+    uint BYXPool;
     uint BYXRewardPerBlock = 5;
-
-    uint sBYXFund = 10000000;
-    uint totalsBYXDistributed = 1000;
 
     uint lastBlockUpdate;
     uint lastBlockReward;
@@ -29,7 +27,7 @@ contract BYXStakingManager is Ownable {
     constructor(address _byxAddress, address _sbyxAddress) {
         // inject BYX address in the deploy
         BYX = IERC20(_byxAddress);
-        sBYX = IERC20(_sbyxAddress);
+        sBYX = IERC20MintableAndBurnable(_sbyxAddress);
         lastBlockUpdate = block.number;
         lastBlockReward = block.number + (BYXFund / BYXRewardPerBlock);
     }
@@ -47,12 +45,6 @@ contract BYXStakingManager is Ownable {
     fallback() external {
         emit LogBadCall(msg.sender);
     }
-
-    /*************************************************************************************************/
-    /*                                          VIEW FUNCTIONS                                       */
-    /*************************************************************************************************/
-
-
 
     /*************************************************************************************************/
     /*                                        EXTERNAL FUNCTIONS                                     */
@@ -91,10 +83,36 @@ contract BYXStakingManager is Ownable {
         _withdrawStake(_amount);
     }
 
+    /**
+    * @notice pool initialization.
+    *
+    * @dev initialize the pool with a custom amount.
+    * In order to avoid empty pool.
+    * Calculation can not be made with 0 value in the pool.
+    *
+    * @param _amount the amount to deposit in the initial pool.
+    */
+    function initializePool(uint _amount) external onlyOwner{
+        _initializePool(_amount);
+    }
+
 
     /*************************************************************************************************/
     /*                                        INTERNAL FUNCTIONS                                     */
     /*************************************************************************************************/
+
+    /**
+     * @notice pool initialization.
+     *
+     * @dev initialize the pool with a custom amount.
+     *
+     * @param _amount the amount to deposit in the initial pool.
+     */
+    function _initializePool(uint _amount) internal {
+        BYXPool += _amount;
+        BYXFund -= _amount;
+        sBYX.mint(address(this), _amount);
+    }
 
     /**
      * @notice deposit stake function.
@@ -109,9 +127,7 @@ contract BYXStakingManager is Ownable {
         BYXPool += _amount;
         BYX.transferFrom(msg.sender, address(this), _amount);  // TODO check if we need allowance
         uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
-        sBYXFund -= _sBYXamount;
-        totalsBYXDistributed += _sBYXamount;
-        sBYX.transferFrom(address(this), msg.sender, _sBYXamount);
+        sBYX.mint(msg.sender, _sBYXamount);
     }
 
     /**
@@ -123,9 +139,8 @@ contract BYXStakingManager is Ownable {
      */
     function _withdrawStake(uint _sBYXAmount) internal {
         require(sBYX.balanceOf(msg.sender) >= _sBYXAmount, "Not enough sBYX in wallet");
-        totalsBYXDistributed -= _sBYXAmount;
-        sBYX.transferFrom(msg.sender, address(this), _sBYXAmount);
-        uint _amount = calculateBYXAmountFromsBYX(_sBYXAmount);
+        uint _amount = _calculateBYXAmountFromsBYX(_sBYXAmount);
+        sBYX.burnFrom(msg.sender, _sBYXAmount);
         BYXPool -= _amount;
         BYX.transferFrom(address(this), msg.sender, _amount);
     }
@@ -139,7 +154,7 @@ contract BYXStakingManager is Ownable {
      */
     function _calculateSBYXAmountFromBYX(uint _amount) internal returns (uint _sBYXAmount) {
         _updatePool();
-        return _amount * totalsBYXDistributed / BYXPool;
+        return _amount * sBYX.totalSupply() / BYXPool;
     }
 
     /**
@@ -149,9 +164,9 @@ contract BYXStakingManager is Ownable {
      *
      * @param _amount the amount of sBYX to convert.
      */
-    function calculateBYXAmountFromsBYX(uint _sBYXAmount) internal returns (uint _amount) {
+    function _calculateBYXAmountFromsBYX(uint _sBYXAmount) internal returns (uint _amount) {
         _updatePool();
-        return _sBYXAmount * BYXPool / totalsBYXDistributed;
+        return _sBYXAmount * BYXPool / sBYX.totalSupply();
     }
 
     /**

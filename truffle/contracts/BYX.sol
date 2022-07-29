@@ -66,4 +66,5 @@ contract BYX is ERC20, Ownable {
         require(_amount <= maxTotalSupply - _totalSupply, "Not enough coins remaining");
         _mint(_recipient, _amount);
     }
+
 }

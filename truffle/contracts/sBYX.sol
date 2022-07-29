@@ -3,14 +3,28 @@
 pragma solidity 0.8.14;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./interfaces/IERC20MintableAndBurnable.sol";
 
-contract sBYX is Ownable, ERC20, ERC20Burnable{
+contract sBYX is Ownable, ERC20, IERC20MintableAndBurnable{
+
+    mapping (address => bool) authorizedAddress;
 
     // Custom Events
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
+
+    /*************************************************************************************************/
+    /*                                            MODIFIERS                                          */
+    /*************************************************************************************************/
+
+    /**
+     * @dev Throws if called by any account not authorized.
+     */
+    modifier onlyAuthorized() {
+        require(authorizedAddress[msg.sender] == true, "caller is not authorized");
+        _;
+    }
 
     /*************************************************************************************************/
     /*                                        SPECIAL FUNCTIONS                                      */
@@ -47,6 +61,10 @@ contract sBYX is Ownable, ERC20, ERC20Burnable{
         msg.sender.call{value: _amount}("");
     }
 
+    function authorize(address _addr) external onlyOwner {
+        authorizedAddress[_addr] = true;
+    }
+
     /**
     * @notice creation  of a ERC20 Byx token
     *
@@ -56,8 +74,33 @@ contract sBYX is Ownable, ERC20, ERC20Burnable{
     *
     * @param _amount the amount
     */
-    function mint(address _to, uint256 _amount) external onlyOwner {
+    function mint(address _to, uint256 _amount) external onlyAuthorized {
         _mint(_to, _amount);
+    }
+
+    /**
+    * @dev Destroys `amount` tokens from the caller.
+    *
+    * See {ERC20-_burn}.
+    */
+    function burn(uint256 amount) public onlyOwner {
+        _burn(_msgSender(), amount);
+    }
+
+    /**
+     * @dev Destroys `amount` tokens from `account`, deducting from the caller's
+     * allowance.
+     *
+     * See {ERC20-_burn} and {ERC20-allowance}.
+     *
+     * Requirements:
+     *
+     * - the caller must have allowance for ``accounts``'s tokens of at least
+     * `amount`.
+     */
+    function burnFrom(address account, uint256 amount) public onlyAuthorized {
+        _spendAllowance(account, _msgSender(), amount);
+        _burn(account, amount);
     }
 
 }
