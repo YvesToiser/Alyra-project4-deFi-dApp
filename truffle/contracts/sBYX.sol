@@ -1,18 +1,12 @@
 // SPDX-License-Identifier: MIT
-/// BYX.sol
 
 pragma solidity 0.8.14;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract BYX is ERC20, Ownable {
-
-    // Custom variables
-    uint maxTotalSupply = 100000000;
-
-    // ERC20 variables
-    uint256 private _totalSupply;
+contract sBYX is Ownable, ERC20, ERC20Burnable{
 
     // Custom Events
     event LogBadCall(address user);
@@ -22,7 +16,7 @@ contract BYX is ERC20, Ownable {
     /*                                        SPECIAL FUNCTIONS                                      */
     /*************************************************************************************************/
 
-    constructor() ERC20("Byx", "BYX") {}
+    constructor() ERC20("Staked Byx", "sBYX") {}
 
     /**
     * @dev receive function will emit event in case of ether sent to the contract.
@@ -54,16 +48,16 @@ contract BYX is ERC20, Ownable {
     }
 
     /**
-     * @notice creation  of a ERC20 Byx token
-     *
-     * @dev minting of Byx token
-     *
-     * @param _recipient the recipient of token
-     *
-     * @param _amount the amount
-     */
-    function mint(address _recipient, uint256 _amount) external onlyOwner {
-        require(_amount <= maxTotalSupply - _totalSupply, "Not enough coins remaining");
-        _mint(_recipient, _amount);
+    * @notice creation  of a ERC20 Byx token
+    *
+    * @dev minting of Byx token
+    *
+    * @param _to the recipient of token
+    *
+    * @param _amount the amount
+    */
+    function mint(address _to, uint256 _amount) external onlyOwner {
+        _mint(_to, _amount);
     }
+
 }
