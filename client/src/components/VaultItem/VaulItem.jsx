@@ -3,6 +3,7 @@ import Logo from "components/Logo/Logo";
 import "./VaultItem.scss";
 import Button from "components/Button/Button";
 import { useState } from "react";
+import Link from "../Link/Link";
 
 export default function VaultItem({ logo, name, apr, tvl }) {
   const [showDetails, setShowDetails] = useState(false);
@@ -23,7 +24,10 @@ export default function VaultItem({ logo, name, apr, tvl }) {
           {showDetails ? "Hide Details" : " Show Details"}
         </Button>
       </div>
-      <div className={`vault-item__details${showDetails ? "--show" : ""}`}>test</div>
+      <div className={`vault-item__details${showDetails ? "--show" : ""}`}>
+        test
+        <Link>Mon lien</Link>
+      </div>
     </Box>
   );
 }
