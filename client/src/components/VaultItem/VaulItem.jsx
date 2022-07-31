@@ -6,7 +6,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const VaultInfo = ({ children }) => {
   return (
-    <Text my={4} fontSize={16} display="flex">
+    <Text my={4} fontSize={14} display="flex">
       {children}
     </Text>
   );
@@ -14,7 +14,7 @@ const VaultInfo = ({ children }) => {
 
 const VaultLink = ({ children, link }) => {
   return (
-    <Link href={link} isExternal my={4} fontSize={16} color="blue.500">
+    <Link href={link} isExternal my={4} color="blue.500">
       {children} <ExternalLinkIcon mx="2px" />
     </Link>
   );
@@ -44,20 +44,20 @@ export default function VaultItem({ logo, name, apr, tvl }) {
   const REWARD_IN_USD = 100;
 
   return (
-    <Box borderWidth="2px" borderRadius="20" p={10}>
-      <SimpleGrid columns={5}>
+    <Box borderWidth="2px" borderRadius="20" p={5}>
+      <SimpleGrid columns={5} justify="center" align="center">
         <Avatar src={logo} />
         <VaultElement>{name || "?"}</VaultElement>
         <VaultElement>{apr || "?"}</VaultElement>
         <VaultElement>{tvl || "?"}</VaultElement>
 
-        <Button colorScheme="teal" size="lg" onClick={toggleDetails}>
+        <Button colorScheme="teal" size="md" onClick={toggleDetails} my="auto">
           Details
         </Button>
       </SimpleGrid>
       <Collapse in={showDetails} animateOpacity>
-        <Grid templateColumns="repeat(4, 1fr)" gap={4} h="100%">
-          <GridItem w="100%" colSpan={1} py={10}>
+        <Grid templateColumns="repeat(4, 1fr)" gap={2} h="100%">
+          <GridItem w="100%" colSpan={1} py={5}>
             <VaultInfo>
               <Text>Total locked: </Text>
               <Text fontWeight="bold" ml={2}>
@@ -88,18 +88,19 @@ export default function VaultItem({ logo, name, apr, tvl }) {
               <Flex width="100%" height="80%" direction={"column"} p={10} justify={"center"} align="center">
                 <Button
                   colorScheme="teal"
-                  size="lg"
+                  size="md"
                   w="80%"
                   my={4}
                   mx={"auto"}
-                  p={3}
+                  py={3}
+                  px={8}
                   onClick={() => console.log("On Stake")}
                 >
                   Stake {name}
                 </Button>
                 <Button
                   colorScheme="teal"
-                  size="lg"
+                  size="md"
                   w="80%"
                   my={4}
                   mx={"auto"}

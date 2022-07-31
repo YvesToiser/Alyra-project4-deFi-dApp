@@ -21,9 +21,9 @@ export default function Authenticated() {
 
   return (
     <Flex direction="column" align="center">
-      <Box h={20} />
+      <Box h={10} />
       <UserInformations address={user.address} balance={user.balance} network={network} />
-      <Box h={40} />
+      <Box h={20} />
       <SimpleGrid columns={1} spacingY="20px" w={"70vw"}>
         <VaultHeader />
         {pools.map((pool) => (
