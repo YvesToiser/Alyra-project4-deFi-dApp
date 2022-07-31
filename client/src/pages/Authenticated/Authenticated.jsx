@@ -1,4 +1,6 @@
 import VaultItem from "components/VaultItem/VaulItem";
+import StakeHeader from "components/Stake/StakeHeader";
+import StakeAmount from "components/Stake/StakeAmount";
 import VaultHeader from "components/VaultHeader/VaultHeader";
 import useEth from "hooks/useEth";
 import { pools } from "data/fakePool";

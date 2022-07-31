@@ -1,0 +1,26 @@
+.stake{
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 250px;
+    align-items: flex-end;
+    justify-content: end;
+    /*padding-bottom: 5px;
+padding-right: 5px;*/
+    
+}
+.stake p {
+    float: right;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    font-weight: bold;
+}
+.prcnt {
+    background-color: rgb(244, 230, 230);
+    width: 50px;
+    height: 25px;
+    color: rgb(75, 75, 240);
+    text-align: center;
+    position: ;
+}
