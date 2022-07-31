@@ -66,7 +66,7 @@ export default function VaultItem({ logo, name, apr, tvl }) {
   const EARN_VALUE = 3;
 
   return (
-    <Box borderWidth="1px" borderRadius="20" p={10}>
+    <Box borderWidth="2px" borderRadius="20" p={10}>
       <SimpleGrid columns={5}>
         <Avatar src={logo} />
         <VaultElement>{name || "?"}</VaultElement>
@@ -108,10 +108,26 @@ export default function VaultItem({ logo, name, apr, tvl }) {
           <GridItem w="100%" colSpan={1}>
             <Flex width="100%" height="100%" justify={"center"} align="center">
               <Flex width="100%" height="80%" direction={"column"} p={10} justify={"center"} align="center">
-                <Button colorScheme="teal" size="lg" w="80%" my={4} mx={"auto"} onClick={() => console.log("On Stake")}>
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  w="80%"
+                  my={4}
+                  mx={"auto"}
+                  p={3}
+                  onClick={() => console.log("On Stake")}
+                >
                   Stake {name}
                 </Button>
-                <Button colorScheme="teal" size="lg" w="80%" my={4} mx={"auto"} onClick={() => console.log("On Stake")}>
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  w="80%"
+                  my={4}
+                  mx={"auto"}
+                  p={3}
+                  onClick={() => console.log("On Stake")}
+                >
                   Unstake
                 </Button>
               </Flex>
