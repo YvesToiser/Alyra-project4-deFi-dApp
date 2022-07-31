@@ -1,27 +1,6 @@
 import "./VaultItem.scss";
 import { useState } from "react";
-import {
-  Grid,
-  GridItem,
-  Box,
-  Avatar,
-  Center,
-  SimpleGrid,
-  Flex,
-  Text,
-  Button,
-  Link,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Slider,
-  SliderThumb,
-  SliderTrack,
-  SliderFilledTrack,
-  Collapse
-} from "@chakra-ui/react";
+import { Grid, GridItem, Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Link, Collapse } from "@chakra-ui/react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
@@ -63,7 +42,6 @@ export default function VaultItem({ logo, name, apr, tvl }) {
   const CONTRACT_ETHERSCAN = "https://etherscan.io/address/0x0";
   const REWARD_IN_CRYPTO = 27;
   const REWARD_IN_USD = 100;
-  const EARN_VALUE = 3;
 
   return (
     <Box borderWidth="2px" borderRadius="20" p={10}>
