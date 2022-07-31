@@ -44,6 +44,7 @@ function EthProvider({ children }) {
       network = "Unknown";
     }
     dispatch({ type: "SET_NETWORK", data: network });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const init = useCallback(

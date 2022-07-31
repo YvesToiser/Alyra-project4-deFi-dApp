@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import EthContext from "contexts/EthContext/EthContext";
 import useEth from "hooks/useEth";
 
 const useAuth = () => {

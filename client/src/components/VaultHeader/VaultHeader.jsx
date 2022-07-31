@@ -1,12 +1,15 @@
 import "./VaultHeader.scss";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 
 export default function VaultHeader() {
   return (
-    <div className="vault-header">
-      <h3>LOGO</h3>
-      <h3>NAME</h3>
-      <h3>APR</h3>
-      <h3>TVL</h3>
-    </div>
+    <Box borderRadius="20" px={10}>
+      <SimpleGrid columns={5}>
+        <Text>LOGO</Text>
+        <Text>NAME</Text>
+        <Text>APR</Text>
+        <Text>TVL</Text>
+      </SimpleGrid>
+    </Box>
   );
 }

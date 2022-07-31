@@ -2,6 +2,7 @@
 html {
   font-size: 10px;
   font-family: "Montserrat", sans-serif;
+  overflow-y: scroll;
 }
 
 * {
@@ -10,7 +11,5 @@ html {
 }
 
 #root {
-  width: 100vw;
-  height: 100vh;
   --toastify-color-progress-light: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
 }
