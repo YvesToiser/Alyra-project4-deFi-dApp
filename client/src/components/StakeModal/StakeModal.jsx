@@ -1,0 +1,134 @@
+import styled from "@emotion/styled";
+import { Text } from "@chakra-ui/react";
+
+import { MdGraphicEq } from "react-icons/md";
+import { GrMoney } from "react-icons/gr";
+import { GiTwoCoins } from "react-icons/gi";
+
+import {
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
+  Box,
+  InputGroup,
+  InputLeftAddon,
+  Input,
+  Button,
+  Tooltip,
+  Flex
+} from "@chakra-ui/react";
+import { useState } from "react";
+import useChakraColor from "hooks/useChakraColor";
+const StakeModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.bgColor};
+`;
+
+const StakeModalHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 10%;
+  align-items: center;
+  text-align: center;
+  background-color: ${(props) => props.backgroundColor};
+`;
+const StakeModalBody = styled.div`
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  height: 90%;
+  width: 100%;
+  padding: 2rem;
+`;
+
+const CustomSlider = ({ sliderValue, setSliderValue }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const labelStyles = {
+    mt: "10",
+    ml: "-2.5",
+    fontSize: "md"
+  };
+
+  return (
+    <Slider
+      aria-label="slider-ex-1"
+      defaultValue={30}
+      width={"80%"}
+      onMouseLeave={() => setShowTooltip(false)}
+      onMouseEnter={() => setShowTooltip(true)}
+      onChange={(val) => setSliderValue(val)}
+    >
+      <SliderMark value={0} {...labelStyles}>
+        0%
+      </SliderMark>
+      <SliderMark value={25} {...labelStyles}>
+        25%
+      </SliderMark>
+      <SliderMark value={50} {...labelStyles}>
+        50%
+      </SliderMark>
+      <SliderMark value={75} {...labelStyles}>
+        75%
+      </SliderMark>
+      <SliderMark value={100} {...labelStyles}>
+        100%
+      </SliderMark>
+
+      <SliderTrack>
+        <SliderFilledTrack />
+      </SliderTrack>
+      <Tooltip hasArrow bg="teal.500" color="white" placement="top" isOpen={showTooltip} label={`${sliderValue}%`}>
+        <SliderThumb boxSize={10}>
+          <Box color="tomato" as={GiTwoCoins} />
+        </SliderThumb>
+      </Tooltip>
+    </Slider>
+  );
+};
+
+const StakeModal = () => {
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
+  const total = 32;
+  const stakeValue = total * (stakeValuePercentage / 100);
+  const { getColor, theme } = useChakraColor();
+  const bgColor = getColor("chakra-body-bg");
+  const curency = "byx";
+  // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
+  // const borderColor = getColor(theme, colorMode, "chakra-border-color");
+  // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
+
+  return (
+    <StakeModalContainer bgColor={bgColor}>
+      <StakeModalHeader backgroundColor={theme.colors.teal[500]}>
+        <Text fontSize={24} color="white">
+          Stake
+        </Text>
+      </StakeModalHeader>
+
+      <StakeModalBody>
+        {/* <Text fontSize={24}>StakeModal</Text> */}
+        <Flex gridRowStart={1}>
+          <Text fontSize={24} color="white">
+            My balance : {total} {curency}
+          </Text>
+        </Flex>
+        <Flex gridRowStart={2} justify="center" align="center">
+          <InputGroup width={"30%"}>
+            <InputLeftAddon children={<GrMoney />} />
+            <Input type="text" placeholder="Value" value={stakeValue} />
+          </InputGroup>
+        </Flex>
+        <Flex gridRowStart={4} justify="center">
+          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={setStakeValuePercentage} />
+        </Flex>
+        <Flex gridRowStart={6} justify="center">
+          <Button width={200}>Stake</Button>
+        </Flex>
+      </StakeModalBody>
+    </StakeModalContainer>
+  );
+};
+
+export default StakeModal;

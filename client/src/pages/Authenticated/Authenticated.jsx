@@ -3,7 +3,9 @@ import VaultHeader from "components/VaultHeader/VaultHeader";
 import useEth from "hooks/useEth";
 import { pools } from "data/fakePool";
 import "./Authenticated.scss";
-import { SimpleGrid, Box, Flex, Text } from "@chakra-ui/react";
+import { SimpleGrid, Box, Flex, Text, Button } from "@chakra-ui/react";
+import Modal from "components/Modal/Modal";
+import { useState } from "react";
 
 function UserInformations({ address, balance, network }) {
   return (

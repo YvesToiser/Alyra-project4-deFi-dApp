@@ -1,6 +1,8 @@
 import "./VaultItem.scss";
 import { useState } from "react";
 import { Grid, GridItem, Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Link, Collapse } from "@chakra-ui/react";
+import Modal from "components/Modal/Modal";
+import StakeModal from "components/StakeModal/StakeModal";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
@@ -32,12 +34,13 @@ const VaultElement = ({ children }) => {
 
 export default function VaultItem({ logo, name, apr, tvl }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetails = () => {
     setShowDetails((_showDetails) => !_showDetails);
   };
 
-  const TOTAL_LOCKED = "172,270,237 BYX";
+  const TOTAL_LOCKED = "172 BYX";
   const AVERAGE_LOCK_DURATION = "3 weeks";
   const CONTRACT_ETHERSCAN = "https://etherscan.io/address/0x0";
   const REWARD_IN_CRYPTO = 27;
@@ -45,6 +48,9 @@ export default function VaultItem({ logo, name, apr, tvl }) {
 
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} width={"50%"} height={"50%"}>
+        <StakeModal />
+      </Modal>
       <SimpleGrid columns={5} justify="center" align="center">
         <Avatar src={logo} />
         <VaultElement>{name || "?"}</VaultElement>
@@ -59,17 +65,17 @@ export default function VaultItem({ logo, name, apr, tvl }) {
         <Grid templateColumns="repeat(4, 1fr)" gap={2} h="100%">
           <GridItem w="100%" colSpan={1} py={5}>
             <VaultInfo>
-              <Text>Total locked: </Text>
+              <Text>Total staked: </Text>
               <Text fontWeight="bold" ml={2}>
                 {TOTAL_LOCKED}
               </Text>
             </VaultInfo>
-            <VaultInfo>
+            {/* <VaultInfo>
               <Text>Average lock duration:</Text>
               <Text fontWeight="bold" ml={2}>
                 {AVERAGE_LOCK_DURATION}
               </Text>
-            </VaultInfo>
+            </VaultInfo> */}
             <VaultLink link={CONTRACT_ETHERSCAN}>View Contract</VaultLink>
           </GridItem>
           <GridItem w="100%" colSpan={2}>
@@ -94,7 +100,7 @@ export default function VaultItem({ logo, name, apr, tvl }) {
                   mx={"auto"}
                   py={3}
                   px={8}
-                  onClick={() => console.log("On Stake")}
+                  onClick={() => setIsOpen((isOpen) => !isOpen)}
                 >
                   Stake {name}
                 </Button>
@@ -117,3 +123,5 @@ export default function VaultItem({ logo, name, apr, tvl }) {
     </Box>
   );
 }
+
+//<Button onClick={() => setIsOpen((isOpen) => !isOpen)}>sqdqs</Button>

@@ -26,9 +26,7 @@ export default function Unauthenticated({ getAccount, askAccount }) {
       getAccount()
         .then((account) => {
           if (account) {
-            setUser(account).then(() => {
-              setLoading(false);
-            });
+            setUser(account).then(() => {});
           }
         })
         .catch(() => {

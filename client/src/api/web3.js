@@ -20,3 +20,13 @@ export async function getBalance(web3, address) {
     return balance;
   }
 }
+
+// stake
+
+// withdrawStake
+
+// getUserTotalStake
+
+// getTvl
+
+// getRewardAmmount
