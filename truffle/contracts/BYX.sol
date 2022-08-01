@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract BYX is ERC20, Ownable {
 
     // Custom variables
-    uint maxTotalSupply = 100000000;
+    uint public maxTotalSupply = 100000000;
 
     // ERC20 variables
     uint256 private _totalSupply;
@@ -62,8 +62,9 @@ contract BYX is ERC20, Ownable {
      *
      * @param _amount the amount
      */
-    function faucet(address _recipient, uint256 _amount) external onlyOwner {
-        require(_amount <= maxTotalSupply - _totalSupply, "Not enough coins remaining");
+    function mint(address _recipient, uint256 _amount) external onlyOwner {
+        require((maxTotalSupply - totalSupply()) >= _amount, "Not enough coins remaining");
         _mint(_recipient, _amount);
     }
+
 }
