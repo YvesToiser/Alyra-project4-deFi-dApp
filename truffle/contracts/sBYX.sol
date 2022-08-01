@@ -61,6 +61,13 @@ contract sBYX is Ownable, ERC20, IERC20MintableAndBurnable{
         msg.sender.call{value: _amount}("");
     }
 
+    /**
+     * @notice Authorize an Address. This address will be authorized to mint sBYX (BYXStakingManager contract)
+     *
+     * @dev Authorize an Address. This address will be authorized to mint sBYX (BYXStakingManager contract)
+     *
+     * @param _addr the address to authorize.
+     */
     function authorize(address _addr) external onlyOwner {
         authorizedAddress[_addr] = true;
     }
@@ -99,7 +106,6 @@ contract sBYX is Ownable, ERC20, IERC20MintableAndBurnable{
      * `amount`.
      */
     function burnFrom(address account, uint256 amount) public onlyAuthorized {
-        _spendAllowance(account, _msgSender(), amount);
         _burn(account, amount);
     }
 

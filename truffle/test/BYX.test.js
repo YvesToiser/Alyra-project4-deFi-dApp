@@ -61,18 +61,18 @@ contract('BYX', function (accounts) {
         it('should return total supply correctly after multiple mint (3000 value)', async function () {
             const result  = await this.byxInstance.totalSupply.call();
             expect(result).to.be.bignumber.equal(INITIAL_VALUE);
-            await this.byxInstance.mint(ALICE, AIRDROP_SUPPLY);
-            await this.byxInstance.mint(BOB, AIRDROP_SUPPLY);
-            await this.byxInstance.mint(CHARLY, AIRDROP_SUPPLY);
+            await this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: owner});
+            await this.byxInstance.mint(BOB, AIRDROP_SUPPLY, {from: owner});
+            await this.byxInstance.mint(CHARLY, AIRDROP_SUPPLY, {from: owner});
             const newResult  = await this.byxInstance.totalSupply.call();
             const THREE_AIRDROP_SUPPLY = new BN(3 * AIRDROP_SUPPLY);
             expect(newResult).to.be.bignumber.equal(THREE_AIRDROP_SUPPLY);
         });
 
         it('should mint token on appropriate addresses', async function () {
-            await this.byxInstance.mint(ALICE, AIRDROP_SUPPLY);
-            await this.byxInstance.mint(BOB, AIRDROP_SUPPLY);
-            await this.byxInstance.mint(CHARLY, AIRDROP_SUPPLY);
+            await this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: owner});
+            await this.byxInstance.mint(BOB, AIRDROP_SUPPLY, {from: owner});
+            await this.byxInstance.mint(CHARLY, AIRDROP_SUPPLY, {from: owner});
             const aliceBalance  = await this.byxInstance.balanceOf.call(ALICE);
             expect(aliceBalance).to.be.bignumber.equal(AIRDROP_SUPPLY);
             const bobBalance  = await this.byxInstance.balanceOf.call(BOB);
@@ -80,5 +80,22 @@ contract('BYX', function (accounts) {
             const charlyBalance  = await this.byxInstance.balanceOf.call(CHARLY);
             expect(charlyBalance).to.be.bignumber.equal(AIRDROP_SUPPLY);
         });
+
+        it('should not mint if not by owner',  async function () {
+            await expectRevert(this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: CHARLY}),
+                "Ownable: caller is not the owner");
+        });
+
+        // it('should not mint if max total supply has been reached',  async function () {
+        //     await this.byxInstance.mint(CHARLY, MAX_TOTAL_SUPPLY, {from: owner});
+        //     const result  = await this.byxInstance.totalSupply.call();
+        //     expect(result).to.be.bignumber.equal(MAX_TOTAL_SUPPLY);
+        //     console.log(result.toString());
+        //     const max  = await this.byxInstance.maxTotalSupply.call();
+        //     console.log(max.toString());
+        //     // TODO FIX -> Should revert
+        //     await expectRevert(this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: owner}),
+        //         "Not enough coins remaining");
+        // });
     });
 });
