@@ -1,26 +1,25 @@
 import styled from "@emotion/styled";
 import { Text } from "@chakra-ui/react";
-
-import { MdGraphicEq } from "react-icons/md";
 import { GrMoney } from "react-icons/gr";
 import { GiTwoCoins } from "react-icons/gi";
-
-import {
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderMark,
-  Box,
-  InputGroup,
-  InputLeftAddon,
-  Input,
-  Button,
-  Tooltip,
-  Flex
-} from "@chakra-ui/react";
 import { useState } from "react";
 import useChakraColor from "hooks/useChakraColor";
+
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
+  Tooltip
+} from "@chakra-ui/react";
+
 const StakeModalContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -54,7 +53,9 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
   return (
     <Slider
       aria-label="slider-ex-1"
-      defaultValue={30}
+      defaultValue={sliderValue}
+      value={sliderValue}
+      focusThumbOnChange={false}
       width={"80%"}
       onMouseLeave={() => setShowTooltip(false)}
       onMouseEnter={() => setShowTooltip(true)}
@@ -89,12 +90,23 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
 };
 
 const StakeModal = () => {
-  const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
-  const total = 32;
-  const stakeValue = total * (stakeValuePercentage / 100);
   const { getColor, theme } = useChakraColor();
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
+  const [stakeValue, setStakeValue] = useState(0);
+  const total = 32;
   const bgColor = getColor("chakra-body-bg");
   const curency = "byx";
+
+  const handleStakeValueChange = (val) => {
+    setStakeValuePercentage((parseInt(val) * 100) / total);
+    setStakeValue(val);
+  };
+
+  const handleStakeValuePercentageChange = (val) => {
+    setStakeValuePercentage(val);
+    setStakeValue(total * (stakeValuePercentage / 100));
+  };
+
   // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
   // const borderColor = getColor(theme, colorMode, "chakra-border-color");
   // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
@@ -108,7 +120,6 @@ const StakeModal = () => {
       </StakeModalHeader>
 
       <StakeModalBody>
-        {/* <Text fontSize={24}>StakeModal</Text> */}
         <Flex gridRowStart={1}>
           <Text fontSize={24} color="white">
             My balance : {total} {curency}
@@ -117,11 +128,16 @@ const StakeModal = () => {
         <Flex gridRowStart={2} justify="center" align="center">
           <InputGroup width={"30%"}>
             <InputLeftAddon children={<GrMoney />} />
-            <Input type="text" placeholder="Value" value={stakeValue} />
+            <Input
+              type="text"
+              placeholder="Value"
+              value={stakeValue}
+              onChange={(e) => handleStakeValueChange(e.target.value)}
+            />
           </InputGroup>
         </Flex>
         <Flex gridRowStart={4} justify="center">
-          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={setStakeValuePercentage} />
+          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
         </Flex>
         <Flex gridRowStart={6} justify="center">
           <Button width={200}>Stake</Button>

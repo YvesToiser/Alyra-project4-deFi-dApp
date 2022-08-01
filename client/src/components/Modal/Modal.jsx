@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 const ModalContainer = styled.div`
@@ -7,7 +6,7 @@ const ModalContainer = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 300;
 `;
 
 const ModalOverlay = styled.div`
@@ -33,28 +32,16 @@ const ModalContent = styled.div`
 `;
 
 const Modal = ({ children, isOpen, onClose, width, height }) => {
-  const [isOpenState, setIsOpen] = useState(isOpen);
+  if (!isOpen) return;
 
-  useEffect(() => {
-    setIsOpen(isOpen);
-  }, [isOpen]);
-
-  const handleClose = () => {
-    setIsOpen(false);
-    onClose();
-  };
-
-  if (isOpenState)
-    return (
-      <ModalContainer isOpen={isOpenState}>
-        <ModalOverlay onClick={handleClose} />
-        <ModalContent width={width} height={height}>
-          {children}
-        </ModalContent>
-      </ModalContainer>
-    );
-
-  return null;
+  return (
+    <ModalContainer isOpen={isOpen}>
+      <ModalOverlay onClick={onClose} />
+      <ModalContent width={width} height={height}>
+        {children}
+      </ModalContent>
+    </ModalContainer>
+  );
 };
 
 export default Modal;

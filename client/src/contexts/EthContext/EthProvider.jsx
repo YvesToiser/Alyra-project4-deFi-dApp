@@ -47,6 +47,8 @@ function EthProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Check if the user is connected to a network
+  // If not reload on network change  and set the network
   const init = useCallback(
     async (artifact) => {
       if (artifact) {
@@ -64,7 +66,7 @@ function EthProvider({ children }) {
           address = artifact.networks[networkID].address;
           contract = new web3.eth.Contract(abi, address);
         } catch (err) {
-          console.error("Contract not found");
+          console.error("Contract Error", err);
         }
         dispatch({
           type: actions.init,
@@ -77,7 +79,7 @@ function EthProvider({ children }) {
 
   useEffect(() => {
     try {
-      const artifact = require("../../contracts/SimpleStorage.json");
+      const artifact = require("../../contracts/BYXStakingManager.json");
       init(artifact);
     } catch (err) {
       console.error(err);

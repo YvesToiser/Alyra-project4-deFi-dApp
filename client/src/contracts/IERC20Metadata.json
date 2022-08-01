@@ -503,7 +503,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
+<<<<<<< HEAD
   "updatedAt": "2022-08-02T07:32:52.076Z",
+=======
+  "updatedAt": "2022-08-01T17:26:42.674Z",
+>>>>>>> f839a21 (FIX - Contract setup)
   "devdoc": {
     "details": "Interface for the optional metadata functions from the ERC20 standard. _Available since v4.1._",
     "kind": "dev",
