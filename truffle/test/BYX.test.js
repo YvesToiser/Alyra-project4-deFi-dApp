@@ -86,16 +86,13 @@ contract('BYX', function (accounts) {
                 "Ownable: caller is not the owner");
         });
 
-        // it('should not mint if max total supply has been reached',  async function () {
-        //     await this.byxInstance.mint(CHARLY, MAX_TOTAL_SUPPLY, {from: owner});
-        //     const result  = await this.byxInstance.totalSupply.call();
-        //     expect(result).to.be.bignumber.equal(MAX_TOTAL_SUPPLY);
-        //     console.log(result.toString());
-        //     const max  = await this.byxInstance.maxTotalSupply.call();
-        //     console.log(max.toString());
-        //     // TODO FIX -> Should revert
-        //     await expectRevert(this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: owner}),
-        //         "Not enough coins remaining");
-        // });
+        it('should not mint if max total supply has been reached',  async function () {
+            await this.byxInstance.mint(CHARLY, MAX_TOTAL_SUPPLY, {from: owner});
+            const result  = await this.byxInstance.totalSupply.call();
+            expect(result).to.be.bignumber.equal(MAX_TOTAL_SUPPLY);
+            const max  = await this.byxInstance.maxTotalSupply.call();
+            await expectRevert(this.byxInstance.mint(ALICE, AIRDROP_SUPPLY, {from: owner}),
+                "Not enough coins remaining");
+        });
     });
 });

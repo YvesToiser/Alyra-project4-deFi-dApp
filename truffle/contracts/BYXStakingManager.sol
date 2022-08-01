@@ -10,8 +10,11 @@ contract BYXStakingManager is Ownable {
     IERC20 BYX;
     IERC20MintableAndBurnable sBYX;
 
+    /// BYX token fund for staking rewards
     uint BYXFund = 50000000;
+    /// Amount of BYX token in the staking pool
     uint BYXPool;
+    /// BYX reward per block
     uint BYXRewardPerBlock = 5;
 
     uint lastBlockUpdate;

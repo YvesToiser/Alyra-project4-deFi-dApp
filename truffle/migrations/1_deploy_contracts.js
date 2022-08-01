@@ -14,7 +14,7 @@ module.exports = async function(deployer, _network, accounts) {
 	await deployer.deploy(BYX);
     const byxInstance = await BYX.deployed();
 
-	// Deploy BYX token contract
+	// Deploy sBYX token contract
 	await deployer.deploy(sBYX);
 	const sByxInstance = await sBYX.deployed();
 
