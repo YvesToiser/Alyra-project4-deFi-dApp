@@ -11,11 +11,11 @@ contract BYXStakingManager is Ownable {
     IERC20MintableAndBurnable sBYX;
 
     /// BYX token fund for staking rewards
-    uint BYXFund = 50000000;
-    /// Amount of BYX token in the staking pool
-    uint BYXPool;
+    uint BYXFund = 50000000 * 10 ** 18; // 50 000 000 tokens
+    /// Amount of BYX token in the staking pool.
+    uint public BYXPool;
     /// BYX reward per block
-    uint BYXRewardPerBlock = 5;
+    uint BYXRewardPerBlock = 5 * 10 ** 18; // 5 tokens
 
     uint lastBlockUpdate;
     uint lastBlockReward;
@@ -47,6 +47,21 @@ contract BYXStakingManager is Ownable {
      */
     fallback() external {
         emit LogBadCall(msg.sender);
+    }
+
+    /*************************************************************************************************/
+    /*                                          VIEW FUNCTIONS                                       */
+    /*************************************************************************************************/
+
+    /**
+     * @notice get the APR in bps. You need to multiply it by 100 to get percentage.
+     *
+     * @dev get the APR in bps. You need to multiply it by 100 to get percentage.
+     *
+     * @return uint. The APr in bps.
+     */
+    function getAPR() external view returns(uint) {
+        return BYXRewardPerBlock * 6400 * 365 * 10000 / BYXPool;
     }
 
     /*************************************************************************************************/
@@ -154,8 +169,10 @@ contract BYXStakingManager is Ownable {
      * @dev calculate sBYX amount from BYX amount.
      *
      * @param _amount the amount of BYX to convert.
+     *
+     * @return uint. The amount of sBYX in the pool
      */
-    function _calculateSBYXAmountFromBYX(uint _amount) internal returns (uint _sBYXAmount) {
+    function _calculateSBYXAmountFromBYX(uint _amount) internal returns (uint) {
         _updatePool();
         return _amount * sBYX.totalSupply() / BYXPool;
     }
@@ -165,9 +182,11 @@ contract BYXStakingManager is Ownable {
      *
      * @dev calculate BYX amount from sBYX amount.
      *
-     * @param _amount the amount of sBYX to convert.
+     * @param _sBYXAmount the amount of sBYX to convert.
+     *
+     * @return uint. The amount of BYX in the pool
      */
-    function _calculateBYXAmountFromsBYX(uint _sBYXAmount) internal returns (uint _amount) {
+    function _calculateBYXAmountFromsBYX(uint _sBYXAmount) internal returns (uint) {
         _updatePool();
         return _sBYXAmount * BYXPool / sBYX.totalSupply();
     }

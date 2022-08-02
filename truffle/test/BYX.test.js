@@ -9,8 +9,9 @@ contract('BYX', function (accounts) {
     const BYX_SYMBOL = 'BYX';
 
     // Supply parameters
-    const MAX_TOTAL_SUPPLY = new BN(100*1000*1000);
-    const AIRDROP_SUPPLY = new BN(1000);
+    const MAX_TOTAL_SUPPLY = "100000000000000000000000000";
+    const AIRDROP_SUPPLY = "1000000000000000000000";
+    const THREE_AIRDROP_SUPPLY = "3000000000000000000000";
     const INITIAL_VALUE = new BN(0);
 
     // Address parameters
@@ -65,7 +66,6 @@ contract('BYX', function (accounts) {
             await this.byxInstance.mint(BOB, AIRDROP_SUPPLY, {from: owner});
             await this.byxInstance.mint(CHARLY, AIRDROP_SUPPLY, {from: owner});
             const newResult  = await this.byxInstance.totalSupply.call();
-            const THREE_AIRDROP_SUPPLY = new BN(3 * AIRDROP_SUPPLY);
             expect(newResult).to.be.bignumber.equal(THREE_AIRDROP_SUPPLY);
         });
 

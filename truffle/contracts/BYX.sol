@@ -9,8 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract BYX is ERC20, Ownable {
 
     // Custom variables
-    uint public maxTotalSupply = 100000000;
-
+    uint public maxTotalSupply = 100000000 * 10 ** 18; // 100 millions tokens
     // ERC20 variables
     uint256 private _totalSupply;
 
