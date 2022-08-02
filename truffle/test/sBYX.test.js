@@ -10,8 +10,8 @@ contract('BYX', function (accounts) {
 
     // Supply parameters
     const INITIAL_VALUE = new BN(0);
-    const MINT_AMOUNT = new BN(1000);
-    const BURN_AMOUNT = new BN(100);
+    const MINT_AMOUNT = "1000000000000000000000";
+    const BURN_AMOUNT = "1000000000000000000000";
 
     // Address parameters
     const owner = accounts[0];
