@@ -50,27 +50,31 @@ function EthProvider({ children }) {
   // Check if the user is connected to a network
   // If not reload on network change  and set the network
   const init = useCallback(
-    async (artifact) => {
-      if (artifact) {
+    async (artifact, artifactToken) => {
+      if (artifact && artifactToken) {
         if (!window.ethereum) return;
 
         const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
         const networkID = await web3.eth.net.getId();
         const chainId = await web3.eth.getChainId();
-        const { abi } = artifact;
+        const abiTokenManager = artifact.abi;
+        const abiToken = artifactToken.abi;
 
         handleNetworkChange(chainId.toString(16));
 
-        let address, contract;
+        let addressTokenManager, addressToken, contractTokenManager, contractToken;
+
         try {
-          address = artifact.networks[networkID].address;
-          contract = new web3.eth.Contract(abi, address);
+          addressTokenManager = artifact.networks[networkID].address;
+          addressToken = artifactToken.networks[networkID].address;
+          contractTokenManager = new web3.eth.Contract(abiTokenManager, addressTokenManager);
+          contractToken = new web3.eth.Contract(abiToken, addressToken);
         } catch (err) {
           console.error("Contract Error", err);
         }
         dispatch({
           type: actions.init,
-          data: { artifact, web3, networkID, contract }
+          data: { artifact, web3, networkID, contractTokenManager, contractToken }
         });
       }
     },
@@ -80,7 +84,8 @@ function EthProvider({ children }) {
   useEffect(() => {
     try {
       const artifact = require("../../contracts/BYXStakingManager.json");
-      init(artifact);
+      const artifactToken = require("../../contracts/BYX.json");
+      init(artifact, artifactToken);
     } catch (err) {
       console.error(err);
     }

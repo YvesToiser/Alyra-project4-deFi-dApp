@@ -3787,18 +3787,10 @@
   "ast": {
     "absolutePath": "project:/contracts/EthUsdPrice.sol",
     "exportedSymbols": {
-      "AggregatorV3Interface": [
-        45
-      ],
-      "Context": [
-        869
-      ],
-      "ETHUSDPriceProvider": [
-        1430
-      ],
-      "Ownable": [
-        158
-      ]
+      "AggregatorV3Interface": [45],
+      "Context": [869],
+      "ETHUSDPriceProvider": [1430],
+      "Ownable": [158]
     },
     "id": 1431,
     "license": "MIT",
@@ -3806,11 +3798,7 @@
     "nodes": [
       {
         "id": 1332,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "32:23:8"
       },
@@ -3859,11 +3847,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 1430,
-        "linearizedBaseContracts": [
-          1430,
-          158,
-          869
-        ],
+        "linearizedBaseContracts": [1430, 158, 869],
         "name": "ETHUSDPriceProvider",
         "nameLocation": "197:19:8",
         "nodeType": "ContractDefinition",
@@ -4468,9 +4452,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {
@@ -4742,13 +4724,7 @@
               "src": "1837:234:8",
               "statements": [
                 {
-                  "assignments": [
-                    null,
-                    1421,
-                    null,
-                    null,
-                    null
-                  ],
+                  "assignments": [null, 1421, null, null, null],
                   "declarations": [
                     null,
                     {
@@ -4941,15 +4917,71 @@
       "links": {},
       "address": "0xB6d6e690B228CF548872b65D7B36f889f482bEF0",
       "transactionHash": "0x43a6315d742a2b64d4ad546d26d129cd0a1cb0d73699d1d66d20c5dc44e2f970"
+    },
+    "1659422652984": {
+      "events": {
+        "0xcc97ff3d49208ba08dc7ada5cf9e88e59e047be7d363118838f7af1233c49c43": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            }
+          ],
+          "name": "LogBadCall",
+          "type": "event"
+        },
+        "0x1d76c7e5736b9b335988489baea5b96ec803f8f1194842fe5ce3a6ec85e79b56": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "quantity",
+              "type": "uint256"
+            }
+          ],
+          "name": "LogDepot",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x6C5fBcA650c8d82E7d391E35A5f4A2D8a571E8cd",
+      "transactionHash": "0x51d3559c84b2297cf432080b16bfdb96a953211afe3c28af95936e142d671670"
     }
   },
   "schemaVersion": "3.4.7",
-<<<<<<< HEAD
+
   "updatedAt": "2022-08-02T07:32:52.091Z",
-=======
-  "updatedAt": "2022-08-01T19:05:31.723Z",
+
   "networkType": "ethereum",
->>>>>>> f839a21 (FIX - Contract setup)
   "devdoc": {
     "kind": "dev",
     "methods": {

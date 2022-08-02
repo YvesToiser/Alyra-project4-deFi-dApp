@@ -10,7 +10,8 @@ const initialState = {
   web3: null,
   accounts: null,
   networkID: null,
-  contract: null,
+  contractTokenManager: null,
+  contractToken: null,
   network: null,
   user: {
     address: null,

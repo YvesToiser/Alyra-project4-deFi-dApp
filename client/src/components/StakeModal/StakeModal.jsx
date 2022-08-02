@@ -4,6 +4,7 @@ import { GrMoney } from "react-icons/gr";
 import { GiTwoCoins } from "react-icons/gi";
 import { useState } from "react";
 import useChakraColor from "hooks/useChakraColor";
+import useTokenManager from "../../hooks/useTokenManager";
 
 import {
   Box,
@@ -81,7 +82,7 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
         <SliderFilledTrack />
       </SliderTrack>
       <Tooltip hasArrow bg="teal.500" color="white" placement="top" isOpen={showTooltip} label={`${sliderValue}%`}>
-        <SliderThumb boxSize={10}>
+        <SliderThumb boxSize={6}>
           <Box color="tomato" as={GiTwoCoins} />
         </SliderThumb>
       </Tooltip>
@@ -89,22 +90,26 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
   );
 };
 
-const StakeModal = () => {
+const StakeModal = ({ total }) => {
   const { getColor, theme } = useChakraColor();
+  const { stake } = useTokenManager();
   const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
   const [stakeValue, setStakeValue] = useState(0);
-  const total = 32;
   const bgColor = getColor("chakra-body-bg");
   const curency = "byx";
 
   const handleStakeValueChange = (val) => {
-    setStakeValuePercentage((parseInt(val) * 100) / total);
+    setStakeValuePercentage((parseFloat(val) * 100) / total);
     setStakeValue(val);
   };
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
-    setStakeValue(total * (stakeValuePercentage / 100));
+    setStakeValue((total * val) / 100);
+  };
+
+  const handleStake = () => {
+    stake(stakeValue, curency);
   };
 
   // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
@@ -140,7 +145,9 @@ const StakeModal = () => {
           <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
         </Flex>
         <Flex gridRowStart={6} justify="center">
-          <Button width={200}>Stake</Button>
+          <Button width={200} onClick={handleStake}>
+            Stake
+          </Button>
         </Flex>
       </StakeModalBody>
     </StakeModalContainer>
