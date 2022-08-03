@@ -22,6 +22,8 @@ contract BYXStakingManager is Ownable {
 
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
+    event StakeDeposit(address user, uint amount);
+    event StakeWithdraw(address user, uint bps); /// bps is the part of sender's owning in sBYX in basis point (0.0x %)
 
     /*************************************************************************************************/
     /*                                        SPECIAL FUNCTIONS                                      */
@@ -142,10 +144,12 @@ contract BYXStakingManager is Ownable {
     function _depositStake(uint _amount) internal {
         require(BYX.balanceOf(msg.sender) >= _amount, "Not enough BYX in wallet");
         require(_amount > 0, "Amount must be positive");
+        require(BYX.allowance(msg.sender, address(this)) >= _amount, "BYX: insufficient allowance");
         BYXPool += _amount;
         BYX.transferFrom(msg.sender, address(this), _amount);
         uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
         sBYX.mint(msg.sender, _sBYXamount);
+        emit StakeDeposit(msg.sender, _amount);
     }
 
     /**
@@ -157,10 +161,14 @@ contract BYXStakingManager is Ownable {
      */
     function _withdrawStake(uint _sBYXAmount) internal {
         require(sBYX.balanceOf(msg.sender) >= _sBYXAmount, "Not enough sBYX in wallet");
+        require(_sBYXAmount > 0, "Amount must be positive");
+        require(sBYX.allowance(msg.sender, address(this)) >= _sBYXAmount, "sBYX: insufficient allowance");
         uint _amount = _calculateBYXAmountFromsBYX(_sBYXAmount);
+        uint bps = _sBYXAmount * 10000 / sBYX.balanceOf(msg.sender);
         sBYX.burnFrom(msg.sender, _sBYXAmount);
         BYXPool -= _amount;
         BYX.transfer(msg.sender, _amount);
+        emit StakeWithdraw(msg.sender, bps);
     }
 
     /**
