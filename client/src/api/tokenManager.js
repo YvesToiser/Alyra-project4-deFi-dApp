@@ -1,9 +1,12 @@
+import Big from "big.js";
+
 // stake
+
 export async function depositStake(contract, address, amount, decimal) {
   // console.log("depositStake", amount, decimal);
   // console.log(amount * 10 ** decimal);
-
-  return await contract.methods.depositStake(200).send({ from: address });
+  console.log(new Big(123.4567));
+  return await contract.methods.depositStake(99999999999).send({ from: address });
 }
 
 // withdrawStake
@@ -12,23 +15,18 @@ export async function withdrawStake(contract, address, amount) {
 }
 
 //check allowance
-export async function allowance(contract, address) {
-  return await contract.methods.allowance(address, address).call();
+export async function allowance(contract, ownerAddress, spenderAddress) {
+  // allowance(address owner, address spender)
+  return await contract.methods.allowance(ownerAddress, spenderAddress).call();
 }
 
 // approve
-export async function approve(contract, allowedAddress, spenderAddress, amount) {
-  return await contract.methods.approve(allowedAddress, amount).send({ from: spenderAddress });
+export async function approve(contract, ownerAddress, spenderAddress, amount) {
+  return await contract.methods.approve(spenderAddress, amount.toString()).send({ from: ownerAddress });
 }
 // getUserTotalStake
 export async function userTotalStake(contract, address) {
-  return await contract.getPastEvents("LogDepot", {
-    filter: {
-      owner: address
-    },
-    fromBlock: 0,
-    toBlock: "latest"
-  });
+  return await contract.getPastEvents("LogDepot");
 }
 
 // getTvl

@@ -39,6 +39,7 @@ function EthProvider({ children }) {
 
     let network;
     if (networks.hasOwnProperty(chainId)) {
+      console.log("Test", chainId);
       network = networks[chainId];
     } else {
       network = "Unknown";

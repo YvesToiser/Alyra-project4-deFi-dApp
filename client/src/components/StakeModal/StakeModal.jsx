@@ -5,6 +5,7 @@ import { GiTwoCoins } from "react-icons/gi";
 import { useState } from "react";
 import useChakraColor from "hooks/useChakraColor";
 import useTokenManager from "../../hooks/useTokenManager";
+import { useEffect } from "react";
 
 import {
   Box,
