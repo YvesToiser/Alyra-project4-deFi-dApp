@@ -5,8 +5,7 @@ import { GiTwoCoins } from "react-icons/gi";
 import { useState } from "react";
 import useChakraColor from "hooks/useChakraColor";
 import useTokenManager from "../../hooks/useTokenManager";
-import { useEffect } from "react";
-
+import useToken from "hooks/useToken";
 import {
   Box,
   Button,
@@ -91,7 +90,7 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
   );
 };
 
-const StakeModal = ({ total }) => {
+const StakeModal = ({ total, getBalance }) => {
   const { getColor, theme } = useChakraColor();
   const { stake, getUserTotalStake } = useTokenManager();
 
@@ -110,8 +109,9 @@ const StakeModal = ({ total }) => {
     setStakeValue((total * val) / 100);
   };
 
-  const handleStake = () => {
-    stake(stakeValue, curency);
+  const handleStake = async () => {
+    await stake(stakeValue, curency);
+    await getBalance();
   };
 
   // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");

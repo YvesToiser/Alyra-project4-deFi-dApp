@@ -2,6 +2,7 @@ import { depositStake, allowance, approve, userTotalStake } from "api/tokenManag
 import useEth from "hooks/useEth";
 import { useEffect, useCallback, useState } from "react";
 import Big from "big.js";
+import useToken from "hooks/useToken";
 
 const useTokenManager = () => {
   const { state } = useEth();
@@ -9,21 +10,23 @@ const useTokenManager = () => {
   const [allowanceValue, setAllowanceValue] = useState();
 
   const stake = async (stakeValue, curency) => {
+    // Check decimal
+    const value = new Big(stakeValue).mul(10 ** 18);
+
     try {
-      const test = new Big(10 * 10 ** 18);
-      const result = await depositStake(contractTokenManager, user.address, test, 18);
-      console.log(result);
+      const result = await depositStake(contractTokenManager, user.address, value.toFixed());
     } catch (error) {
       console.error(error);
     }
   };
 
   const getApproval = async (stakeValue, curency) => {
-    const test = new Big(100000000 * 100000000);
+    const value = new Big(100).mul(10).pow(19);
     try {
-      await approve(contractToken, user.address, contractTokenManager._address, test);
-      console.log(await allowance(contractToken, user.address, contractToken._address));
-      setAllowanceValue(await allowance(contractToken, user.address, contractToken._address));
+      await approve(contractToken, user.address, contractTokenManager._address, value.toFixed());
+      // console.log(await allowance(contractToken, user.address, contractToken._address));
+      // Use event
+      setAllowanceValue(test.toNumber());
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +35,7 @@ const useTokenManager = () => {
   const getAllowance = useCallback(async () => {
     try {
       const result = await allowance(contractToken, user.address, contractTokenManager._address);
-      console.log(result);
+
       setAllowanceValue(result);
     } catch (error) {
       console.error(error);
@@ -43,7 +46,6 @@ const useTokenManager = () => {
     try {
       const logs = await userTotalStake(contractTokenManager, user.address);
       console.log(logs);
-      console.log(contractTokenManager);
     } catch (error) {
       console.error(error);
     }

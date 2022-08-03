@@ -3,6 +3,7 @@ import useEth from "hooks/useEth";
 import { ApiGetBalance } from "api/token";
 
 const useToken = () => {
+  // userBalance should be lgobal, use context
   const [balance, setBalance] = useState(0);
   const { state } = useEth();
   const { user, contractToken } = state;
@@ -11,7 +12,10 @@ const useToken = () => {
   const getBalance = useCallback(async () => {
     try {
       const balance = await ApiGetBalance(contractToken, user.address);
-      setBalance(balance / 10 ** 18);
+
+      const newBalance = balance / 10 ** 18;
+      setBalance(newBalance);
+      // setBalance(balance);
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +25,11 @@ const useToken = () => {
     contractToken && getBalance();
   }, [contractToken, getBalance]);
 
-  return { balance, contractTokenAdress };
+  useEffect(() => {
+    console.log(balance);
+  }, [balance]);
+
+  return { balance, contractTokenAdress, getBalance };
 };
 
 export default useToken;

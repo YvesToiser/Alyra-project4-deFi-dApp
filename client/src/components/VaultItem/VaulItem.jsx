@@ -6,6 +6,7 @@ import StakeModal from "components/StakeModal/StakeModal";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import useToken from "../../hooks/useToken";
 import useTokenManager from "../../hooks/useTokenManager";
+import React from "react";
 
 const VaultInfo = ({ children, title }) => {
   return (
@@ -47,8 +48,8 @@ const VaultButton = ({ children, onClick }) => {
 export default function VaultItem({ logo, name, apr, tvl }) {
   const [showDetails, setShowDetails] = useState(false);
   const [isOpen, setIsOpen] = useState();
-  const { balance, contractTokenAdress } = useToken();
-  const { allowanceValue, getApproval } = useTokenManager();
+  const { balance, contractTokenAdress, getBalance } = useToken();
+  const { allowanceValue, getApproval, getAllowance } = useTokenManager();
 
   const onToggleDetails = () => {
     setShowDetails((_showDetails) => !_showDetails);
@@ -68,7 +69,7 @@ export default function VaultItem({ logo, name, apr, tvl }) {
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
       <Modal isOpen={isOpen} onClose={onToggleStake} width={"50%"} height={"70%"}>
-        <StakeModal total={balance} />
+        <StakeModal total={balance} getBalance={getBalance} />
       </Modal>
 
       <SimpleGrid columns={5} justify="center" align="center">
@@ -103,6 +104,8 @@ export default function VaultItem({ logo, name, apr, tvl }) {
                 <Fragment>
                   <VaultButton onClick={onToggleStake}>Stake {name}</VaultButton>
                   <VaultButton onClick={onToggleStake}>Unstake {name}</VaultButton>
+                  <VaultButton onClick={getAllowance}>getAllowance {name}</VaultButton>
+
                   <VaultButton onClick={() => getApproval(balance, name)}>Approve {name}</VaultButton>
                 </Fragment>
               ) : (
