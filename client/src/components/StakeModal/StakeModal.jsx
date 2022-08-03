@@ -92,7 +92,8 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
 
 const StakeModal = ({ total }) => {
   const { getColor, theme } = useChakraColor();
-  const { stake } = useTokenManager();
+  const { stake, getUserTotalStake } = useTokenManager();
+
   const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
   const [stakeValue, setStakeValue] = useState(0);
   const bgColor = getColor("chakra-body-bg");
@@ -147,6 +148,9 @@ const StakeModal = ({ total }) => {
         <Flex gridRowStart={6} justify="center">
           <Button width={200} onClick={handleStake}>
             Stake
+          </Button>
+          <Button width={200} onClick={getUserTotalStake}>
+            GetLog
           </Button>
         </Flex>
       </StakeModalBody>

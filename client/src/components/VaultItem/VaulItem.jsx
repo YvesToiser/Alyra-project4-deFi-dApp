@@ -1,14 +1,10 @@
 import "./VaultItem.scss";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { Grid, GridItem, Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Link, Collapse } from "@chakra-ui/react";
 import Modal from "components/Modal/Modal";
 import StakeModal from "components/StakeModal/StakeModal";
-
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import useEth from "../../hooks/useEth";
-import { getBalance } from "api/web3";
 import useToken from "../../hooks/useToken";
-import { networks } from "helpers/chainId";
 
 const VaultInfo = ({ children, title }) => {
   return (
@@ -69,7 +65,7 @@ export default function VaultItem({ logo, name, apr, tvl }) {
 
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
-      <Modal isOpen={isOpen} onClose={onToggleStake} width={"50%"} height={"50%"}>
+      <Modal isOpen={isOpen} onClose={onToggleStake} width={"50%"} height={"70%"}>
         <StakeModal total={balance} />
       </Modal>
 
