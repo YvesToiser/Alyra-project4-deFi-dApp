@@ -143,7 +143,7 @@ contract BYXStakingManager is Ownable {
         require(BYX.balanceOf(msg.sender) >= _amount, "Not enough BYX in wallet");
         require(_amount > 0, "Amount must be positive");
         BYXPool += _amount;
-        BYX.transferFrom(msg.sender, address(this), _amount);  // TODO check if we need allowance
+        BYX.transferFrom(msg.sender, address(this), _amount);
         uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
         sBYX.mint(msg.sender, _sBYXamount);
     }
@@ -160,7 +160,7 @@ contract BYXStakingManager is Ownable {
         uint _amount = _calculateBYXAmountFromsBYX(_sBYXAmount);
         sBYX.burnFrom(msg.sender, _sBYXAmount);
         BYXPool -= _amount;
-        BYX.transferFrom(address(this), msg.sender, _amount);
+        BYX.transfer(msg.sender, _amount);
     }
 
     /**
