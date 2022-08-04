@@ -22,8 +22,13 @@ contract BYXStakingManager is Ownable {
 
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
-    event StakeDeposit(address user, uint amount);
-    event StakeWithdraw(address user, uint bps); /// bps is the part of sender's owning in sBYX in basis point (0.0x %)
+    /**
+     * @dev In order to calculate more easily the user staking amount in the front-end, we send only one event for deposit and withdraw.
+     * in case of deposit the amount is in BYX (with decimals).
+     * In case of withdraw, the amount is in bps. (bps is the part of sender's owning in sBYX in basis point (0.0x %))
+     * (amount in BYX is -> staking amount * bps / 10000
+     */
+    event Stake(address user, string operation, uint amount);
 
     /*************************************************************************************************/
     /*                                        SPECIAL FUNCTIONS                                      */
@@ -149,7 +154,7 @@ contract BYXStakingManager is Ownable {
         BYX.transferFrom(msg.sender, address(this), _amount);
         uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
         sBYX.mint(msg.sender, _sBYXamount);
-        emit StakeDeposit(msg.sender, _amount);
+        emit Stake(msg.sender, 'deposit',  _amount);
     }
 
     /**
@@ -168,7 +173,7 @@ contract BYXStakingManager is Ownable {
         sBYX.burnFrom(msg.sender, _sBYXAmount);
         BYXPool -= _amount;
         BYX.transfer(msg.sender, _amount);
-        emit StakeWithdraw(msg.sender, bps);
+        emit Stake(msg.sender, 'withdraw',  _amount);
     }
 
     /**
