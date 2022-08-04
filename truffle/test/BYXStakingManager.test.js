@@ -67,7 +67,7 @@ contract("BYXStakingManager", function (accounts) {
             const res = await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: ALICE });
             const sBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
             expect(sBYXBalance).to.be.bignumber.above(ZERO_VALUE);
-            expectEvent(res, 'StakeDeposit', {user : ALICE, amount : new BN(ANY_STAKE)});
+            expectEvent(res, 'Stake', {user : ALICE, operation: 'deposit', amount : new BN(ANY_STAKE)});
         });
     });
 
@@ -104,7 +104,7 @@ contract("BYXStakingManager", function (accounts) {
             const newBYXBalance = await this.byxInstance.balanceOf.call(ALICE, { from: ALICE });
             expect(newBYXBalance).to.be.bignumber.above(AIRDROP_SUPPLY);  // Alice must have earned some rewards
             expect(newsBYXBalance).to.be.bignumber.equal(ZERO_VALUE);  // Alice must have no more sBYX tokens left
-            expectEvent(res, 'StakeWithdraw', {user : ALICE, bps : new BN(10000)}); // 100% of her sBYX -> 10 000 bps
+            expectEvent(res, 'Stake', {user : ALICE, operation: 'withdraw', amount : new BN(10000)}); // 100% of her sBYX -> 10 000 bps
         });
 
     });
