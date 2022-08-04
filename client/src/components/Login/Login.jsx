@@ -1,27 +1,25 @@
 import Button from "components/Button/Button";
 import { ToastContainer, Flip } from "react-toastify";
-import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../helpers/toast";
-import { Fragment, useEffect, useState } from "react";
-import Loader from "../components/Loader/Loader";
-import ContainerCenter from "../components/Containers/ContainerCenter/ContainerCenter";
+import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../../helpers/toast";
+import { Fragment, useEffect } from "react";
 import useEth from "hooks/useEth";
+import useWallet from "hooks/useWallet";
 
 function ConnectButton(props) {
   return <Button onClick={props.onClick}>{props.children}</Button>;
 }
 
-export default function Unauthenticated({ getAccount, askAccount }) {
-  const [loading, setLoading] = useState(false);
+export default function Connection() {
   const {
     dispatch,
     setUser,
     state: { web3 }
   } = useEth();
+  const { askAccount, getAccount } = useWallet();
 
   useEffect(() => {
     if (!window.ethereum) return;
 
-    setLoading(true);
     if (web3) {
       getAccount()
         .then((account) => {
@@ -29,12 +27,8 @@ export default function Unauthenticated({ getAccount, askAccount }) {
             setUser(account).then(() => {});
           }
         })
-        .catch(() => {
-          setLoading(false);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+        .catch(() => {})
+        .finally(() => {});
     }
   }, [dispatch, getAccount, setUser, web3]);
 
@@ -55,17 +49,9 @@ export default function Unauthenticated({ getAccount, askAccount }) {
   };
 
   return (
-    <div>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <ContainerCenter>
-            <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
-          </ContainerCenter>
-          <ToastContainer transition={Flip} />
-        </Fragment>
-      )}
-    </div>
+    <Fragment>
+      <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
+      <ToastContainer transition={Flip} />
+    </Fragment>
   );
 }

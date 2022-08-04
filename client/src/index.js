@@ -5,6 +5,7 @@ import App from "./App";
 import { EthProvider } from "contexts/EthContext";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

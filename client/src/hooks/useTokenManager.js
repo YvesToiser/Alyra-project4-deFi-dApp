@@ -1,20 +1,35 @@
-import { depositStake, allowance, approve, userTotalStake } from "api/tokenManager";
+import { depositStake, allowance, approve, userTotalStake, withdrawStake } from "api/tokenManager";
 import useEth from "hooks/useEth";
 import { useEffect, useCallback, useState } from "react";
 import Big from "big.js";
-import useToken from "hooks/useToken";
 
-const useTokenManager = () => {
-  const { state } = useEth();
-  const { user, contractTokenManager, contractToken } = state;
+const useTokenManager = (tokenName) => {
+  const { state, dispatch } = useEth();
+  const { user, contracts } = state;
+
+  const contractTokenManager = contracts["manager"];
+
+  const contractToken = contracts[tokenName];
   const [allowanceValue, setAllowanceValue] = useState();
+  const amountStaked = user && user.balanceStaked && user.balanceStaked[tokenName];
 
   const stake = async (stakeValue, curency) => {
     // Check decimal
     const value = new Big(stakeValue).mul(10 ** 18);
 
     try {
-      const result = await depositStake(contractTokenManager, user.address, value.toFixed());
+      await depositStake(contractTokenManager, user.address, value.toFixed());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const withdraw = async (withDrawValue, curency) => {
+    // Check decimal
+    const value = new Big(withDrawValue).mul(10 ** 18);
+
+    try {
+      await withdrawStake(contractTokenManager, user.address, value.toFixed());
     } catch (error) {
       console.error(error);
     }
@@ -24,9 +39,8 @@ const useTokenManager = () => {
     const value = new Big(100).mul(10).pow(19);
     try {
       await approve(contractToken, user.address, contractTokenManager._address, value.toFixed());
-      // console.log(await allowance(contractToken, user.address, contractToken._address));
+      setAllowanceValue(value);
       // Use event
-      setAllowanceValue(test.toNumber());
     } catch (error) {
       console.error(error);
     }
@@ -40,22 +54,50 @@ const useTokenManager = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [contractToken, contractTokenManager._address, user.address]);
+  }, [contractToken, contractTokenManager, user.address]);
 
-  const getUserTotalStake = async () => {
+  // NOTE: This function allow us to save gas costs
+  const getUserTotalStake = useCallback(async () => {
     try {
       const logs = await userTotalStake(contractTokenManager, user.address);
-      console.log(logs);
+      let amount = new Big(0);
+      logs.forEach((element) => {
+        if (element.returnValues.operation === "deposit") {
+          amount = amount.plus(new Big(element.returnValues.amount));
+        }
+        if (element.returnValues.operation === "withdraw") {
+          amount = amount.sub(element.returnValues.amount);
+        }
+      });
+
+      const data = {
+        [tokenName]: amount.div(10 ** 18).toFixed()
+      };
+      dispatch({ type: "SET_USER_BALANCE_STAKED", data });
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [contractTokenManager, dispatch, tokenName, user.address]);
+
+  // const getRewardAmount = useCallback(async () => {
+  //   try {
+  //     const logs = await rewardAmount(contractTokenManager, user.address);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [contractTokenManager, user.address]);
 
   useEffect(() => {
-    !allowanceValue && getAllowance();
-  }, [allowanceValue, getAllowance]);
+    if (!allowanceValue && user.address) {
+      getAllowance();
+    }
 
-  return { getAllowance, getApproval, getUserTotalStake, stake, allowanceValue };
+    if (contractTokenManager) {
+      !amountStaked && getUserTotalStake();
+    }
+  }, [contractTokenManager, allowanceValue, getAllowance, getUserTotalStake, user.address, amountStaked]);
+
+  return { getAllowance, getApproval, getUserTotalStake, stake, withdraw, allowanceValue, amountStaked };
 };
 
 export default useTokenManager;

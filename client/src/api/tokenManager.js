@@ -1,7 +1,3 @@
-import Big from "big.js";
-
-// stake
-
 export async function depositStake(contract, address, amount) {
   return await contract.methods.depositStake(amount).send({ from: address });
 }
@@ -21,9 +17,10 @@ export async function allowance(contract, ownerAddress, spenderAddress) {
 export async function approve(contract, ownerAddress, spenderAddress, amount) {
   return await contract.methods.approve(spenderAddress, amount).send({ from: ownerAddress });
 }
+
 // getUserTotalStake
 export async function userTotalStake(contract, address) {
-  return await contract.getPastEvents("StakeDeposit", {
+  return await contract.getPastEvents("Stake", {
     filter: { from: address },
     fromBlock: 0,
     toBlock: "latest"
@@ -33,3 +30,10 @@ export async function userTotalStake(contract, address) {
 // getTvl
 
 // getRewardAmount
+export async function rewardAmount(contract, address) {
+  return await contract.getPastEvents("Reward", {
+    filter: { from: address },
+    fromBlock: 0,
+    toBlock: "latest"
+  });
+}

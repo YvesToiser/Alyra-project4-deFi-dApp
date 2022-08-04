@@ -5,7 +5,7 @@ import { GiTwoCoins } from "react-icons/gi";
 import { useState } from "react";
 import useChakraColor from "hooks/useChakraColor";
 import useTokenManager from "../../hooks/useTokenManager";
-import useToken from "hooks/useToken";
+import { truncNumbers } from "helpers/calculation";
 import {
   Box,
   Button,
@@ -90,11 +90,11 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
   );
 };
 
-const StakeModal = ({ total, getBalance }) => {
+export const StakeModal = ({ total, getBalance, token }) => {
   const { getColor, theme } = useChakraColor();
-  const { stake, getUserTotalStake } = useTokenManager();
+  const { stake, getUserTotalStake } = useTokenManager(token.toLowerCase());
 
-  const [stakeValuePercentage, setStakeValuePercentage] = useState(50);
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
   const [stakeValue, setStakeValue] = useState(0);
   const bgColor = getColor("chakra-body-bg");
   const curency = "byx";
@@ -117,6 +117,7 @@ const StakeModal = ({ total, getBalance }) => {
   // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
   // const borderColor = getColor(theme, colorMode, "chakra-border-color");
   // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
+  const truncTotal = truncNumbers(total);
 
   return (
     <StakeModalContainer bgColor={bgColor}>
@@ -129,7 +130,7 @@ const StakeModal = ({ total, getBalance }) => {
       <StakeModalBody>
         <Flex gridRowStart={1}>
           <Text fontSize={24} color="white">
-            My balance : {total} {curency}
+            My balance : {truncTotal} {curency}
           </Text>
         </Flex>
         <Flex gridRowStart={2} justify="center" align="center">
@@ -138,7 +139,7 @@ const StakeModal = ({ total, getBalance }) => {
             <Input
               type="text"
               placeholder="Value"
-              value={stakeValue}
+              value={truncNumbers(stakeValue)}
               onChange={(e) => handleStakeValueChange(e.target.value)}
             />
           </InputGroup>
@@ -159,4 +160,68 @@ const StakeModal = ({ total, getBalance }) => {
   );
 };
 
-export default StakeModal;
+export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }) => {
+  const { getColor, theme } = useChakraColor();
+  const { withdraw } = useTokenManager(token.toLowerCase());
+
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
+  const [withdrawValue, setWithdrawValue] = useState(0);
+  const bgColor = getColor("chakra-body-bg");
+  const curency = "byx";
+
+  const handleStakeValueChange = (val) => {
+    setStakeValuePercentage((parseFloat(val) * 100) / sTokenBalance);
+    setWithdrawValue(val);
+  };
+
+  const handleStakeValuePercentageChange = (val) => {
+    setStakeValuePercentage(val);
+    setWithdrawValue((sTokenBalance * val) / 100);
+  };
+
+  const handleWithdraw = async () => {
+    await withdraw(withdrawValue, curency);
+  };
+
+  // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
+  // const borderColor = getColor(theme, colorMode, "chakra-border-color");
+  // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
+  const truncTotal = truncNumbers(sTokenBalance);
+
+  return (
+    <StakeModalContainer bgColor={bgColor}>
+      <StakeModalHeader backgroundColor={theme.colors.teal[500]}>
+        <Text fontSize={24} color="white">
+          WithDraw
+        </Text>
+      </StakeModalHeader>
+
+      <StakeModalBody>
+        <Flex gridRowStart={1}>
+          <Text fontSize={24} color="white">
+            Value max to withdraw : {truncTotal} s{curency}
+          </Text>
+        </Flex>
+        <Flex gridRowStart={2} justify="center" align="center">
+          <InputGroup width={"30%"}>
+            <InputLeftAddon children={<GrMoney />} />
+            <Input
+              type="text"
+              placeholder="Value"
+              value={truncNumbers(withdrawValue)}
+              onChange={(e) => handleStakeValueChange(e.target.value)}
+            />
+          </InputGroup>
+        </Flex>
+        <Flex gridRowStart={4} justify="center">
+          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
+        </Flex>
+        <Flex gridRowStart={6} justify="center">
+          <Button width={200} onClick={handleWithdraw}>
+            WithDraw
+          </Button>
+        </Flex>
+      </StakeModalBody>
+    </StakeModalContainer>
+  );
+};
