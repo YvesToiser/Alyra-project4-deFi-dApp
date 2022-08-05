@@ -37,7 +37,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\ninterface IPriceProvider{\n\n    /**\n     * @dev give last ETHUSD price.\n     */\n    function getLatestETHUSDPrice() external view returns (int256);\n\n    /**\n     * @dev give last BYXUSD price\n     */\n    function getLatestBYXUSDPrice() external view returns (int256);\n\n}\n\n",
-  "sourcePath": "/home/ben/code/Alyra/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IPriceProvider.sol",
+  "sourcePath": "/Users/rey/Code/Alyra/6_Defi/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IPriceProvider.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IPriceProvider.sol",
     "exportedSymbols": {
@@ -209,8 +209,8 @@
     "version": "0.8.14+commit.80d49f37.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.8",
-  "updatedAt": "2022-08-05T15:02:52.728Z",
+  "schemaVersion": "3.4.7",
+  "updatedAt": "2022-08-05T20:21:14.948Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
