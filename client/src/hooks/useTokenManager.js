@@ -15,7 +15,7 @@ const useTokenManager = (tokenName) => {
 
   const stake = async (stakeValue, curency) => {
     // Check decimal
-    const value = new Big(stakeValue).mul(10 ** 18);
+    const value = new Big(stakeValue);
 
     try {
       await depositStake(contractTokenManager, user.address, value.toFixed());
@@ -26,7 +26,7 @@ const useTokenManager = (tokenName) => {
 
   const withdraw = async (withDrawValue, curency) => {
     // Check decimal
-    const value = new Big(withDrawValue).mul(10 ** 18);
+    const value = new Big(withDrawValue);
 
     try {
       await withdrawStake(contractTokenManager, user.address, value.toFixed());
@@ -36,7 +36,7 @@ const useTokenManager = (tokenName) => {
   };
 
   const getApproval = async (value, curency) => {
-    const trueValue = new Big(value).mul(10 ** 18);
+    const trueValue = new Big(value);
     try {
       await approve(contractToken, user.address, contractTokenManager._address, trueValue.toFixed());
       setAllowanceValue(trueValue);
@@ -52,7 +52,7 @@ const useTokenManager = (tokenName) => {
     try {
       const result = await allowance(contractToken, user.address, contractTokenManager._address);
 
-      setAllowanceValue(result / 10 ** 18);
+      setAllowanceValue(result );
     } catch (error) {
       console.error(error);
     }
@@ -69,12 +69,13 @@ const useTokenManager = (tokenName) => {
         }
         if (element.returnValues.operation === "withdraw") {
           // element.returnValues.amount return percent of sbix used to withdraw (amount in bps => centieme de pourcentage)
-          amount = amount.minus(1 - element.returnValues.amount / 10000);
+          console.log(element.returnValues.amount);
+          // amount = amount.mul(1 - element.returnValues.amount / 10000);
         }
       });
 
       const data = {
-        [tokenName]: amount.div(10 ** 18).toFixed()
+        [tokenName]: amount.toFixed()
       };
 
       dispatch({ type: "SET_USER_BALANCE_STAKED", data });

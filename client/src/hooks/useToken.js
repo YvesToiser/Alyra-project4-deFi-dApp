@@ -15,7 +15,7 @@ const useToken = (tokenName) => {
     try {
       const balance = await ApiGetBalance(contractToken, user.address);
       //TODO: Make global function
-      const newBalance = balance / 10 ** 18;
+      const newBalance = balance ;
       const data = {
         [tokenName]: newBalance
       };
