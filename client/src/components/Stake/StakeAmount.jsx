@@ -10,12 +10,20 @@ export default function stakeAmount({ text }) {
         <p>0 usd</p>
       </div>
       <h3>Balance </h3>
-      <div className="prcnt">
-        <p>25%</p>
+      <div className="prcBtn">
+        <div className="prcnt">
+          <p>25%</p>
+        </div>
+        <div className="prcnt">
+          <p>50%</p>
+        </div>
+        <div className="prcnt">
+          <p>75%</p>
+        </div>
+        <div className="prcnt">
+          <p>Max</p>
+        </div>
       </div>
-      <p>50%</p>
-      <p>75%</p>
-      <p>Max</p>
       <p>Annual ROI at current rates</p>
     </div>
   );

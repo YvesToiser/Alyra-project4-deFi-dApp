@@ -5,7 +5,8 @@ import VaultHeader from "components/VaultHeader/VaultHeader";
 import useEth from "hooks/useEth";
 import { pools } from "data/fakePool";
 import "./Authenticated.scss";
-import { SimpleGrid, Box, Flex, Text } from "@chakra-ui/react";
+import { SimpleGrid, Box, Flex, Text, Slider } from "@chakra-ui/react";
+import { motion } from "framer-motion/dist/es/index";
 
 function UserInformations({ address, balance, network }) {
   return (
@@ -24,14 +25,26 @@ export default function Authenticated() {
   return (
     <Flex direction="column" align="center">
       <Box h={20} />
-      <UserInformations address={user.address} balance={user.balance} network={network} />
+      <UserInformations
+        address={user.address}
+        balance={user.balance}
+        network={network}
+      />
       <Box h={40} />
       <SimpleGrid columns={1} spacingY="20px" w={"70vw"}>
         <VaultHeader />
         {pools.map((pool) => (
-          <VaultItem key={pool.id} name={pool.name} logo={pool.logo} apr={pool.apr} tvl={pool.tvl} />
+          <VaultItem
+            key={pool.id}
+            name={pool.name}
+            logo={pool.logo}
+            apr={pool.apr}
+            tvl={pool.tvl}
+          />
         ))}
       </SimpleGrid>
+      <StakeAmount />
+      <Slider />
     </Flex>
   );
 }
