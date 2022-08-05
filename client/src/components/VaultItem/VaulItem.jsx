@@ -91,10 +91,12 @@ const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTo
   );
 };
 
-export default function VaultItem({ logo, name, apr, tvl, user }) {
+export default function VaultItem({ logo, name, user }) {
   const [showDetails, setShowDetails] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
+  const [tvl, setTvl] = useState(null);
+  const [apr, setApr] = useState(null);
 
   const token = useToken("byx");
   const sToken = useToken("sbyx");
@@ -125,6 +127,15 @@ export default function VaultItem({ logo, name, apr, tvl, user }) {
     !sToken.balance && sToken.getBalance();
   }, [sToken]);
 
+  useEffect(() => {
+    if (manager) {
+      manager.getPoolInfo().then((data) => {
+        data && setTvl(data.tvl);
+        data && setApr(data.apr);
+      });
+    }
+  }, [manager]);
+
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
       <Modal isOpen={isOpen} onClose={onToggleModal} width={"50%"} height={"70%"}>
@@ -154,8 +165,8 @@ export default function VaultItem({ logo, name, apr, tvl, user }) {
       <SimpleGrid columns={5} justify="center" align="center">
         <Avatar src={logo} />
         <VaultElement>{name || "?"}</VaultElement>
-        <VaultElement>{apr || "?"}</VaultElement>
-        <VaultElement>{tvl || "?"}</VaultElement>
+        <VaultElement>{`${apr} %` || "?"}</VaultElement>
+        <VaultElement>{`${tvl}` || "?"}</VaultElement>
 
         {isAuth && (
           <Button colorScheme="teal" size="md" onClick={onToggleDetails} my="auto">
