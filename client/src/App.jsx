@@ -1,9 +1,6 @@
-import useAuth from "./hooks/useAuth";
 import useEth from "hooks/useEth";
-
 import Vaults from "components/Vaults/Vaults";
-import Unauthenticated from "components/Login/Login";
-
+import Connection from "components/Login/Login";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useColorMode, Button, Box, Text } from "@chakra-ui/react";
 
@@ -20,28 +17,19 @@ function UserInformations({ address, balance, network }) {
 }
 
 function App() {
-  const { user } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
   const isLightMode = colorMode === "light";
-  const isAuth = !!user.address;
   const { state } = useEth();
-
-  const { network } = state;
+  const { network, user } = state;
+  const isAuth = !!user.address;
 
   return (
     <Box overflowX={"hidden"} maxW={"100vw"}>
       <Button pos="absolute" top="10" right="10" onClick={toggleColorMode}>
         {isLightMode ? <SunIcon /> : <MoonIcon />}
       </Button>
-      {isAuth ? (
-        <UserInformations address={user.address} balance={user.balance} network={network} />
-      ) : (
-        <Unauthenticated />
-      )}
-
-      <Box className="app-container">
-        <Vaults />
-      </Box>
+      {isAuth ? <UserInformations address={user.address} balance={user.balance} network={network} /> : <Connection />}
+      <Vaults />
     </Box>
   );
 }

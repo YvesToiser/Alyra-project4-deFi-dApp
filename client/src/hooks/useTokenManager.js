@@ -1,5 +1,5 @@
-import { depositStake, allowance, approve, userTotalStake, withdrawStake } from "api/tokenManager";
 import useEth from "hooks/useEth";
+import { depositStake, allowance, approve, userTotalStake, withdrawStake, tvl } from "api/tokenManager";
 import { useEffect, useCallback, useState } from "react";
 import Big from "big.js";
 
@@ -35,22 +35,24 @@ const useTokenManager = (tokenName) => {
     }
   };
 
-  const getApproval = async (stakeValue, curency) => {
-    const value = new Big(100).mul(10).pow(19);
+  const getApproval = async (value, curency) => {
+    const trueValue = new Big(value).mul(10 ** 18);
     try {
-      await approve(contractToken, user.address, contractTokenManager._address, value.toFixed());
-      setAllowanceValue(value);
+      await approve(contractToken, user.address, contractTokenManager._address, trueValue.toFixed());
+      setAllowanceValue(trueValue);
       // Use event
     } catch (error) {
       console.error(error);
+      throw error;
     }
+    getAllowance();
   };
 
   const getAllowance = useCallback(async () => {
     try {
       const result = await allowance(contractToken, user.address, contractTokenManager._address);
 
-      setAllowanceValue(result);
+      setAllowanceValue(result / 10 ** 18);
     } catch (error) {
       console.error(error);
     }
@@ -63,16 +65,18 @@ const useTokenManager = (tokenName) => {
       let amount = new Big(0);
       logs.forEach((element) => {
         if (element.returnValues.operation === "deposit") {
-          amount = amount.plus(new Big(element.returnValues.amount));
+          amount = amount.plus(element.returnValues.amount);
         }
         if (element.returnValues.operation === "withdraw") {
-          amount = amount.sub(element.returnValues.amount);
+          // element.returnValues.amount return percent of sbix used to withdraw (amount in bps => centieme de pourcentage)
+          amount = amount.minus(1 - element.returnValues.amount / 10000);
         }
       });
 
       const data = {
         [tokenName]: amount.div(10 ** 18).toFixed()
       };
+
       dispatch({ type: "SET_USER_BALANCE_STAKED", data });
     } catch (error) {
       console.error(error);
@@ -87,6 +91,16 @@ const useTokenManager = (tokenName) => {
   //   }
   // }, [contractTokenManager, user.address]);
 
+  const getTvl = useCallback(async () => {
+    try {
+      const result = await tvl(contractTokenManager, user.address);
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  }, [contractTokenManager, user.address]);
+
+  // not in hook
   useEffect(() => {
     if (!allowanceValue && user.address) {
       getAllowance();
@@ -97,7 +111,7 @@ const useTokenManager = (tokenName) => {
     }
   }, [contractTokenManager, allowanceValue, getAllowance, getUserTotalStake, user.address, amountStaked]);
 
-  return { getAllowance, getApproval, getUserTotalStake, stake, withdraw, allowanceValue, amountStaked };
+  return { getAllowance, getApproval, getUserTotalStake, stake, withdraw, allowanceValue, amountStaked, getTvl };
 };
 
 export default useTokenManager;

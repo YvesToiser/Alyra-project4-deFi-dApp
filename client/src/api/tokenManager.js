@@ -28,6 +28,9 @@ export async function userTotalStake(contract, address) {
 }
 
 // getTvl
+export async function tvl(contract) {
+  return await contract.methods.BYXPool().call();
+}
 
 // getRewardAmount
 export async function rewardAmount(contract, address) {

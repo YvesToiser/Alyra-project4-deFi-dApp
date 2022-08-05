@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Text } from "@chakra-ui/react";
 import { GrMoney } from "react-icons/gr";
 import { GiTwoCoins } from "react-icons/gi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useChakraColor from "hooks/useChakraColor";
 import useTokenManager from "../../hooks/useTokenManager";
 import { truncNumbers } from "helpers/calculation";
@@ -92,21 +92,33 @@ const CustomSlider = ({ sliderValue, setSliderValue }) => {
 
 export const StakeModal = ({ total, getBalance, token }) => {
   const { getColor, theme } = useChakraColor();
-  const { stake, getUserTotalStake } = useTokenManager(token.toLowerCase());
-
+  const { stake, getApproval } = useTokenManager(token.toLowerCase());
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
   const [stakeValue, setStakeValue] = useState(0);
+  const [approved, setApproved] = useState(false);
+
   const bgColor = getColor("chakra-body-bg");
   const curency = "byx";
+
+  const handleApproval = async () => {
+    try {
+      await getApproval(stakeValue, token);
+      setApproved(true);
+    } catch (error) {
+      setApproved(false);
+    }
+  };
 
   const handleStakeValueChange = (val) => {
     setStakeValuePercentage((parseFloat(val) * 100) / total);
     setStakeValue(val);
+    setApproved(false);
   };
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
     setStakeValue((total * val) / 100);
+    setApproved(false);
   };
 
   const handleStake = async () => {
@@ -148,11 +160,11 @@ export const StakeModal = ({ total, getBalance, token }) => {
           <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
         </Flex>
         <Flex gridRowStart={6} justify="center">
-          <Button width={200} onClick={handleStake}>
-            Stake
+          <Button width={200} onClick={handleApproval} disabled={approved}>
+            Approve
           </Button>
-          <Button width={200} onClick={getUserTotalStake}>
-            GetLog
+          <Button width={200} onClick={handleStake} disabled={!approved}>
+            Stake
           </Button>
         </Flex>
       </StakeModalBody>
@@ -162,21 +174,33 @@ export const StakeModal = ({ total, getBalance, token }) => {
 
 export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }) => {
   const { getColor, theme } = useChakraColor();
-  const { withdraw } = useTokenManager(token.toLowerCase());
+  const { withdraw, getApproval } = useTokenManager(token.toLowerCase());
+  const [approved, setApproved] = useState(false);
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(0);
   const bgColor = getColor("chakra-body-bg");
-  const curency = "byx";
+  const curency = "sbyx";
+
+  const handleApproval = async () => {
+    try {
+      await getApproval(withdrawValue, token);
+      setApproved(true);
+    } catch (error) {
+      setApproved(false);
+    }
+  };
 
   const handleStakeValueChange = (val) => {
     setStakeValuePercentage((parseFloat(val) * 100) / sTokenBalance);
     setWithdrawValue(val);
+    setApproved(false);
   };
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
     setWithdrawValue((sTokenBalance * val) / 100);
+    setApproved(false);
   };
 
   const handleWithdraw = async () => {
@@ -217,7 +241,10 @@ export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }
           <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
         </Flex>
         <Flex gridRowStart={6} justify="center">
-          <Button width={200} onClick={handleWithdraw}>
+          <Button width={200} onClick={handleApproval} disabled={approved}>
+            Approve
+          </Button>
+          <Button width={200} onClick={handleWithdraw} disabled={!approved}>
             WithDraw
           </Button>
         </Flex>

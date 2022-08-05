@@ -46,8 +46,8 @@ const VaultButton = ({ children, onClick }) => {
   );
 };
 
-const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTokenAdress }) => {
-  const { allowanceValue, getApproval, getAllowance, amountStaked } = useTokenManager(token.toLowerCase());
+const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTokenAdress, manager }) => {
+  const { amountStaked } = manager;
 
   const NETWORK_SCAN = "etherscan.io";
   const TOTAL_LOCKED = `${roundNumbers(amountStaked, 2)} BYX`;
@@ -77,16 +77,10 @@ const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTo
 
       <GridItem w="100%" colSpan={1}>
         <Flex width="100%" height="100%" justify={"center"} align="center" p={10} direction={"column"}>
-          {allowanceValue > 0 ? (
-            <Fragment>
-              <VaultButton onClick={() => onToggleStake("stake")}>Stake {token}</VaultButton>
-              <VaultButton onClick={() => onToggleStake("withdraw")}>Withdraw {token}</VaultButton>
-              <VaultButton onClick={getAllowance}>getAllowance {token}</VaultButton>
-              <VaultButton onClick={() => getApproval(balance, token)}>Approve {token}</VaultButton>
-            </Fragment>
-          ) : (
-            <VaultButton onClick={() => getApproval(balance, token)}>Approve {token}</VaultButton>
-          )}
+          <Fragment>
+            <VaultButton onClick={() => onToggleStake("stake")}>Stake {token}</VaultButton>
+            {amountStaked > 0 && <VaultButton onClick={() => onToggleStake("withdraw")}>Withdraw {token}</VaultButton>}
+          </Fragment>
         </Flex>
       </GridItem>
     </Grid>
@@ -95,10 +89,12 @@ const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTo
 
 export default function VaultItem({ logo, name, apr, tvl, user }) {
   const [showDetails, setShowDetails] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
+
   const { balance, getBalance, contractTokenAdress } = useToken("byx");
   const sToken = useToken("sbyx");
+  const manager = useTokenManager(name.toLowerCase());
 
   const tokenBalance = balance;
   const sTokenBalance = sToken.balance;
@@ -123,7 +119,7 @@ export default function VaultItem({ logo, name, apr, tvl, user }) {
             tokenBalance={tokenBalance}
             sTokenBalance={sTokenBalance}
             getBalance={getBalance}
-            token={name}
+            token={"sbyx"}
           />
         )}
       </Modal>
@@ -147,6 +143,7 @@ export default function VaultItem({ logo, name, apr, tvl, user }) {
           balance={tokenBalance}
           balanceSToken={sTokenBalance}
           contractTokenAdress={contractTokenAdress}
+          manager={manager}
         />
       </Collapse>
     </Box>
