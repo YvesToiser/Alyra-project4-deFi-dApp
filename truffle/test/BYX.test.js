@@ -25,7 +25,7 @@ contract('BYX', function (accounts) {
         this.byxInstance = await BYX.new({from: owner});
     });
 
-    describe('GETTERS', () => {
+    describe('Getters', () => {
 
         it('should return token name correctly', async function () {
             const result  = await this.byxInstance.name.call();

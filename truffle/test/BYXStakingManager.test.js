@@ -157,7 +157,7 @@ contract("BYXStakingManager", function (accounts) {
                 method: "evm_mine",
                 id: 1
             }, (error, response) => {
-                console.log(response);
+                // console.log(response);
             });
 
             // Then Alice unstake after one more block

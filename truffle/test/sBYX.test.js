@@ -2,7 +2,7 @@ const { BN, expectRevert, expectEvent } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
 const SBYX = artifacts.require('sBYX');
 
-contract('BYX', function (accounts) {
+contract('sBYX', function (accounts) {
 
     // sBYX values
     const SBYX_NAME = 'Staked Byx';
@@ -25,7 +25,7 @@ contract('BYX', function (accounts) {
         this.sByxInstance = await SBYX.new({from: owner});
     });
 
-    describe('GETTERS', () => {
+    describe('Getters', () => {
 
         it('should return token name correctly', async function () {
             const result  = await this.sByxInstance.name.call();
