@@ -22,7 +22,7 @@ contract ETHStakingManager is Ownable {
         uint ethAmountStaked;  // in ETH
     }
 
-    mapping(address => User) users;
+    mapping(address => User) public users;
     address[] userList;
 
     event LogBadCall(address user);
