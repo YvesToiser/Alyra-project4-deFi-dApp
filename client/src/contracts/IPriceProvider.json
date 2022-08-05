@@ -37,27 +37,27 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\ninterface IPriceProvider{\n\n    /**\n     * @dev give last ETHUSD price.\n     */\n    function getLatestETHUSDPrice() external view returns (int256);\n\n    /**\n     * @dev give last BYXUSD price\n     */\n    function getLatestBYXUSDPrice() external view returns (int256);\n\n}\n\n",
-  "sourcePath": "/home/jack/Dev/PROJEX/4_Alyra_Projet_deFi_Staking_App/truffle/contracts/interfaces/IPriceProvider.sol",
+  "sourcePath": "/home/ben/code/Alyra/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IPriceProvider.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IPriceProvider.sol",
     "exportedSymbols": {
       "IPriceProvider": [
-        1272
+        1987
       ]
     },
-    "id": 1273,
+    "id": 1988,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1259,
+        "id": 1974,
         "literals": [
           "solidity",
           "0.8",
           ".14"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:23:9"
+        "src": "32:23:12"
       },
       {
         "abstract": false,
@@ -66,48 +66,48 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1272,
+        "id": 1987,
         "linearizedBaseContracts": [
-          1272
+          1987
         ],
         "name": "IPriceProvider",
-        "nameLocation": "67:14:9",
+        "nameLocation": "67:14:12",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 1260,
+              "id": 1975,
               "nodeType": "StructuredDocumentation",
-              "src": "88:47:9",
+              "src": "88:47:12",
               "text": " @dev give last ETHUSD price."
             },
             "functionSelector": "6aa83fea",
-            "id": 1265,
+            "id": 1980,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLatestETHUSDPrice",
-            "nameLocation": "149:20:9",
+            "nameLocation": "149:20:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1261,
+              "id": 1976,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "169:2:9"
+              "src": "169:2:12"
             },
             "returnParameters": {
-              "id": 1264,
+              "id": 1979,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1263,
+                  "id": 1978,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1265,
-                  "src": "195:6:9",
+                  "scope": 1980,
+                  "src": "195:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -115,10 +115,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1262,
+                    "id": 1977,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "195:6:9",
+                    "src": "195:6:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -127,48 +127,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "194:8:9"
+              "src": "194:8:12"
             },
-            "scope": 1272,
-            "src": "140:63:9",
+            "scope": 1987,
+            "src": "140:63:12",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 1266,
+              "id": 1981,
               "nodeType": "StructuredDocumentation",
-              "src": "209:46:9",
+              "src": "209:46:12",
               "text": " @dev give last BYXUSD price"
             },
             "functionSelector": "9f1eaa17",
-            "id": 1271,
+            "id": 1986,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLatestBYXUSDPrice",
-            "nameLocation": "269:20:9",
+            "nameLocation": "269:20:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1267,
+              "id": 1982,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "289:2:9"
+              "src": "289:2:12"
             },
             "returnParameters": {
-              "id": 1270,
+              "id": 1985,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1269,
+                  "id": 1984,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1271,
-                  "src": "315:6:9",
+                  "scope": 1986,
+                  "src": "315:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -176,10 +176,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 1268,
+                    "id": 1983,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "315:6:9",
+                    "src": "315:6:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -188,29 +188,29 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "314:8:9"
+              "src": "314:8:12"
             },
-            "scope": 1272,
-            "src": "260:63:9",
+            "scope": 1987,
+            "src": "260:63:12",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1273,
-        "src": "57:269:9",
+        "scope": 1988,
+        "src": "57:269:12",
         "usedErrors": []
       }
     ],
-    "src": "32:296:9"
+    "src": "32:296:12"
   },
   "compiler": {
     "name": "solc",
     "version": "0.8.14+commit.80d49f37.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-05T09:31:47.480Z",
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-08-05T15:02:52.728Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

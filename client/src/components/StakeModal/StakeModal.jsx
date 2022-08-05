@@ -1,31 +1,25 @@
-import styled from "@emotion/styled";
-import { Text } from "@chakra-ui/react";
-import { GrMoney } from "react-icons/gr";
-import { GiTwoCoins } from "react-icons/gi";
-import { useState, useEffect } from "react";
-import useChakraColor from "hooks/useChakraColor";
-import useTokenManager from "../../hooks/useTokenManager";
-import { truncNumbers } from "helpers/calculation";
+import styled from '@emotion/styled'
+import { Text } from '@chakra-ui/react'
+import { GrMoney } from 'react-icons/gr'
+import { useState } from 'react'
+import useChakraColor from 'hooks/useChakraColor'
+import useTokenManager from '../../hooks/useTokenManager'
+import { truncNumbers } from 'helpers/calculation'
+import CustomSlider from 'components/Slider/Slider'
+import { tokenRound, roundNumbers } from 'helpers/calculation'
 import {
-  Box,
   Button,
   Flex,
   Input,
   InputGroup,
   InputLeftAddon,
-  Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
-  Tooltip
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
 
 const StakeModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${(props) => props.bgColor};
-`;
+`
 
 const StakeModalHeader = styled.div`
   display: flex;
@@ -34,105 +28,56 @@ const StakeModalHeader = styled.div`
   align-items: center;
   text-align: center;
   background-color: ${(props) => props.backgroundColor};
-`;
+`
 const StakeModalBody = styled.div`
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   height: 90%;
   width: 100%;
   padding: 2rem;
-`;
+`
 
-const CustomSlider = ({ sliderValue, setSliderValue }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const labelStyles = {
-    mt: "10",
-    ml: "-2.5",
-    fontSize: "md"
-  };
+export const StakeModal = ({ tokenBalance, getBalance, token }) => {
+  const { getColor, theme } = useChakraColor()
+  const { stake, getApproval } = useTokenManager(token.toLowerCase())
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(0)
+  const [stakeValue, setStakeValue] = useState(0)
+  const [approved, setApproved] = useState(false)
 
-  return (
-    <Slider
-      aria-label="slider-ex-1"
-      defaultValue={sliderValue}
-      value={sliderValue}
-      focusThumbOnChange={false}
-      width={"80%"}
-      onMouseLeave={() => setShowTooltip(false)}
-      onMouseEnter={() => setShowTooltip(true)}
-      onChange={(val) => setSliderValue(val)}
-    >
-      <SliderMark value={0} {...labelStyles}>
-        0%
-      </SliderMark>
-      <SliderMark value={25} {...labelStyles}>
-        25%
-      </SliderMark>
-      <SliderMark value={50} {...labelStyles}>
-        50%
-      </SliderMark>
-      <SliderMark value={75} {...labelStyles}>
-        75%
-      </SliderMark>
-      <SliderMark value={100} {...labelStyles}>
-        100%
-      </SliderMark>
+  const roundedBalance = tokenRound(tokenBalance)
+  const MY_BALANCE = tokenBalance && `${roundedBalance} ${token}`
 
-      <SliderTrack>
-        <SliderFilledTrack />
-      </SliderTrack>
-      <Tooltip hasArrow bg="teal.500" color="white" placement="top" isOpen={showTooltip} label={`${sliderValue}%`}>
-        <SliderThumb boxSize={6}>
-          <Box color="tomato" as={GiTwoCoins} />
-        </SliderThumb>
-      </Tooltip>
-    </Slider>
-  );
-};
+  const handleStakeInputValueChange = (val) => {
+    setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance)
+    setStakeValue(val)
+    setApproved(false)
+  }
 
-export const StakeModal = ({ total, getBalance, token }) => {
-  const { getColor, theme } = useChakraColor();
-  const { stake, getApproval } = useTokenManager(token.toLowerCase());
-  const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [stakeValue, setStakeValue] = useState(0);
-  const [approved, setApproved] = useState(false);
-
-  const bgColor = getColor("chakra-body-bg");
-  const curency = "byx";
+  const handleStakeValuePercentageChange = (val) => {
+    setStakeValuePercentage(val)
+    setStakeValue((roundedBalance * val) / 100)
+    setApproved(false)
+  }
 
   const handleApproval = async () => {
     try {
-      await getApproval(stakeValue, token);
-      setApproved(true);
+      await getApproval(
+        tokenBalance.mul(stakeValuePercentage / 100).round(),
+        token,
+      )
+      setApproved(true)
     } catch (error) {
-      setApproved(false);
+      setApproved(false)
     }
-  };
-
-  const handleStakeValueChange = (val) => {
-    setStakeValuePercentage((parseFloat(val) * 100) / total);
-    setStakeValue(val);
-    setApproved(false);
-  };
-
-  const handleStakeValuePercentageChange = (val) => {
-    setStakeValuePercentage(val);
-    setStakeValue((total * val) / 100);
-    setApproved(false);
-  };
+  }
 
   const handleStake = async () => {
-    await stake(stakeValue, curency);
-    await getBalance();
-  };
-
-  // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
-  // const borderColor = getColor(theme, colorMode, "chakra-border-color");
-  // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
-  const truncTotal = truncNumbers(total);
+    await stake(tokenBalance.mul(stakeValuePercentage / 100).round(), token)
+    await getBalance()
+  }
 
   return (
-    <StakeModalContainer bgColor={bgColor}>
+    <StakeModalContainer bgColor={getColor('chakra-body-bg')}>
       <StakeModalHeader backgroundColor={theme.colors.teal[500]}>
         <Text fontSize={24} color="white">
           Stake
@@ -142,22 +87,25 @@ export const StakeModal = ({ total, getBalance, token }) => {
       <StakeModalBody>
         <Flex gridRowStart={1}>
           <Text fontSize={24} color="white">
-            My balance : {truncTotal} {curency}
+            My balance : {MY_BALANCE}
           </Text>
         </Flex>
         <Flex gridRowStart={2} justify="center" align="center">
-          <InputGroup width={"30%"}>
+          <InputGroup width={'30%'}>
             <InputLeftAddon children={<GrMoney />} />
             <Input
               type="text"
               placeholder="Value"
-              value={truncNumbers(stakeValue)}
-              onChange={(e) => handleStakeValueChange(e.target.value)}
+              value={roundNumbers(stakeValue)}
+              onChange={(e) => handleStakeInputValueChange(e.target.value)}
             />
           </InputGroup>
         </Flex>
         <Flex gridRowStart={4} justify="center">
-          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
+          <CustomSlider
+            sliderValue={stakeValuePercentage}
+            setSliderValue={handleStakeValuePercentageChange}
+          />
         </Flex>
         <Flex gridRowStart={6} justify="center">
           <Button width={200} onClick={handleApproval} disabled={approved}>
@@ -169,51 +117,55 @@ export const StakeModal = ({ total, getBalance, token }) => {
         </Flex>
       </StakeModalBody>
     </StakeModalContainer>
-  );
-};
+  )
+}
 
-export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }) => {
-  const { getColor, theme } = useChakraColor();
-  const { withdraw, getApproval } = useTokenManager(token.toLowerCase());
-  const [approved, setApproved] = useState(false);
+export const WithdrawModal = ({
+  tokenBalance,
+  sTokenBalance,
+  getBalance,
+  token,
+}) => {
+  const { getColor, theme } = useChakraColor()
+  const { withdraw, getApproval } = useTokenManager(token.toLowerCase())
+  const [approved, setApproved] = useState(false)
 
-  const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [withdrawValue, setWithdrawValue] = useState(0);
-  const bgColor = getColor("chakra-body-bg");
-  const curency = "sbyx";
+  const [stakeValuePercentage, setStakeValuePercentage] = useState(0)
+  const [withdrawValue, setWithdrawValue] = useState(0)
+
+  const roundedBalance = sTokenBalance && tokenRound(sTokenBalance)
+  const MY_BALANCE = sTokenBalance && `${roundedBalance} ${token}`
+
+  const handleStakeValueChange = (val) => {
+    setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance)
+    setWithdrawValue(val)
+    setApproved(false)
+  }
+
+  const handleStakeValuePercentageChange = (val) => {
+    setStakeValuePercentage(val)
+    setWithdrawValue((roundedBalance * val) / 100)
+    setApproved(false)
+  }
 
   const handleApproval = async () => {
     try {
-      await getApproval(withdrawValue, token);
-      setApproved(true);
+      await getApproval(
+        tokenBalance.mul(stakeValuePercentage / 100).round(),
+        token,
+      )
+      setApproved(true)
     } catch (error) {
-      setApproved(false);
+      setApproved(false)
     }
-  };
-
-  const handleStakeValueChange = (val) => {
-    setStakeValuePercentage((parseFloat(val) * 100) / sTokenBalance);
-    setWithdrawValue(val);
-    setApproved(false);
-  };
-
-  const handleStakeValuePercentageChange = (val) => {
-    setStakeValuePercentage(val);
-    setWithdrawValue((sTokenBalance * val) / 100);
-    setApproved(false);
-  };
+  }
 
   const handleWithdraw = async () => {
-    await withdraw(withdrawValue, curency);
-  };
-
-  // const bodyTextColor = getColor(theme, colorMode, "chakra-body-text");
-  // const borderColor = getColor(theme, colorMode, "chakra-border-color");
-  // const PlaceholderColor = getColor(theme, colorMode, "chakra-placeholder-color");
-  const truncTotal = truncNumbers(sTokenBalance);
+    await withdraw(tokenBalance.mul(stakeValuePercentage / 100).round(), token)
+  }
 
   return (
-    <StakeModalContainer bgColor={bgColor}>
+    <StakeModalContainer bgColor={getColor('chakra-body-bg')}>
       <StakeModalHeader backgroundColor={theme.colors.teal[500]}>
         <Text fontSize={24} color="white">
           WithDraw
@@ -223,11 +175,11 @@ export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }
       <StakeModalBody>
         <Flex gridRowStart={1}>
           <Text fontSize={24} color="white">
-            Value max to withdraw : {truncTotal} s{curency}
+            Value max to withdraw : {MY_BALANCE}
           </Text>
         </Flex>
         <Flex gridRowStart={2} justify="center" align="center">
-          <InputGroup width={"30%"}>
+          <InputGroup width={'30%'}>
             <InputLeftAddon children={<GrMoney />} />
             <Input
               type="text"
@@ -238,7 +190,10 @@ export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }
           </InputGroup>
         </Flex>
         <Flex gridRowStart={4} justify="center">
-          <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
+          <CustomSlider
+            sliderValue={stakeValuePercentage}
+            setSliderValue={handleStakeValuePercentageChange}
+          />
         </Flex>
         <Flex gridRowStart={6} justify="center">
           <Button width={200} onClick={handleApproval} disabled={approved}>
@@ -250,5 +205,5 @@ export const WithdrawModal = ({ tokenBalance, sTokenBalance, getBalance, token }
         </Flex>
       </StakeModalBody>
     </StakeModalContainer>
-  );
-};
+  )
+}
