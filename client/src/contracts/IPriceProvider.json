@@ -1,0 +1,231 @@
+{
+  "contractName": "IPriceProvider",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getLatestETHUSDPrice",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getLatestBYXUSDPrice",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.14+commit.80d49f37\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestBYXUSDPrice\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLatestETHUSDPrice\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getLatestBYXUSDPrice()\":{\"details\":\"give last BYXUSD price\"},\"getLatestETHUSDPrice()\":{\"details\":\"give last ETHUSD price.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IPriceProvider.sol\":\"IPriceProvider\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IPriceProvider.sol\":{\"keccak256\":\"0x97ec4e83449d118e5e0fabadd6a1cf63484115e86434f3dc03be70475cb01d61\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://db2e808b67c26b69a304c958d6a484b19d8bcf45311e444dc873ee406883c3d8\",\"dweb:/ipfs/QmPv4LC6KrYGaGGP88xDQkjJAhFNVK4BWWWb8Dr5KoR6dK\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\ninterface IPriceProvider{\n\n    /**\n     * @dev give last ETHUSD price.\n     */\n    function getLatestETHUSDPrice() external view returns (int256);\n\n    /**\n     * @dev give last BYXUSD price\n     */\n    function getLatestBYXUSDPrice() external view returns (int256);\n\n}\n\n",
+  "sourcePath": "/home/jack/Dev/PROJEX/4_Alyra_Projet_deFi_Staking_App/truffle/contracts/interfaces/IPriceProvider.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IPriceProvider.sol",
+    "exportedSymbols": {
+      "IPriceProvider": [
+        1272
+      ]
+    },
+    "id": 1273,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1259,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".14"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:9"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IPriceProvider",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 1272,
+        "linearizedBaseContracts": [
+          1272
+        ],
+        "name": "IPriceProvider",
+        "nameLocation": "67:14:9",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 1260,
+              "nodeType": "StructuredDocumentation",
+              "src": "88:47:9",
+              "text": " @dev give last ETHUSD price."
+            },
+            "functionSelector": "6aa83fea",
+            "id": 1265,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLatestETHUSDPrice",
+            "nameLocation": "149:20:9",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1261,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "169:2:9"
+            },
+            "returnParameters": {
+              "id": 1264,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1263,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1265,
+                  "src": "195:6:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 1262,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "195:6:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "194:8:9"
+            },
+            "scope": 1272,
+            "src": "140:63:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1266,
+              "nodeType": "StructuredDocumentation",
+              "src": "209:46:9",
+              "text": " @dev give last BYXUSD price"
+            },
+            "functionSelector": "9f1eaa17",
+            "id": 1271,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLatestBYXUSDPrice",
+            "nameLocation": "269:20:9",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1267,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "289:2:9"
+            },
+            "returnParameters": {
+              "id": 1270,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1269,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1271,
+                  "src": "315:6:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 1268,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "315:6:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "314:8:9"
+            },
+            "scope": 1272,
+            "src": "260:63:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1273,
+        "src": "57:269:9",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:296:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.14+commit.80d49f37.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.7",
+  "updatedAt": "2022-08-05T09:31:47.480Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getLatestBYXUSDPrice()": {
+        "details": "give last BYXUSD price"
+      },
+      "getLatestETHUSDPrice()": {
+        "details": "give last ETHUSD price."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
