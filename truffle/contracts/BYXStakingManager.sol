@@ -121,7 +121,6 @@ contract BYXStakingManager is Ownable {
         _initializePool(_amount);
     }
 
-
     /*************************************************************************************************/
     /*                                        INTERNAL FUNCTIONS                                     */
     /*************************************************************************************************/
@@ -169,11 +168,11 @@ contract BYXStakingManager is Ownable {
         require(_sBYXAmount > 0, "Amount must be positive");
         require(sBYX.allowance(msg.sender, address(this)) >= _sBYXAmount, "sBYX: insufficient allowance");
         uint _amount = _calculateBYXAmountFromsBYX(_sBYXAmount);
-        uint bps = _sBYXAmount * 10000 / sBYX.balanceOf(msg.sender);
+        uint _bps = _sBYXAmount * 10000 / sBYX.balanceOf(msg.sender);
         sBYX.burnFrom(msg.sender, _sBYXAmount);
         BYXPool -= _amount;
         BYX.transfer(msg.sender, _amount);
-        emit Stake(msg.sender, 'withdraw',  _amount);
+        emit Stake(msg.sender, 'withdraw',  _bps);
     }
 
     /**
