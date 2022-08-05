@@ -243,7 +243,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\n\ninterface IERC20MintableAndBurnable is IERC20{\n\n    /**\n     * @dev Destroys `amount` tokens from the caller.\n     *\n     * See {ERC20-_burn}.\n     */\n    function burn(uint256 amount) external;\n\n    /**\n     * @dev Destroys `amount` tokens from `account`, deducting from the caller's\n     * allowance.\n     *\n     * See {ERC20-_burn} and {ERC20-allowance}.\n     *\n     * Requirements:\n     *\n     * - the caller must have allowance for ``accounts``'s tokens of at least\n     * `amount`.\n     */\n    function burnFrom(address account, uint256 amount) external;\n\n    /**\n     * @dev See {ERC20-_mint}.\n     */\n    function mint(address account, uint256 amount) external;\n}\n",
-  "sourcePath": "/Users/rey/Code/Alyra/6_Defi/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IERC20MintableAndBurnable.sol",
+  "sourcePath": "/home/ben/code/Alyra/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IERC20MintableAndBurnable.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC20MintableAndBurnable.sol",
     "exportedSymbols": {
@@ -561,8 +561,8 @@
     "version": "0.8.14+commit.80d49f37.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-04T12:15:17.735Z",
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-08-05T12:41:40.648Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
