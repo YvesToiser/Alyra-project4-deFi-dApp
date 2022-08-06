@@ -1,7 +1,12 @@
 const BYX = artifacts.require("BYX");
 const sBYX = artifacts.require("sBYX");
-// const ETHUSDPriceProvider = artifacts.require("ETHUSDPriceProvider");
 const BYXStakingManager = artifacts.require("BYXStakingManager");
+const ETHStakingManager = artifacts.require("ETHStakingManager");
+// Comment/uncomment Price Provider depending on deploy network
+// For Kovan Network :
+// const PriceProvider = artifacts.require("PriceProvider");
+// For Ganache local network :
+const PriceProvider = artifacts.require("MockedPriceProvider");
 
 const AIRDROP_SUPPLY = "1000000000000000000000";
 const STAKING_REWARDS_SUPPLY = "50000000000000000000000000";
@@ -34,7 +39,10 @@ module.exports = async function(deployer, _network, accounts) {
 	await sByxInstance.authorize(BYXstakingManagerInstance.address);
 	await BYXstakingManagerInstance.initializePool(INITIAL_STAKE);
 
-	// // Deploy ETH/USD price provider  --> Not needed yet
-	// await deployer.deploy(ETHUSDPriceProvider);
-	// const ethUsdPrice = await ETHUSDPriceProvider.deployed();
+	// Deploy price provider
+	await deployer.deploy(PriceProvider);
+	const PriceProviderInstance = await PriceProvider.deployed();
+
+	// Deploy ETH Staking Manager
+	await deployer.deploy(ETHStakingManager, byxInstance.address, PriceProviderInstance.address);
 };

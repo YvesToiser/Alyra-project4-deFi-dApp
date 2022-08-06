@@ -12,9 +12,10 @@ contract("BYXStakingManager", function (accounts) {
     const INITIAL_STAKE = "1000000000000000000000";
     const BIG_INITIAL_STAKE = "500000000000000000000000";
     const HUGE_INITIAL_STAKE = "20000000000000000000000000";
-    const ZERO_VALUE = new BN(0);
     const ANY_STAKE = '1000000000000000000';
+    const FULL_STAKE = '1000000000000000000000';
     const LOWER_AMOUNT = '500000000000000000';
+    const ZERO_VALUE = new BN(0);
 
     // Address parameters
     const owner = accounts[0];
@@ -66,6 +67,7 @@ contract("BYXStakingManager", function (accounts) {
             await this.byxInstance.approve(this.BYXstakingManagerInstance.address, ANY_STAKE, { from: ALICE });
             const res = await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: ALICE });
             const sBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
+            console.log('sBYXBalance : ' + sBYXBalance);
             expect(sBYXBalance).to.be.bignumber.above(ZERO_VALUE);
             expectEvent(res, 'Stake', {user : ALICE, operation: 'deposit', amount : new BN(ANY_STAKE)});
         });
@@ -120,17 +122,39 @@ contract("BYXStakingManager", function (accounts) {
             // Bob stakes first
             await this.byxInstance.approve(this.BYXstakingManagerInstance.address, ANY_STAKE, { from: BOB });
             await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: BOB });
+            const BobsBYXBalance = await this.sByxInstance.balanceOf.call(BOB, { from: BOB });
             // Then Alice stakes
             await this.byxInstance.approve(this.BYXstakingManagerInstance.address, ANY_STAKE, { from: ALICE });
             await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: ALICE });
-            const sBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
+            const AlicesBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
             // Alice unstake first
-            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, sBYXBalance, { from: ALICE });
-            await this.BYXstakingManagerInstance.withdrawStake(sBYXBalance, { from: ALICE });
+            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, AlicesBYXBalance, { from: ALICE });
+            await this.BYXstakingManagerInstance.withdrawStake(AlicesBYXBalance, { from: ALICE });
             const newBYXBalance = await this.byxInstance.balanceOf.call(ALICE, { from: ALICE });
             // Then Bob unstake
-            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, sBYXBalance, { from: BOB });
-            await this.BYXstakingManagerInstance.withdrawStake(sBYXBalance, { from: BOB });
+            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, BobsBYXBalance, { from: BOB });
+            await this.BYXstakingManagerInstance.withdrawStake(BobsBYXBalance, { from: BOB });
+            const BobBYXBalance = await this.byxInstance.balanceOf.call(BOB, { from: BOB });
+            expect(newBYXBalance).to.be.bignumber.above(AIRDROP_SUPPLY);  // Alice must have earned some rewards
+            expect(BobBYXBalance).to.be.bignumber.above(newBYXBalance); // Bob must have earned more rewards than Alice
+        });
+
+        it("should reward correctly with full stake", async function () {
+            // Bob stakes first
+            await this.byxInstance.approve(this.BYXstakingManagerInstance.address, FULL_STAKE, { from: BOB });
+            await this.BYXstakingManagerInstance.depositStake(FULL_STAKE, { from: BOB });
+            const BobsBYXBalance = await this.sByxInstance.balanceOf.call(BOB, { from: BOB });
+            // Then Alice stakes
+            await this.byxInstance.approve(this.BYXstakingManagerInstance.address, FULL_STAKE, { from: ALICE });
+            await this.BYXstakingManagerInstance.depositStake(FULL_STAKE, { from: ALICE });
+            const AlicesBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
+            // Alice unstake first
+            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, AlicesBYXBalance, { from: ALICE });
+            await this.BYXstakingManagerInstance.withdrawStake(AlicesBYXBalance, { from: ALICE });
+            const newBYXBalance = await this.byxInstance.balanceOf.call(ALICE, { from: ALICE });
+            // Then Bob unstake
+            await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, BobsBYXBalance, { from: BOB });
+            await this.BYXstakingManagerInstance.withdrawStake(BobsBYXBalance, { from: BOB });
             const BobBYXBalance = await this.byxInstance.balanceOf.call(BOB, { from: BOB });
             expect(newBYXBalance).to.be.bignumber.above(AIRDROP_SUPPLY);  // Alice must have earned some rewards
             expect(BobBYXBalance).to.be.bignumber.above(newBYXBalance); // Bob must have earned more rewards than Alice

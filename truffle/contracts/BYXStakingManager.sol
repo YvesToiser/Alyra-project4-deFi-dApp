@@ -149,9 +149,9 @@ contract BYXStakingManager is Ownable {
         require(BYX.balanceOf(msg.sender) >= _amount, "Not enough BYX in wallet");
         require(_amount > 0, "Amount must be positive");
         require(BYX.allowance(msg.sender, address(this)) >= _amount, "BYX: insufficient allowance");
+        uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
         BYXPool += _amount;
         BYX.transferFrom(msg.sender, address(this), _amount);
-        uint _sBYXamount = _calculateSBYXAmountFromBYX(_amount);
         sBYX.mint(msg.sender, _sBYXamount);
         emit Stake(msg.sender, 'deposit',  _amount);
     }
