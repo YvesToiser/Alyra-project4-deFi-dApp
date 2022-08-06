@@ -6,7 +6,6 @@ import useChakraColor from "hooks/useChakraColor";
 import CustomSlider from "components/Slider/Slider";
 import { tokenRound, roundNumbers } from "helpers/calculation";
 import { Button, Flex, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
-import { stakeEth } from "api/tokenManagerEth";
 
 const StakeModalContainer = styled.div`
   width: 100%;
@@ -93,54 +92,22 @@ export const StakeModalEth = ({ balance, onToggleModal, handleStake }) => {
   );
 };
 
-export const WithdrawModalEth = ({
-  tokenBalance,
-  sTokenBalance,
-  getBalance,
-  getSBalance,
-  token,
-  onToggleModal,
-  manager,
-  sManager
-}) => {
+export const WithdrawModalEth = ({ token, handleWithdraw, balance, pendingRewards }) => {
   const { getColor, theme } = useChakraColor();
-  const { withdraw, getApproval } = sManager;
-  const [approved, setApproved] = useState(false);
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(0);
 
-  const roundedBalance = sTokenBalance && tokenRound(sTokenBalance);
-  const MY_BALANCE = sTokenBalance && `${roundedBalance} ${token}`;
+  const roundedBalance = balance && tokenRound(balance);
 
   const handleStakeValueChange = (val) => {
     setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance);
     setWithdrawValue(val);
-    setApproved(false);
   };
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
     setWithdrawValue((roundedBalance * val) / 100);
-    setApproved(false);
-  };
-
-  const handleApproval = async () => {
-    try {
-      await getApproval(sTokenBalance.mul(stakeValuePercentage / 100).round(), token);
-      setApproved(true);
-    } catch (error) {
-      setApproved(false);
-    }
-  };
-
-  const handleWithdraw = async () => {
-    await withdraw(sTokenBalance.mul(stakeValuePercentage / 100).round(), token);
-    await getBalance();
-    await getSBalance();
-    await manager.getUserTotalStake();
-
-    onToggleModal();
   };
 
   return (
@@ -154,7 +121,7 @@ export const WithdrawModalEth = ({
       <StakeModalBody>
         <Flex gridRowStart={1}>
           <Text fontSize={24} color="white">
-            Value max to withdraw : {MY_BALANCE}
+            Value max to withdraw : {roundedBalance.toFixed()}
           </Text>
         </Flex>
         <Flex gridRowStart={2} justify="center" align="center">
@@ -172,10 +139,11 @@ export const WithdrawModalEth = ({
           <CustomSlider sliderValue={stakeValuePercentage} setSliderValue={handleStakeValuePercentageChange} />
         </Flex>
         <Flex gridRowStart={6} justify="center">
-          <Button width={200} onClick={handleApproval} disabled={approved}>
-            Approve
-          </Button>
-          <Button width={200} onClick={handleWithdraw} disabled={!approved}>
+          <Button
+            width={200}
+            onClick={() => handleWithdraw(balance.mul(stakeValuePercentage / 100).round())}
+            disabled={withdrawValue <= 0}
+          >
             WithDraw
           </Button>
         </Flex>

@@ -13,7 +13,6 @@ function EthProvider({ children }) {
   const setUser = useCallback(
     async (address) => {
       let balance = await getBalance(state.web3, address);
-      console.log(balance);
 
       balance = balance ? balance : new Big(0);
       dispatch({ type: "SET_USER", data: { address: address, balance: { eth: balance } } });

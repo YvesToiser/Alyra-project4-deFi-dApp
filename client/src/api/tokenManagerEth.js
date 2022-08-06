@@ -44,7 +44,11 @@ export function getEthUserInfo(contract, address) {
 }
 
 export function stakeEth(contract, address, amount) {
-  return contract.methods.stake().send({ from: address, value: amount });
+  return contract.methods.depositStake().send({ from: address, value: amount });
+}
+
+export function withdrawEth(contract, address, amount) {
+  return contract.methods.withdrawStake(amount).send({ from: address });
 }
 
 // // getRewardAmount

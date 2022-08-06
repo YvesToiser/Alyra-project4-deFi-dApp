@@ -76,7 +76,7 @@ export default function VaultItem({ logo, name, user }) {
 
     const totalStokenSupply = await sToken.getTotalSupply();
     const tvl = await manager.getTVL();
-    const onPlatformByx = userSBYX && userSBYX.mul(tvl).div(totalStokenSupply);
+    const onPlatformByx = userSBYX && totalStokenSupply && userSBYX.mul(tvl).div(totalStokenSupply);
     const valueStaked = manager.amountStaked;
     const pendingRewards = onPlatformByx && onPlatformByx.minus(valueStaked);
 

@@ -7,7 +7,7 @@ import { SimpleGrid, Flex } from "@chakra-ui/react";
 import ethLogo from "assets/logos/logo-eth.png";
 import VaultEth from "../VaultEth/VaultEth";
 
-export default function Vaults() {
+export default function Vaults({ setUser }) {
   const { state } = useEth();
   const { user, web3 } = state;
 
@@ -26,7 +26,7 @@ export default function Vaults() {
             user={user}
           />
         ))}
-        <VaultEth key={"eth"} name={"eth"} logo={ethLogo} web3={web3} user={user} />
+        <VaultEth key={"eth"} name={"eth"} logo={ethLogo} web3={web3} user={user} setUser={setUser} />
       </SimpleGrid>
     </Flex>
   );

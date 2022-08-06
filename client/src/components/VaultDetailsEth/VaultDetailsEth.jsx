@@ -31,13 +31,13 @@ const VaultButton = ({ children, onClick }) => {
 };
 
 const VaultDetailsEth = ({ token, onToggleStake, balance, amountStaked, pendingRewards }) => {
-  const roundedBalance = tokenRound(balance);
+  const roundedBalance = balance && tokenRound(balance);
 
   const MY_BALANCE = balance && `${roundedBalance.toFixed()} ETH`;
-  const TOTAL_LOCKED = amountStaked && `${amountStaked} ETH`;
+  const TOTAL_LOCKED = amountStaked && `${tokenRound(amountStaked).toFixed()} ETH`;
   // const CONTRACT_ETHERSCAN = contractTokenAdress && `https://${NETWORK_SCAN}/address/${contractTokenAdress}`;
 
-  const canWithDraw = amountStaked && amountStaked > 0;
+  const canWithDraw = amountStaked && amountStaked.gte(0);
   const canStake = balance && balance.gt(0);
 
   return (
@@ -53,7 +53,7 @@ const VaultDetailsEth = ({ token, onToggleStake, balance, amountStaked, pendingR
           <Box borderWidth="1px" borderRadius="20" width="80%" height="80%" p={8}>
             <Text fontSize={16}>BIX Earned</Text>
             <Text fontSize={16} fontWeight="bold">
-              {pendingRewards}
+              {pendingRewards?.toFixed()}
             </Text>
             {/* <Text fontSize={16}>{REWARD_IN_USD}</Text> */}
           </Box>

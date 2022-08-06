@@ -4,8 +4,10 @@ import Connection from "components/Login/Login";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useColorMode, Button, Box, Text } from "@chakra-ui/react";
 import { tokenRound } from "./helpers/calculation";
+import { getBalance } from "./api/web3";
 
 import "./App.scss";
+import { Big } from "big.js";
 
 function UserInformations({ address, balance, network }) {
   const roundedBalance = tokenRound(balance);
@@ -22,9 +24,16 @@ function UserInformations({ address, balance, network }) {
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
   const isLightMode = colorMode === "light";
-  const { state } = useEth();
+  const { state, dispatch } = useEth();
   const { network, user } = state;
   const isAuth = !!user.address;
+
+  const setUser = async (address) => {
+    let balance = await getBalance(state.web3, address);
+
+    balance = balance ? balance : new Big(0);
+    dispatch({ type: "SET_USER", data: { address: address, balance: { eth: balance } } });
+  };
 
   return (
     <Box overflowX={"hidden"} maxW={"100vw"}>
@@ -36,7 +45,7 @@ function App() {
       ) : (
         <Connection />
       )}
-      <Vaults />
+      <Vaults setUser={setUser} />
     </Box>
   );
 }

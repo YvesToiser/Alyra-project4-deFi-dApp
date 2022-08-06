@@ -10685,12 +10685,12 @@
         }
       },
       "links": {},
-      "address": "0xE2e609631c21de3bcA497391659Cc60D598E800F",
-      "transactionHash": "0x5de0df822714a4f2bfa2f194c5ae76527e89aada897838a9998aeabcfde48982"
+      "address": "0xBF225FF3eAf5969112CEA5af212B41d7174a2Beb",
+      "transactionHash": "0x207a1f739f96142e1c794da625f6fde923275e664f1f7e45955d588bbbdcc32e"
     }
   },
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-06T21:20:57.412Z",
+  "updatedAt": "2022-08-06T21:26:17.117Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

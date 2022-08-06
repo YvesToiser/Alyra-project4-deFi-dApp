@@ -1,18 +1,14 @@
 import "./VaultEth.scss";
-import { useState } from "react";
+import { Big } from "big.js";
 import { Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Collapse } from "@chakra-ui/react";
-import Modal from "components/Modal/Modal";
-import { StakeModal, WithdrawModal } from "components/StakeModal/StakeModal";
-import useToken from "../../hooks/useToken";
-import useTokenManager from "../../hooks/useTokenManager";
-import React from "react";
-import { tokenRound } from "../../helpers/calculation";
-import { useEffect, useCallback } from "react";
-import VaultDetailsEth from "components/VaultDetailsEth/VaultDetailsEth";
-import useEth from "hooks/useEth";
+import { getEthApr, getEthTVL, getEthUserInfo, stakeEth, withdrawEth } from "api/tokenManagerEth";
 import { StakeModalEth, WithdrawModalEth } from "components/StakeModalEth/StakeModalEth";
-
-import { getEthApr, getEthTVL, getEthUserInfo, stakeEth } from "api/tokenManagerEth";
+import { tokenRound } from "../../helpers/calculation";
+import { useState, useCallback, useEffect } from "react";
+import Modal from "components/Modal/Modal";
+import React from "react";
+import useEth from "hooks/useEth";
+import VaultDetailsEth from "components/VaultDetailsEth/VaultDetailsEth";
 
 const VaultElement = ({ children }) => {
   return (
@@ -24,7 +20,7 @@ const VaultElement = ({ children }) => {
   );
 };
 
-export default function VaultEth({ logo, name, user }) {
+export default function VaultEth({ logo, name, user, setUser }) {
   const [apr, setApr] = useState(null);
   const [ethAmountStaked, setEthAmountStaked] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,36 +43,58 @@ export default function VaultEth({ logo, name, user }) {
     setIsOpen((_isOpen) => !_isOpen);
   };
 
+  const getInfo = useCallback(() => {
+    getEthApr(ethContractManager)
+      .then((_apr) => {
+        setApr(_apr);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    getEthTVL(ethContractManager)
+      .then((_tvl) => {
+        setTvl(new Big(_tvl));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    getEthUserInfo(ethContractManager, user.address)
+      .then((_info) => {
+        setEthAmountStaked(new Big(_info.ethAmountStaked));
+        setPendingRewards(new Big(_info.pendingRewards));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [ethContractManager, user.address]);
+
   useEffect(() => {
     if (ethContractManager && user.address) {
-      getEthApr(ethContractManager)
-        .then((_apr) => {
-          setApr(_apr);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-
-      getEthTVL(ethContractManager)
-        .then((_tvl) => {
-          setTvl(_tvl);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      getEthUserInfo(ethContractManager, user.address)
-        .then((_info) => {
-          setEthAmountStaked(_info.ethAmountStaked);
-          setPendingRewards(_info.pendingRewards);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      getInfo();
     }
-  }, [ethContractManager, user]);
+  }, [ethContractManager, getInfo, user.address]);
 
   const handleStake = async (value) => {
-    stakeEth(ethContractManager, user.address, value);
+    try {
+      await stakeEth(ethContractManager, user.address, value);
+      getInfo();
+      setUser();
+    } catch (error) {
+      console.error("error");
+    }
+
+    onToggleModal();
+  };
+
+  const handleWithdraw = async (value) => {
+    try {
+      await withdrawEth(ethContractManager, user.address, value.toFixed());
+      getInfo();
+      setUser();
+    } catch (error) {
+      console.error("error");
+    }
     onToggleModal();
   };
 
@@ -87,14 +105,10 @@ export default function VaultEth({ logo, name, user }) {
           <StakeModalEth token={name} balance={userBalance} handleStake={handleStake} />
         ) : (
           <WithdrawModalEth
-            token={"sbyx"}
-            // tokenBalance={token.balance}
-            // sTokenBalance={sToken.balance}
-            // getBalance={token.getBalance}
-            // getSBalance={sToken.getBalance}
-            // onToggleModal={onToggleModal}
-            // manager={manager}
-            // sManager={sManager}
+            token={name}
+            handleWithdraw={handleWithdraw}
+            balance={ethAmountStaked}
+            pendingRewards={pendingRewards}
           />
         )}
       </Modal>
@@ -103,7 +117,7 @@ export default function VaultEth({ logo, name, user }) {
         <Avatar src={logo} />
         <VaultElement>{name.toUpperCase() || "?"}</VaultElement>
         <VaultElement>{`${apr} %` || "?"}</VaultElement>
-        <VaultElement>{`${tvl}` || "?"}</VaultElement>
+        <VaultElement>{`${tvl && tokenRound(tvl).toFixed()}` || "?"}</VaultElement>
 
         {isAuth && (
           <Button colorScheme="teal" size="md" onClick={onToggleDetails} my="auto">
