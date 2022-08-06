@@ -4,6 +4,7 @@ import { toastConnected, toastPleaseAddWebsite, toastInstallMetamask } from "../
 import { Fragment, useEffect } from "react";
 import useEth from "hooks/useEth";
 import useWallet from "hooks/useWallet";
+import { Flex } from "@chakra-ui/react";
 
 function ConnectButton(props) {
   return <Button onClick={props.onClick}>{props.children}</Button>;
@@ -50,7 +51,9 @@ export default function Connection() {
 
   return (
     <Fragment>
-      <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
+      <Flex justify={"center"} my={10}>
+        <ConnectButton onClick={handleConnect}>Connection</ConnectButton>
+      </Flex>
       <ToastContainer transition={Flip} />
     </Fragment>
   );

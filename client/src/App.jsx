@@ -13,7 +13,7 @@ function UserInformations({ address, balance, network }) {
   const roundedBalance = tokenRound(balance);
 
   return (
-    <Box borderWidth="1px" p={8} borderRadius="20" my={20} width="30%">
+    <Box borderWidth="1px" p={8} borderRadius="20" my={20} mx="auto" width="30%">
       <Text>{address}</Text>
       <Text>{network}</Text>
       <Text>{roundedBalance.toFixed()} ETH</Text>
