@@ -6,16 +6,16 @@
 -**Total supply & Mint**
 
 ## Getters
-- should return token name correctly (6ms)
-- should return token symbol correctly (8ms)
-- should return max total supply correctly (7ms)
+- should return token name correctly (8ms)
+- should return token symbol correctly (6ms)
+- should return max total supply correctly (6ms)
 
 ## Total supply & Mint
 
-- should return total supply correctly  (0 value) (5ms)
+- should return total supply correctly  (0 value) (14ms)
 - should return total supply correctly after mint (28ms, 73846 gas)
-- should return total supply correctly after multiple mint (3000 value) (66ms, 187326 gas)
-- should mint token on appropriate addresses (75ms, 187326 gas)
+- should return total supply correctly after multiple mint (3000 value) (66ms, 187338 gas)
+- should mint token on appropriate addresses (75ms, 187338 gas)
 - should not mint if not by owner (26ms, 24835 gas)
 - should not mint if max total supply has been reached (67ms, 103151 gas)
 
@@ -32,33 +32,59 @@
 
 
 ## Staking
-- should not stake with insufficient allowance (42ms, 81440 gas)
-- should not stake with insufficient fund (32ms, 30369 gas)
-- should not stake with null amount (47ms, 77123 gas)
-- should stake correctly (84ms, 158121 gas)
+- should not stake with insufficient allowance (48ms, 81440 gas)
+- should not stake with insufficient fund (23ms, 30369 gas)
+- should not stake with null amount (38ms, 77123 gas)
+- should stake correctly (82ms, 158109 gas)
 
 
 
 
 ## Unstaking
-- should not unstake with insufficient allowance (50ms, 81399 gas)
-- should not unstake with insufficient fund (21ms, 30304 gas)
-- should not unstake with null amount (20ms, 30147 gas)
-- should unstake correctly (81ms, 137014 gas)
+- should not unstake with insufficient allowance (40ms, 81399 gas)
+- should not unstake with insufficient fund (20ms, 30304 gas)
+- should not unstake with null amount (21ms, 30147 gas)
+- should unstake correctly (90ms, 137014 gas)
 
 
 ## Rewards
 
-- should reward correctly (268ms, 595070 gas)
-- should increase reward with new block (259ms, 590270 gas)
+- should reward correctly (276ms, 595070 gas)
+- should increase reward with new block (364ms, 614966 gas)
+- should increase reward with new block (286ms, 590270 gas)
 
 ## Pool info
 
-- should return pool value correctly after initialization (29ms, 106607 gas)
-- should return pool value correctly after staking (93ms, 264728 gas)
-- should return APR correctly with initial stake (22ms, 106607 gas)
-- should return APR correctly with bigger initial stake (26ms, 106619 gas)
-- should return APR correctly with even bigger initial stake (25ms, 106619 gas)
+- should return pool value correctly after initialization (34ms, 106607 gas)
+- should return pool value correctly after staking (86ms, 264728 gas)
+- should return APR correctly with initial stake (34ms, 106607 gas)
+- should return APR correctly with bigger initial stake (36ms, 106619 gas)
+- should return APR correctly with even bigger initial stake (37ms, 106619 gas)
+
+## ETHStakingManager contract
+
+- **Staking**
+- **Unstaking**
+-  **Rewards**
+
+## Staking
+
+- should not stake with insufficient amount (25ms, 95357 gas)
+- should stake correctly (44ms, 166019 gas)
+- should emit appropriate event when staking (29ms, 166019 gas)
+
+
+## Unstaking
+
+- should not unstake more than available (44ms, 190220 gas)
+- should unstake correctly (45ms, 199470 gas)
+- should emit appropriate event when unstaking (55ms, 199470 gas)
+
+
+## Rewards
+- should not claim rewards if none available (48ms, 192132 gas)
+- should not have rewards before mandatory time (4052ms, 241080 gas)
+- should update rewards, have rewards after mandatory time, claim rewards correctly if available and emit appropriate event (4140ms, 388769 gas)
 
 
 ## sByx contract
@@ -69,22 +95,36 @@
 
 ## Getters
 
-- should return token name correctly (9ms)
-- should return token symbol correctly (4ms)
+- should return token name correctly (5ms)
+- should return token symbol correctly (5ms)
 
 ## Mint and authorization
 
-- should not mint if not authorized (15ms, 24906 gas)
-- should not authorize by wrong address (20ms, 24495 gas)
-- should mint if authorized (14ms, 46474 gas)
+- should not mint if not authorized (17ms, 24906 gas)
+- should not authorize by wrong address (17ms, 24495 gas)
+- should mint if authorized (18ms, 46474 gas)
 
 ## Burn & Burn From
 
-- should not burn if not owner (39ms, 95782 gas)
-- should be able to burn if owner (36ms, 100780 gas)
-- should not burn if balance is insufficient (18ms, 26718 gas)
+- should not burn if not owner (34ms, 95794 gas)
+- should be able to burn if owner (37ms, 100780 gas)
+- should not burn if balance is insufficient (17ms, 26718 gas)
 - should not burn from if not authorized (37ms, 96343 gas)
-- should be able to burn from if authorized (33ms, 101187 gas)
+- should be able to burn from if authorized (37ms, 101187 gas)
+- 
+
+
+**44 passing (27s)**
+ 
+
+
+
+
+
+
+
+
+
 
 
 **34 passing (27s)**
