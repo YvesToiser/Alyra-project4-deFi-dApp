@@ -21,7 +21,8 @@ export async function approve(contract, ownerAddress, spenderAddress, amount) {
 // getUserTotalStake
 export async function userTotalStake(contract, address) {
   return await contract.getPastEvents("Stake", {
-    filter: { from: address },
+    // user
+    // filter: { user: address },
     fromBlock: 0,
     toBlock: "latest"
   });

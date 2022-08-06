@@ -10110,27 +10110,13 @@
   "ast": {
     "absolutePath": "project:/contracts/sBYX.sol",
     "exportedSymbols": {
-      "Context": [
-        869
-      ],
-      "ERC20": [
-        744
-      ],
-      "IERC20": [
-        822
-      ],
-      "IERC20Metadata": [
-        847
-      ],
-      "IERC20MintableAndBurnable": [
-        1972
-      ],
-      "Ownable": [
-        158
-      ],
-      "sBYX": [
-        2139
-      ]
+      "Context": [869],
+      "ERC20": [744],
+      "IERC20": [822],
+      "IERC20Metadata": [847],
+      "IERC20MintableAndBurnable": [1972],
+      "Ownable": [158],
+      "sBYX": [2139]
     },
     "id": 2140,
     "license": "MIT",
@@ -10138,11 +10124,7 @@
     "nodes": [
       {
         "id": 1989,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "33:23:13"
       },
@@ -10227,15 +10209,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 2139,
-        "linearizedBaseContracts": [
-          2139,
-          1972,
-          744,
-          847,
-          822,
-          158,
-          869
-        ],
+        "linearizedBaseContracts": [2139, 1972, 744, 847, 822, 158, 869],
         "name": "sBYX",
         "nameLocation": "230:4:13",
         "nodeType": "ContractDefinition",
@@ -10529,10 +10503,7 @@
                       "id": 2015,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "868:7:13",
                       "typeDescriptions": {
@@ -10992,9 +10963,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {
@@ -11267,9 +11236,7 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              1971
-            ],
+            "baseFunctions": [1971],
             "body": {
               "id": 2106,
               "nodeType": "Block",
@@ -11449,9 +11416,7 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              1955
-            ],
+            "baseFunctions": [1955],
             "body": {
               "id": 2121,
               "nodeType": "Block",
@@ -11621,9 +11586,7 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [
-              1963
-            ],
+            "baseFunctions": [1963],
             "body": {
               "id": 2137,
               "nodeType": "Block",

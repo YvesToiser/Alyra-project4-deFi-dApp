@@ -9334,24 +9334,12 @@
   "ast": {
     "absolutePath": "project:/contracts/BYX.sol",
     "exportedSymbols": {
-      "BYX": [
-        973
-      ],
-      "Context": [
-        869
-      ],
-      "ERC20": [
-        744
-      ],
-      "IERC20": [
-        822
-      ],
-      "IERC20Metadata": [
-        847
-      ],
-      "Ownable": [
-        158
-      ]
+      "BYX": [973],
+      "Context": [869],
+      "ERC20": [744],
+      "IERC20": [822],
+      "IERC20Metadata": [847],
+      "Ownable": [158]
     },
     "id": 974,
     "license": "MIT",
@@ -9359,11 +9347,7 @@
     "nodes": [
       {
         "id": 871,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "45:23:6"
       },
@@ -9424,14 +9408,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 973,
-        "linearizedBaseContracts": [
-          973,
-          158,
-          744,
-          847,
-          822,
-          869
-        ],
+        "linearizedBaseContracts": [973, 158, 744, 847, 822, 869],
         "name": "BYX",
         "nameLocation": "189:3:6",
         "nodeType": "ContractDefinition",
@@ -10099,9 +10076,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {
@@ -10364,10 +10339,7 @@
                       "id": 955,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "2091:7:6",
                       "typeDescriptions": {

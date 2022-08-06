@@ -3817,21 +3817,11 @@
   "ast": {
     "absolutePath": "project:/contracts/PriceProvider.sol",
     "exportedSymbols": {
-      "AggregatorV3Interface": [
-        45
-      ],
-      "Context": [
-        180
-      ],
-      "IPriceProvider": [
-        339
-      ],
-      "Ownable": [
-        158
-      ],
-      "PriceProvider": [
-        324
-      ]
+      "AggregatorV3Interface": [45],
+      "Context": [180],
+      "IPriceProvider": [339],
+      "Ownable": [158],
+      "PriceProvider": [324]
     },
     "id": 325,
     "license": "MIT",
@@ -3839,11 +3829,7 @@
     "nodes": [
       {
         "id": 182,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "32:23:3"
       },
@@ -3916,12 +3902,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 324,
-        "linearizedBaseContracts": [
-          324,
-          339,
-          158,
-          180
-        ],
+        "linearizedBaseContracts": [324, 339, 158, 180],
         "name": "PriceProvider",
         "nameLocation": "239:13:3",
         "nodeType": "ContractDefinition",
@@ -4560,22 +4541,14 @@
             "visibility": "external"
           },
           {
-            "baseFunctions": [
-              332
-            ],
+            "baseFunctions": [332],
             "body": {
               "id": 258,
               "nodeType": "Block",
               "src": "2191:241:3",
               "statements": [
                 {
-                  "assignments": [
-                    null,
-                    251,
-                    null,
-                    null,
-                    null
-                  ],
+                  "assignments": [null, 251, null, null, null],
                   "declarations": [
                     null,
                     {
@@ -4739,22 +4712,14 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [
-              338
-            ],
+            "baseFunctions": [338],
             "body": {
               "id": 273,
               "nodeType": "Block",
               "src": "2596:237:3",
               "statements": [
                 {
-                  "assignments": [
-                    null,
-                    266,
-                    null,
-                    null,
-                    null
-                  ],
+                  "assignments": [null, 266, null, null, null],
                   "declarations": [
                     null,
                     {
@@ -5001,9 +4966,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {

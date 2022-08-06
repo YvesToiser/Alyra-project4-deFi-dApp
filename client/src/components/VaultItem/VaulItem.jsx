@@ -8,7 +8,8 @@ import useToken from "../../hooks/useToken";
 import useTokenManager from "../../hooks/useTokenManager";
 import React from "react";
 import { tokenRound } from "../../helpers/calculation";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
+import Big from "big.js";
 
 const VaultInfo = ({ children, title }) => {
   return (
@@ -47,14 +48,21 @@ const VaultButton = ({ children, onClick }) => {
   );
 };
 
-const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTokenAdress, manager }) => {
+const VaultDetails = ({
+  token,
+  onToggleStake,
+  balance,
+  balanceSToken,
+  contractTokenAdress,
+  manager,
+  pendingRewards
+}) => {
   const { amountStaked } = manager;
 
   const NETWORK_SCAN = "etherscan.io";
   const MY_BALANCE = balance && `${tokenRound(balance)} ${token}`;
   const TOTAL_LOCKED = amountStaked && `${tokenRound(amountStaked)} BYX`;
   const CONTRACT_ETHERSCAN = contractTokenAdress && `https://${NETWORK_SCAN}/address/${contractTokenAdress}`;
-  const REWARD_IN_CRYPTO = `27`;
 
   const canWithDraw = balanceSToken && balanceSToken.gt(0);
   const canStake = balance && balance.gt(0);
@@ -72,7 +80,7 @@ const VaultDetails = ({ token, onToggleStake, balance, balanceSToken, contractTo
           <Box borderWidth="1px" borderRadius="20" width="80%" height="80%" p={8}>
             <Text fontSize={16}>BIX Earned</Text>
             <Text fontSize={16} fontWeight="bold">
-              {REWARD_IN_CRYPTO}
+              {pendingRewards}
             </Text>
             {/* <Text fontSize={16}>{REWARD_IN_USD}</Text> */}
           </Box>
@@ -97,6 +105,7 @@ export default function VaultItem({ logo, name, user }) {
   const [modalType, setModalType] = useState(null);
   const [tvl, setTvl] = useState(null);
   const [apr, setApr] = useState(null);
+  const [pendingRewards, setPendingRewards] = useState(null);
 
   const token = useToken("byx");
   const sToken = useToken("sbyx");
@@ -127,12 +136,36 @@ export default function VaultItem({ logo, name, user }) {
     !sToken.balance && sToken.getBalance();
   }, [sToken]);
 
+  const getPendingRewards = useCallback(async () => {
+    if (!manager || !sToken) return;
+
+    const userSBYX = await sToken.balance;
+    if (!userSBYX) {
+      setPendingRewards(0);
+      return;
+    }
+
+    const totalStokenSupply = await sToken.getTotalSupply();
+    const tvl = await manager.getTVL();
+    const onPlatformByx = userSBYX && userSBYX.mul(tvl).div(totalStokenSupply);
+    const valueStaked = manager.amountStaked;
+    const pendingRewards = onPlatformByx && onPlatformByx.minus(valueStaked);
+
+    pendingRewards && setPendingRewards(tokenRound(pendingRewards).toFixed());
+  }, [manager, sToken]);
+
   useEffect(() => {
     if (manager) {
       manager.getPoolInfo().then((data) => {
         data && setTvl(data.tvl);
         data && setApr(data.apr);
       });
+    }
+  }, [manager]);
+
+  useEffect(() => {
+    if (manager) {
+      getPendingRewards();
     }
   }, [manager]);
 
@@ -182,6 +215,7 @@ export default function VaultItem({ logo, name, user }) {
           balanceSToken={sToken.balance}
           contractTokenAdress={token.contractTokenAdress}
           manager={manager}
+          pendingRewards={pendingRewards}
         />
       </Collapse>
     </Box>

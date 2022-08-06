@@ -55,17 +55,19 @@ const useTokenManager = (tokenName) => {
 
   // NOTE: This function allow us to save gas costs
   const getUserTotalStake = useCallback(async () => {
-    if (!contractTokenManager) return;
+    if (!contractTokenManager || !user.address) return;
     try {
       const logs = await userTotalStake(contractTokenManager, user.address);
       let amount = new Big(0);
       logs.forEach((element) => {
-        if (element.returnValues.operation === "deposit") {
-          amount = amount.plus(element.returnValues.amount);
-        }
-        if (element.returnValues.operation === "withdraw") {
-          // element.returnValues.amount return percent of sbix used to withdraw (amount in bps => centieme de pourcentage)
-          amount = amount.mul(1 - element.returnValues.amount / 10000);
+        if (element.returnValues.user.toLowerCase() === user.address.toLowerCase()) {
+          if (element.returnValues.operation === "deposit") {
+            amount = amount.plus(element.returnValues.amount);
+          }
+          if (element.returnValues.operation === "withdraw") {
+            // element.returnValues.amount return percent of sbix used to withdraw (amount in bps => centieme de pourcentage)
+            amount = amount.mul(1 - element.returnValues.amount / 10000);
+          }
         }
       });
 
@@ -79,13 +81,15 @@ const useTokenManager = (tokenName) => {
     }
   }, [contractTokenManager, dispatch, tokenName, user.address]);
 
-  // const getRewardAmount = useCallback(async () => {
-  //   try {
-  //     const logs = await rewardAmount(contractTokenManager, user.address);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, [contractTokenManager, user.address]);
+  const getTVL = useCallback(async () => {
+    if (!contractTokenManager) return;
+    try {
+      const result = await getTvl(contractTokenManager, user.address);
+      return new Big(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [contractTokenManager, user.address]);
 
   const getPoolInfo = useCallback(async () => {
     if (!contractTokenManager) return;
@@ -109,7 +113,8 @@ const useTokenManager = (tokenName) => {
     withdraw,
     allowanceValue,
     amountStaked,
-    getPoolInfo
+    getPoolInfo,
+    getTVL
   };
 };
 

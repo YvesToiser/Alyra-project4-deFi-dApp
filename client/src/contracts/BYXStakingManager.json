@@ -8803,33 +8803,19 @@
   "ast": {
     "absolutePath": "project:/contracts/BYXStakingManager.sol",
     "exportedSymbols": {
-      "BYXStakingManager": [
-        712
-      ],
-      "Context": [
-        258
-      ],
-      "IERC20": [
-        236
-      ],
-      "IERC20MintableAndBurnable": [
-        780
-      ],
-      "Ownable": [
-        158
-      ]
+      "BYXStakingManager": [1427],
+      "Context": [869],
+      "IERC20": [822],
+      "IERC20MintableAndBurnable": [1972],
+      "Ownable": [158]
     },
     "id": 713,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 260,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "id": 975,
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "32:23:4"
       },
@@ -8889,12 +8875,8 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 712,
-        "linearizedBaseContracts": [
-          712,
-          158,
-          258
-        ],
+        "id": 1427,
+        "linearizedBaseContracts": [1427, 158, 869],
         "name": "BYXStakingManager",
         "nameLocation": "230:17:4",
         "nodeType": "ContractDefinition",
@@ -10496,9 +10478,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {
@@ -11420,10 +11400,7 @@
                       "id": 472,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "5301:7:4",
                       "typeDescriptions": {
@@ -11530,10 +11507,7 @@
                       "id": 483,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "5384:7:4",
                       "typeDescriptions": {
@@ -11761,10 +11735,7 @@
                       "id": 490,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "5441:7:4",
                       "typeDescriptions": {
@@ -11789,92 +11760,7 @@
                   },
                   "id": 504,
                   "nodeType": "ExpressionStatement",
-                  "src": "5441:91:4"
-                },
-                {
-                  "assignments": [
-                    506
-                  ],
-                  "declarations": [
-                    {
-                      "constant": false,
-                      "id": 506,
-                      "mutability": "mutable",
-                      "name": "_sBYXamount",
-                      "nameLocation": "5547:11:4",
-                      "nodeType": "VariableDeclaration",
-                      "scope": 542,
-                      "src": "5542:16:4",
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      },
-                      "typeName": {
-                        "id": 505,
-                        "name": "uint",
-                        "nodeType": "ElementaryTypeName",
-                        "src": "5542:4:4",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
-                      },
-                      "visibility": "internal"
-                    }
-                  ],
-                  "id": 510,
-                  "initialValue": {
-                    "arguments": [
-                      {
-                        "id": 508,
-                        "name": "_amount",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 469,
-                        "src": "5589:7:4",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
-                      }
-                    ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
-                        }
-                      ],
-                      "id": 507,
-                      "name": "_calculateSBYXAmountFromBYX",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 648,
-                      "src": "5561:27:4",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$_t_uint256_$",
-                        "typeString": "function (uint256) returns (uint256)"
-                      }
-                    },
-                    "id": 509,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "5561:36:4",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "5542:55:4"
+                  "src": "5441:91:7"
                 },
                 {
                   "expression": {
@@ -12486,10 +12372,7 @@
                       "id": 549,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "6028:7:4",
                       "typeDescriptions": {
@@ -12596,10 +12479,7 @@
                       "id": 560,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "6117:7:4",
                       "typeDescriptions": {
@@ -12827,10 +12707,7 @@
                       "id": 567,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "6178:7:4",
                       "typeDescriptions": {
@@ -12858,9 +12735,7 @@
                   "src": "6178:97:4"
                 },
                 {
-                  "assignments": [
-                    583
-                  ],
+                  "assignments": [1298],
                   "declarations": [
                     {
                       "constant": false,
@@ -12943,9 +12818,7 @@
                   "src": "6285:55:4"
                 },
                 {
-                  "assignments": [
-                    589
-                  ],
+                  "assignments": [1304],
                   "declarations": [
                     {
                       "constant": false,
@@ -14101,10 +13974,7 @@
                       "id": 672,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "7581:7:4",
                       "typeDescriptions": {
@@ -14197,9 +14067,7 @@
                     "src": "7697:217:4",
                     "statements": [
                       {
-                        "assignments": [
-                          685
-                        ],
+                        "assignments": [1400],
                         "declarations": [
                           {
                             "constant": false,
