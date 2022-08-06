@@ -13,7 +13,7 @@ contract ETHStakingManager is Ownable {
     /// BYX token fund for staking rewards
     uint lastBlockUpdate;
     uint BYXFund = 20000000 * 10 ** 18; // 20 000 000 tokens
-    uint64 public APR = 800; // in bps -> 800 bps = 8% annual rate
+    uint public APR = 800; // in bps -> 800 bps = 8% annual rate
     uint ETHPrice;
     uint BYXPrice;
 
@@ -22,8 +22,13 @@ contract ETHStakingManager is Ownable {
         uint ethAmountStaked;  // in ETH
     }
 
-    mapping(address => User) public users;
+    mapping(address => User) users;
     address[] userList;
+
+    event Stake(address user, uint amount);
+    event WithdrawStake(address user, uint amount);
+    event RewardsClaimed(address user, uint amount);
+    event PoolUpdate();
 
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
@@ -39,23 +44,27 @@ contract ETHStakingManager is Ownable {
         lastBlockUpdate = block.number;
     }
 
-    /**
-    * @dev receive function will emit event in case of ether sent to the contract.
-    */
-    receive() external payable {
-        emit LogDepot(msg.sender, msg.value);
-    }
-
-    /**
-     * @dev fallback function will emit event in case of bad call of the contract.
-     */
-    fallback() external {
-        emit LogBadCall(msg.sender);
-    }
+//    /**
+//    * @dev receive function will emit event in case of ether sent to the contract.
+//    */
+//    receive() external payable {
+//        emit LogDepot(msg.sender, msg.value);
+//    }
+//
+//    /**
+//     * @dev fallback function will emit event in case of bad call of the contract.
+//     */
+//    fallback() external {
+//        emit LogBadCall(msg.sender);
+//    }
 
     /*************************************************************************************************/
     /*                                          VIEW FUNCTIONS                                       */
     /*************************************************************************************************/
+
+    function getUserInfo(address _user) external view returns(User memory){
+        return users[_user];
+    }
 
     /*************************************************************************************************/
     /*                                        EXTERNAL FUNCTIONS                                     */
@@ -75,23 +84,29 @@ contract ETHStakingManager is Ownable {
     function depositStake() external payable {
         // We set a mimimum amount to stake to protect potential DOS vulnerability in loop in _updateRewards() function.
         require(msg.value >= 1 * 10 ** 17, 'Minimum stake is 0.1 ETH.');
+        _updateRewards();
         if(users[msg.sender].ethAmountStaked == 0) {
             userList.push(msg.sender);
         }
         users[msg.sender].ethAmountStaked += msg.value;
+        emit Stake(msg.sender, msg.value);
     }
 
     function withdrawStake(uint _amount) external {
         require(_amount <= users[msg.sender].ethAmountStaked, 'Not enough ETH staked.');
+        _updateRewards();
         users[msg.sender].ethAmountStaked -= _amount;
         msg.sender.call{value: _amount}("");
+        emit WithdrawStake(msg.sender, _amount);
     }
 
     function claimRewards() external {
-        require(users[msg.sender].pendingRewards > 0, 'You have no rewards to claim');
+        _updateRewards();
+        require(users[msg.sender].pendingRewards > 0, 'You have no rewards to claim.');
         uint _amount = users[msg.sender].pendingRewards;
         users[msg.sender].pendingRewards = 0;
         BYX.transfer(msg.sender, _amount);
+        emit RewardsClaimed(msg.sender, _amount);
     }
 
     /*************************************************************************************************/
@@ -102,16 +117,17 @@ contract ETHStakingManager is Ownable {
         // We decide to update rewards only if it has not been updated for 1 day.
         if (block.number > lastBlockUpdate + 6400) {
             _updatePrices();
-            uint BYXYearlyRewardPerETH = ETHPrice * APR * BYXPrice;
+            uint BYXYearlyRewardPerETH = ETHPrice * APR / BYXPrice;
             uint nbOfBlockToUpdate = block.number - lastBlockUpdate;
             // Risk for DDOS is minimum as potential attacker needs to stake ETH to add an entry in the array
             // Therefore, we add a minimum amount to stake to protect this potential vulnerability
             for (uint i = 0; i < userList.length; i++) {
                 // New Reward = user ETH staked amount * yearly reward in BYX (in bps) * period ratio (time passed / a year)
-                uint _newRewards = users[userList[i]].ethAmountStaked * BYXYearlyRewardPerETH / 10000 * nbOfBlockToUpdate / 6400* 365;
+                uint _newRewards = users[userList[i]].ethAmountStaked * BYXYearlyRewardPerETH * nbOfBlockToUpdate / (10000 * 6400 * 365);
                 users[userList[i]].pendingRewards += _newRewards;
             }
             lastBlockUpdate = block.number;
+            emit PoolUpdate();
         }
     }
 

@@ -23,6 +23,19 @@ contract("BYXStakingManager", function (accounts) {
     const BOB = accounts[2];
     const CHARLY = accounts[3];
 
+    // Block Minting function
+    const mintBlocks = async (n) => {
+        for (let i = 0; i < n; i++) {
+            web3.currentProvider.send({
+                jsonrpc: "2.0",
+                method: "evm_mine",
+                id: 1
+            }, (error, response) => {
+                // console.log(response);
+            });
+        }
+    };
+
     beforeEach(async function () {
         // Deploy BYX token contract
         this.byxInstance = await BYX.new({from: owner});
@@ -39,7 +52,6 @@ contract("BYXStakingManager", function (accounts) {
 
         // Authorize staker address And initial stake
         await this.sByxInstance.authorize(this.BYXstakingManagerInstance.address);
-
     });
 
     describe('Staking', () => {
@@ -67,7 +79,6 @@ contract("BYXStakingManager", function (accounts) {
             await this.byxInstance.approve(this.BYXstakingManagerInstance.address, ANY_STAKE, { from: ALICE });
             const res = await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: ALICE });
             const sBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
-            console.log('sBYXBalance : ' + sBYXBalance);
             expect(sBYXBalance).to.be.bignumber.above(ZERO_VALUE);
             expectEvent(res, 'Stake', {user : ALICE, operation: 'deposit', amount : new BN(ANY_STAKE)});
         });
@@ -176,13 +187,7 @@ contract("BYXStakingManager", function (accounts) {
             await this.BYXstakingManagerInstance.depositStake(ANY_STAKE, { from: ALICE });
             let AlicesBYXBalance = await this.sByxInstance.balanceOf.call(ALICE, { from: ALICE });
 
-            web3.currentProvider.send({
-                jsonrpc: "2.0",
-                method: "evm_mine",
-                id: 1
-            }, (error, response) => {
-                // console.log(response);
-            });
+            await mintBlocks(1);
 
             // Then Alice unstake after one more block
             await this.sByxInstance.approve(this.BYXstakingManagerInstance.address, AlicesBYXBalance, { from: ALICE });

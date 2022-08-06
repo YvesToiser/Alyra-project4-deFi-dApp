@@ -15,6 +15,6 @@ contract MockedPriceProvider is Ownable, IPriceProvider {
     }
 
     function getLatestBYXUSDPrice() public pure returns (int256) {
-        return 6148 * 10 ** 15;
+        return 9148 * 10 ** 15;
     }
 }

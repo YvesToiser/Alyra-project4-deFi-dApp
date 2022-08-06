@@ -10,6 +10,7 @@ const PriceProvider = artifacts.require("MockedPriceProvider");
 
 const AIRDROP_SUPPLY = "1000000000000000000000";
 const STAKING_REWARDS_SUPPLY = "50000000000000000000000000";
+const ETH_STAKING_REWARDS_SUPPLY = "20000000000000000000000000";
 const INITIAL_STAKE = "1000000000000000000000";
 
 module.exports = async function(deployer, _network, accounts) {
@@ -45,4 +46,5 @@ module.exports = async function(deployer, _network, accounts) {
 
 	// Deploy ETH Staking Manager
 	await deployer.deploy(ETHStakingManager, byxInstance.address, PriceProviderInstance.address);
+	await byxInstance.mint(ETHStakingManager.address, ETH_STAKING_REWARDS_SUPPLY);
 };
