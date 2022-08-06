@@ -9,7 +9,6 @@ import useTokenManager from "../../hooks/useTokenManager";
 import React from "react";
 import { tokenRound } from "../../helpers/calculation";
 import { useEffect, useCallback } from "react";
-import Big from "big.js";
 
 const VaultInfo = ({ children, title }) => {
   return (
@@ -136,6 +135,13 @@ export default function VaultItem({ logo, name, user }) {
     !sToken.balance && sToken.getBalance();
   }, [sToken]);
 
+  useEffect(() => {
+    if (manager) {
+      getPendingRewards();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [manager]);
+
   const getPendingRewards = useCallback(async () => {
     if (!manager || !sToken) return;
 
@@ -160,12 +166,6 @@ export default function VaultItem({ logo, name, user }) {
         data && setTvl(data.tvl);
         data && setApr(data.apr);
       });
-    }
-  }, [manager]);
-
-  useEffect(() => {
-    if (manager) {
-      getPendingRewards();
     }
   }, [manager]);
 

@@ -36,6 +36,7 @@ const useToken = (tokenName) => {
     } catch (error) {
       console.error(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractToken, tokenName, user.address]);
 
   useEffect(() => {
