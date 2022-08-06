@@ -8792,10 +8792,18 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
     "exportedSymbols": {
-      "Context": [869],
-      "ERC20": [744],
-      "IERC20": [822],
-      "IERC20Metadata": [847]
+      "Context": [
+        869
+      ],
+      "ERC20": [
+        744
+      ],
+      "IERC20": [
+        822
+      ],
+      "IERC20Metadata": [
+        847
+      ]
     },
     "id": 745,
     "license": "MIT",
@@ -8803,7 +8811,12 @@
     "nodes": [
       {
         "id": 160,
-        "literals": ["solidity", "^", "0.8", ".0"],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
         "nodeType": "PragmaDirective",
         "src": "105:23:2"
       },
@@ -8894,7 +8907,12 @@
         },
         "fullyImplemented": true,
         "id": 744,
-        "linearizedBaseContracts": [744, 847, 822, 869],
+        "linearizedBaseContracts": [
+          744,
+          847,
+          822,
+          869
+        ],
         "name": "ERC20",
         "nameLocation": "1412:5:2",
         "nodeType": "ContractDefinition",
@@ -9272,7 +9290,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [834],
+            "baseFunctions": [
+              834
+            ],
             "body": {
               "id": 212,
               "nodeType": "Block",
@@ -9365,7 +9385,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [840],
+            "baseFunctions": [
+              840
+            ],
             "body": {
               "id": 222,
               "nodeType": "Block",
@@ -9458,7 +9480,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [846],
+            "baseFunctions": [
+              846
+            ],
             "body": {
               "id": 232,
               "nodeType": "Block",
@@ -9555,7 +9579,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [771],
+            "baseFunctions": [
+              771
+            ],
             "body": {
               "id": 242,
               "nodeType": "Block",
@@ -9648,7 +9674,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [779],
+            "baseFunctions": [
+              779
+            ],
             "body": {
               "id": 256,
               "nodeType": "Block",
@@ -9795,14 +9823,18 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [789],
+            "baseFunctions": [
+              789
+            ],
             "body": {
               "id": 281,
               "nodeType": "Block",
               "src": "3814:104:2",
               "statements": [
                 {
-                  "assignments": [269],
+                  "assignments": [
+                    269
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -10099,7 +10131,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [799],
+            "baseFunctions": [
+              799
+            ],
             "body": {
               "id": 299,
               "nodeType": "Block",
@@ -10299,14 +10333,18 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [809],
+            "baseFunctions": [
+              809
+            ],
             "body": {
               "id": 324,
               "nodeType": "Block",
               "src": "4522:108:2",
               "statements": [
                 {
-                  "assignments": [312],
+                  "assignments": [
+                    312
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -10603,14 +10641,18 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [821],
+            "baseFunctions": [
+              821
+            ],
             "body": {
               "id": 357,
               "nodeType": "Block",
               "src": "5325:153:2",
               "statements": [
                 {
-                  "assignments": [339],
+                  "assignments": [
+                    339
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -11026,7 +11068,9 @@
               "src": "5967:140:2",
               "statements": [
                 {
-                  "assignments": [369],
+                  "assignments": [
+                    369
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -11405,7 +11449,9 @@
               "src": "6693:328:2",
               "statements": [
                 {
-                  "assignments": [398],
+                  "assignments": [
+                    398
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -11471,7 +11517,9 @@
                   "src": "6703:28:2"
                 },
                 {
-                  "assignments": [403],
+                  "assignments": [
+                    403
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -11645,7 +11693,10 @@
                       "id": 409,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "6803:7:2",
                       "typeDescriptions": {
@@ -12064,7 +12115,10 @@
                       "id": 438,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "7593:7:2",
                       "typeDescriptions": {
@@ -12215,7 +12269,10 @@
                       "id": 448,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "7671:7:2",
                       "typeDescriptions": {
@@ -12328,7 +12385,9 @@
                   "src": "7746:38:2"
                 },
                 {
-                  "assignments": [465],
+                  "assignments": [
+                    465
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -12475,7 +12534,10 @@
                       "id": 470,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "7842:7:2",
                       "typeDescriptions": {
@@ -13092,7 +13154,10 @@
                       "id": 513,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "8477:7:2",
                       "typeDescriptions": {
@@ -13848,7 +13913,10 @@
                       "id": 569,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "9186:7:2",
                       "typeDescriptions": {
@@ -14009,7 +14077,9 @@
                   "src": "9264:49:2"
                 },
                 {
-                  "assignments": [589],
+                  "assignments": [
+                    589
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -14156,7 +14226,10 @@
                       "id": 594,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "9377:7:2",
                       "typeDescriptions": {
@@ -14816,7 +14889,10 @@
                       "id": 643,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "10233:7:2",
                       "typeDescriptions": {
@@ -14967,7 +15043,10 @@
                       "id": 653,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "10311:7:2",
                       "typeDescriptions": {
@@ -15296,7 +15375,9 @@
               "src": "10881:321:2",
               "statements": [
                 {
-                  "assignments": [689],
+                  "assignments": [
+                    689
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -15579,7 +15660,10 @@
                             "id": 702,
                             "name": "require",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [4294967278, 4294967278],
+                            "overloadedDeclarations": [
+                              4294967278,
+                              4294967278
+                            ],
                             "referencedDeclaration": 4294967278,
                             "src": "11010:7:2",
                             "typeDescriptions": {
@@ -16106,7 +16190,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-06T06:58:40.478Z",
+  "updatedAt": "2022-08-06T21:20:55.637Z",
   "devdoc": {
     "details": "Implementation of the {IERC20} interface. This implementation is agnostic to the way tokens are created. This means that a supply mechanism has to be added in a derived contract using {_mint}. For a generic mechanism see {ERC20PresetMinterPauser}. TIP: For a detailed writeup see our guide https://forum.zeppelin.solutions/t/how-to-implement-erc20-supply-mechanisms/226[How to implement supply mechanisms]. We have followed general OpenZeppelin Contracts guidelines: functions revert instead returning `false` on failure. This behavior is nonetheless conventional and does not conflict with the expectations of ERC20 applications. Additionally, an {Approval} event is emitted on calls to {transferFrom}. This allows applications to reconstruct the allowance for all accounts just by listening to said events. Other implementations of the EIP may not emit these events, as it isn't required by the specification. Finally, the non-standard {decreaseAllowance} and {increaseAllowance} functions have been added to mitigate the well-known issues around setting allowances. See {IERC20-approve}.",
     "kind": "dev",

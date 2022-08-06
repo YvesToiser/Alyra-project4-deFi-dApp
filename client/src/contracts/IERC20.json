@@ -198,7 +198,9 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
     "exportedSymbols": {
-      "IERC20": [822]
+      "IERC20": [
+        822
+      ]
     },
     "id": 823,
     "license": "MIT",
@@ -206,7 +208,12 @@
     "nodes": [
       {
         "id": 746,
-        "literals": ["solidity", "^", "0.8", ".0"],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
         "nodeType": "PragmaDirective",
         "src": "106:23:3"
       },
@@ -224,7 +231,9 @@
         },
         "fullyImplemented": false,
         "id": 822,
-        "linearizedBaseContracts": [822],
+        "linearizedBaseContracts": [
+          822
+        ],
         "name": "IERC20",
         "nameLocation": "212:6:3",
         "nodeType": "ContractDefinition",
@@ -1107,7 +1116,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-06T06:58:40.483Z",
+  "updatedAt": "2022-08-06T21:20:55.707Z",
   "devdoc": {
     "details": "Interface of the ERC20 standard as defined in the EIP.",
     "events": {

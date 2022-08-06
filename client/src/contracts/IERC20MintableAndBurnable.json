@@ -243,30 +243,38 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\n\ninterface IERC20MintableAndBurnable is IERC20{\n\n    /**\n     * @dev Destroys `amount` tokens from the caller.\n     *\n     * See {ERC20-_burn}.\n     */\n    function burn(uint256 amount) external;\n\n    /**\n     * @dev Destroys `amount` tokens from `account`, deducting from the caller's\n     * allowance.\n     *\n     * See {ERC20-_burn} and {ERC20-allowance}.\n     *\n     * Requirements:\n     *\n     * - the caller must have allowance for ``accounts``'s tokens of at least\n     * `amount`.\n     */\n    function burnFrom(address account, uint256 amount) external;\n\n    /**\n     * @dev See {ERC20-_mint}.\n     */\n    function mint(address account, uint256 amount) external;\n}\n",
-  "sourcePath": "/home/jack/Dev/PROJEX/4_Alyra_Projet_deFi_Staking_App/truffle/contracts/interfaces/IERC20MintableAndBurnable.sol",
+  "sourcePath": "/Users/rey/Code/Alyra/6_Defi/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IERC20MintableAndBurnable.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC20MintableAndBurnable.sol",
     "exportedSymbols": {
-      "IERC20": [822],
-      "IERC20MintableAndBurnable": [1972]
+      "IERC20": [
+        822
+      ],
+      "IERC20MintableAndBurnable": [
+        2037
+      ]
     },
-    "id": 1973,
+    "id": 2038,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1946,
-        "literals": ["solidity", "0.8", ".14"],
+        "id": 2011,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".14"
+        ],
         "nodeType": "PragmaDirective",
         "src": "32:23:11"
       },
       {
         "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "id": 1947,
+        "id": 2012,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 1973,
+        "scope": 2038,
         "sourceUnit": 823,
         "src": "57:56:11",
         "symbolAliases": [],
@@ -277,13 +285,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1948,
+              "id": 2013,
               "name": "IERC20",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 822,
               "src": "154:6:11"
             },
-            "id": 1949,
+            "id": 2014,
             "nodeType": "InheritanceSpecifier",
             "src": "154:6:11"
           }
@@ -292,21 +300,24 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1972,
-        "linearizedBaseContracts": [1972, 822],
+        "id": 2037,
+        "linearizedBaseContracts": [
+          2037,
+          822
+        ],
         "name": "IERC20MintableAndBurnable",
         "nameLocation": "125:25:11",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 1950,
+              "id": 2015,
               "nodeType": "StructuredDocumentation",
               "src": "167:98:11",
               "text": " @dev Destroys `amount` tokens from the caller.\n See {ERC20-_burn}."
             },
             "functionSelector": "42966c68",
-            "id": 1955,
+            "id": 2020,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -314,17 +325,17 @@
             "nameLocation": "279:4:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1953,
+              "id": 2018,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1952,
+                  "id": 2017,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "292:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1955,
+                  "scope": 2020,
                   "src": "284:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -333,7 +344,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1951,
+                    "id": 2016,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "284:7:11",
@@ -348,12 +359,12 @@
               "src": "283:16:11"
             },
             "returnParameters": {
-              "id": 1954,
+              "id": 2019,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "308:0:11"
             },
-            "scope": 1972,
+            "scope": 2037,
             "src": "270:39:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -361,13 +372,13 @@
           },
           {
             "documentation": {
-              "id": 1956,
+              "id": 2021,
               "nodeType": "StructuredDocumentation",
               "src": "315:295:11",
               "text": " @dev Destroys `amount` tokens from `account`, deducting from the caller's\n allowance.\n See {ERC20-_burn} and {ERC20-allowance}.\n Requirements:\n - the caller must have allowance for ``accounts``'s tokens of at least\n `amount`."
             },
             "functionSelector": "79cc6790",
-            "id": 1963,
+            "id": 2028,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -375,17 +386,17 @@
             "nameLocation": "624:8:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1961,
+              "id": 2026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1958,
+                  "id": 2023,
                   "mutability": "mutable",
                   "name": "account",
                   "nameLocation": "641:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1963,
+                  "scope": 2028,
                   "src": "633:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -394,7 +405,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1957,
+                    "id": 2022,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "633:7:11",
@@ -408,12 +419,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1960,
+                  "id": 2025,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "658:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1963,
+                  "scope": 2028,
                   "src": "650:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -422,7 +433,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1959,
+                    "id": 2024,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "650:7:11",
@@ -437,12 +448,12 @@
               "src": "632:33:11"
             },
             "returnParameters": {
-              "id": 1962,
+              "id": 2027,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "674:0:11"
             },
-            "scope": 1972,
+            "scope": 2037,
             "src": "615:60:11",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -450,13 +461,13 @@
           },
           {
             "documentation": {
-              "id": 1964,
+              "id": 2029,
               "nodeType": "StructuredDocumentation",
               "src": "681:42:11",
               "text": " @dev See {ERC20-_mint}."
             },
             "functionSelector": "40c10f19",
-            "id": 1971,
+            "id": 2036,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -464,17 +475,17 @@
             "nameLocation": "737:4:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1969,
+              "id": 2034,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1966,
+                  "id": 2031,
                   "mutability": "mutable",
                   "name": "account",
                   "nameLocation": "750:7:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1971,
+                  "scope": 2036,
                   "src": "742:15:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -483,7 +494,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1965,
+                    "id": 2030,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "742:7:11",
@@ -497,12 +508,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1968,
+                  "id": 2033,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "767:6:11",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1971,
+                  "scope": 2036,
                   "src": "759:14:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -511,7 +522,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1967,
+                    "id": 2032,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "759:7:11",
@@ -526,19 +537,19 @@
               "src": "741:33:11"
             },
             "returnParameters": {
-              "id": 1970,
+              "id": 2035,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "783:0:11"
             },
-            "scope": 1972,
+            "scope": 2037,
             "src": "728:56:11",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1973,
+        "scope": 2038,
         "src": "115:671:11",
         "usedErrors": []
       }
@@ -551,7 +562,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-06T06:58:40.508Z",
+  "updatedAt": "2022-08-06T21:20:55.756Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

@@ -40,7 +40,7 @@ export async function getEthTVL(contract) {
 }
 
 export function getEthUserInfo(contract, address) {
-  return contract.methods.users(address).call();
+  return contract.methods.getUserInfo(address).call();
 }
 
 export function stakeEth(contract, address, amount) {
