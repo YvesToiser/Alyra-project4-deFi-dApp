@@ -136,4 +136,12 @@ contract ETHStakingManager is Ownable {
         BYXPrice = uint(PriceProvider.getLatestBYXUSDPrice());
     }
 
+    function getTotalStaked() public view returns (uint) {
+        uint totalStaked = 0;
+        for (uint i = 0; i < userList.length; i++) {
+            totalStaked += users[userList[i]].ethAmountStaked;
+        }
+        return totalStaked;
+    }
+
 }

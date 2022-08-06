@@ -20,6 +20,6 @@ export function tokenRound(number, decimal = 18) {
   try {
     return number.div(10 ** decimal).round(2, Big.roundDown);
   } catch (error) {
-    console.log("----- Error: " + error);
+    console.error("----- Error: " + error);
   }
 }

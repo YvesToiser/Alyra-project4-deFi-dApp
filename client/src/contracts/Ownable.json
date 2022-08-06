@@ -67,12 +67,8 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
     "exportedSymbols": {
-      "Context": [
-        869
-      ],
-      "Ownable": [
-        158
-      ]
+      "Context": [869],
+      "Ownable": [158]
     },
     "id": 159,
     "license": "MIT",
@@ -80,12 +76,7 @@
     "nodes": [
       {
         "id": 47,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "102:23:1"
       },
@@ -128,10 +119,7 @@
         },
         "fullyImplemented": true,
         "id": 158,
-        "linearizedBaseContracts": [
-          158,
-          869
-        ],
+        "linearizedBaseContracts": [158, 869],
         "name": "Ownable",
         "nameLocation": "672:7:1",
         "nodeType": "ContractDefinition",
@@ -621,10 +609,7 @@
                       "id": 90,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "1414:7:1",
                       "typeDescriptions": {
@@ -969,10 +954,7 @@
                       "id": 122,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "2161:7:1",
                       "typeDescriptions": {
@@ -1136,9 +1118,7 @@
               "src": "2496:124:1",
               "statements": [
                 {
-                  "assignments": [
-                    144
-                  ],
+                  "assignments": [144],
                   "declarations": [
                     {
                       "constant": false,

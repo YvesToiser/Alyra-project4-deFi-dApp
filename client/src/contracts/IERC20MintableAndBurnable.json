@@ -247,12 +247,8 @@
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC20MintableAndBurnable.sol",
     "exportedSymbols": {
-      "IERC20": [
-        822
-      ],
-      "IERC20MintableAndBurnable": [
-        1972
-      ]
+      "IERC20": [822],
+      "IERC20MintableAndBurnable": [1972]
     },
     "id": 1973,
     "license": "MIT",
@@ -260,11 +256,7 @@
     "nodes": [
       {
         "id": 1946,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "32:23:11"
       },
@@ -301,10 +293,7 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "id": 1972,
-        "linearizedBaseContracts": [
-          1972,
-          822
-        ],
+        "linearizedBaseContracts": [1972, 822],
         "name": "IERC20MintableAndBurnable",
         "nameLocation": "125:25:11",
         "nodeType": "ContractDefinition",

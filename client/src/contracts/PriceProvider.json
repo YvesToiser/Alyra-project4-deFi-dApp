@@ -2,6 +2,43 @@
   "contractName": "PriceProvider",
   "abi": [
     {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "LogBadCall",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "LogDepot",
+      "type": "event"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -19,6 +56,10 @@
       ],
       "name": "OwnershipTransferred",
       "type": "event"
+    },
+    {
+      "stateMutability": "nonpayable",
+      "type": "fallback"
     },
     {
       "inputs": [],
@@ -136,7 +177,7 @@
     {
       "ast": {
         "nodeType": "YulBlock",
-        "src": "0:4140:5",
+        "src": "0:8138:6",
         "statements": [
           {
             "body": {
@@ -144,6 +185,7 @@
               "src": "51:32:5",
               "statements": [
                 {
+<<<<<<< HEAD
                   "nodeType": "YulAssignment",
                   "src": "61:16:5",
                   "value": {
@@ -187,6 +229,8 @@
               "src": "152:52:5",
               "statements": [
                 {
+=======
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
                   "expression": {
                     "arguments": [
                       {
@@ -1583,7 +1627,7 @@
                   },
                   "variableNames": [
                     {
-                      "name": "tail",
+                      "name": "cleaned",
                       "nodeType": "YulIdentifier",
                       "src": "2990:4:5"
                     }
@@ -2160,6 +2204,133 @@
               "src": "4596:78:5",
               "statements": [
                 {
+                  "nodeType": "YulAssignment",
+                  "src": "4479:22:5",
+=======
+              "src": "4469:79:6",
+              "statements": [
+                {
+                  "nodeType": "YulAssignment",
+                  "src": "4479:22:6",
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                  "value": {
+                    "arguments": [
+                      {
+                        "name": "offset",
+                        "nodeType": "YulIdentifier",
+<<<<<<< HEAD
+                        "src": "4494:6:5"
+=======
+                        "src": "4494:6:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mload",
+                      "nodeType": "YulIdentifier",
+<<<<<<< HEAD
+                      "src": "4488:5:5"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "4488:13:5"
+=======
+                      "src": "4488:5:6"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "4488:13:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                  },
+                  "variableNames": [
+                    {
+                      "name": "value",
+                      "nodeType": "YulIdentifier",
+<<<<<<< HEAD
+                      "src": "4479:5:5"
+=======
+                      "src": "4479:5:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                    }
+                  ]
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "name": "value",
+                        "nodeType": "YulIdentifier",
+<<<<<<< HEAD
+                        "src": "4536:5:5"
+=======
+                        "src": "4536:5:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                      }
+                    ],
+                    "functionName": {
+                      "name": "validator_revert_t_uint80",
+                      "nodeType": "YulIdentifier",
+<<<<<<< HEAD
+                      "src": "4510:25:5"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "4510:32:5"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "4510:32:5"
+=======
+                      "src": "4510:25:6"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "4510:32:6"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "4510:32:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                }
+              ]
+            },
+            "name": "abi_decode_t_uint80_fromMemory",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "offset",
+                "nodeType": "YulTypedName",
+<<<<<<< HEAD
+                "src": "4447:6:5",
+=======
+                "src": "4447:6:6",
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                "type": ""
+              },
+              {
+                "name": "end",
+                "nodeType": "YulTypedName",
+<<<<<<< HEAD
+                "src": "4455:3:5",
+=======
+                "src": "4455:3:6",
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+                "type": ""
+              }
+            ],
+            "returnVariables": [
+              {
+                "name": "value",
+                "nodeType": "YulTypedName",
+<<<<<<< HEAD
+                "src": "4463:5:5",
+                "type": ""
+              }
+            ],
+            "src": "4407:141:5"
+=======
+                "src": "4463:5:6",
+                "type": ""
+              }
+            ],
+            "src": "4407:141:6"
+>>>>>>> 7aa7f45 (Feat - eth staking v1 no test)
+          },
+          {
                   "body": {
                     "nodeType": "YulBlock",
                     "src": "4652:16:5",
@@ -3724,36 +3895,36 @@
         "id": 182,
         "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
-        "src": "32:23:3"
+        "src": "32:23:4"
       },
       {
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
         "file": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        "id": 183,
+        "id": 223,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 325,
         "sourceUnit": 46,
-        "src": "57:76:3",
+        "src": "57:76:4",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
         "file": "@openzeppelin/contracts/access/Ownable.sol",
-        "id": 184,
+        "id": 224,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 325,
         "sourceUnit": 159,
-        "src": "134:52:3",
+        "src": "134:52:4",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "absolutePath": "project:/contracts/interfaces/IPriceProvider.sol",
         "file": "./interfaces/IPriceProvider.sol",
-        "id": 185,
+        "id": 225,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 325,
@@ -3767,7 +3938,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 186,
+              "id": 226,
               "name": "Ownable",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 158,
@@ -5297,12 +5468,12 @@
             "visibility": "public"
           }
         ],
-        "scope": 221,
-        "src": "230:361:3",
+        "scope": 365,
+        "src": "230:3837:4",
         "usedErrors": []
       }
     ],
-    "src": "32:560:3"
+    "src": "32:4035:4"
   },
   "compiler": {
     "name": "solc",
@@ -5323,10 +5494,16 @@
     "kind": "dev",
     "methods": {
       "getLatestBYXUSDPrice()": {
-        "details": "give last BYXUSD price"
+        "details": "Return BYXUSD price",
+        "returns": {
+          "_0": "Returns the latest price"
+        }
       },
       "getLatestETHUSDPrice()": {
-        "details": "give last ETHUSD price."
+        "details": "Return ETHUSD price",
+        "returns": {
+          "_0": "Returns the latest price"
+        }
       },
       "owner()": {
         "details": "Returns the address of the current owner."
@@ -5334,15 +5511,46 @@
       "renounceOwnership()": {
         "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
       },
+      "setByxAddr(address)": {
+        "details": "to set the adress of BYXUSD pair on chainlink data feed",
+        "params": {
+          "_pair": "the address of the BYXUSD pair"
+        }
+      },
+      "setEthAddr(address)": {
+        "details": "to set the adress of ETHUSD pair on chainlink data feed",
+        "params": {
+          "_pair": "the address of the ETHUSD pair"
+        }
+      },
       "transferOwnership(address)": {
         "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      },
+      "withdraw(uint256)": {
+        "details": "withdraw function. OnlyOwner.",
+        "params": {
+          "_amount": "the amount to withdraw."
+        }
       }
     },
     "version": 1
   },
   "userdoc": {
     "kind": "user",
-    "methods": {},
+    "methods": {
+      "constructor": {
+        "notice": "* Network: Kovan Aggregator: ETH/USD Address: 0x9326BFA02ADD2366b30bacB125260Af641031331 Aggregator: UNI/USD Address: 0xDA5904BdBfB4EF12a3955aEcA103F51dc87c7C39: As we do not have data feed for BYX price, we use UNI price instead for exercise purpose."
+      },
+      "setByxAddr(address)": {
+        "notice": "set BYXUSD pair address"
+      },
+      "setEthAddr(address)": {
+        "notice": "set ETHUSD pair address"
+      },
+      "withdraw(uint256)": {
+        "notice": "withdraw function. Can only be used by the owner of the contract."
+      }
+    },
     "version": 1
   }
 }

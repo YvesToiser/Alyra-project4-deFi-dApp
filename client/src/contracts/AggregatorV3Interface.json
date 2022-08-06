@@ -126,9 +126,7 @@
   "ast": {
     "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
     "exportedSymbols": {
-      "AggregatorV3Interface": [
-        45
-      ]
+      "AggregatorV3Interface": [45]
     },
     "id": 46,
     "license": "MIT",
@@ -136,12 +134,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "32:23:0"
       },
@@ -153,9 +146,7 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "id": 45,
-        "linearizedBaseContracts": [
-          45
-        ],
+        "linearizedBaseContracts": [45],
         "name": "AggregatorV3Interface",
         "nameLocation": "67:21:0",
         "nodeType": "ContractDefinition",

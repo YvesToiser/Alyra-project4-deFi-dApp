@@ -1879,21 +1879,11 @@
   "ast": {
     "absolutePath": "project:/contracts/MockedPriceProvider.sol",
     "exportedSymbols": {
-      "AggregatorV3Interface": [
-        45
-      ],
-      "Context": [
-        258
-      ],
-      "IPriceProvider": [
-        689
-      ],
-      "MockedPriceProvider": [
-        674
-      ],
-      "Ownable": [
-        158
-      ]
+      "AggregatorV3Interface": [45],
+      "Context": [258],
+      "IPriceProvider": [689],
+      "MockedPriceProvider": [674],
+      "Ownable": [158]
     },
     "id": 675,
     "license": "MIT",
@@ -1901,11 +1891,7 @@
     "nodes": [
       {
         "id": 636,
-        "literals": [
-          "solidity",
-          "0.8",
-          ".14"
-        ],
+        "literals": ["solidity", "0.8", ".14"],
         "nodeType": "PragmaDirective",
         "src": "32:23:5"
       },
@@ -1978,12 +1964,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 674,
-        "linearizedBaseContracts": [
-          674,
-          689,
-          158,
-          258
-        ],
+        "linearizedBaseContracts": [674, 689, 158, 258],
         "name": "MockedPriceProvider",
         "nameLocation": "239:19:5",
         "nodeType": "ContractDefinition",
@@ -2057,9 +2038,7 @@
             "visibility": "internal"
           },
           {
-            "baseFunctions": [
-              682
-            ],
+            "baseFunctions": [682],
             "body": {
               "id": 660,
               "nodeType": "Block",
@@ -2212,9 +2191,7 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [
-              688
-            ],
+            "baseFunctions": [688],
             "body": {
               "id": 672,
               "nodeType": "Block",

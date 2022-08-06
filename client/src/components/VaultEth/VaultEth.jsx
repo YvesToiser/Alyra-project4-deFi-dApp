@@ -9,6 +9,10 @@ import React from "react";
 import { tokenRound } from "../../helpers/calculation";
 import { useEffect, useCallback } from "react";
 import VaultDetailsEth from "components/VaultDetailsEth/VaultDetailsEth";
+import useEth from "hooks/useEth";
+import { StakeModalEth, WithdrawModalEth } from "components/StakeModalEth/StakeModalEth";
+
+import { getEthApr, getEthTVL, getEthUserInfo, stakeEth } from "api/tokenManagerEth";
 
 const VaultElement = ({ children }) => {
   return (
@@ -21,20 +25,16 @@ const VaultElement = ({ children }) => {
 };
 
 export default function VaultEth({ logo, name, user }) {
-  const [showDetails, setShowDetails] = useState(false);
+  const [apr, setApr] = useState(null);
+  const [ethAmountStaked, setEthAmountStaked] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
-  const [tvl, setTvl] = useState(null);
-  const [apr, setApr] = useState(null);
   const [pendingRewards, setPendingRewards] = useState(null);
-
+  const [showDetails, setShowDetails] = useState(false);
+  const [tvl, setTvl] = useState(null);
+  const { state } = useEth();
+  const ethContractManager = state.contracts["ETHStakingManager"];
   const userBalance = user && user?.balance?.eth;
-
-  const token = useToken(name.toLowerCase());
-  const sToken = useToken("sbyx");
-
-  const manager = useTokenManager(name.toLowerCase());
-  const sManager = useTokenManager("sbyx");
 
   const isAuth = !!user.address;
 
@@ -47,77 +47,61 @@ export default function VaultEth({ logo, name, user }) {
     setIsOpen((_isOpen) => !_isOpen);
   };
 
-  // useEffect(() => {
-  //   !manager.amountStaked && manager.getUserTotalStake();
-  // }, [manager]);
-
-  // useEffect(() => {
-  //   !sToken.balance && sToken.getBalance();
-  // }, [sToken]);
-
-  // useEffect(() => {
-  //   if (manager) {
-  //     getPendingRewards();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [manager]);
-
-  // const getPendingRewards = useCallback(async () => {
-  //   if (!manager || !sToken) return;
-
-  //   const userSBYX = await sToken.balance;
-  //   if (!userSBYX) {
-  //     setPendingRewards(0);
-  //     return;
-  //   }
-
-  //   const totalStokenSupply = await sToken.getTotalSupply();
-  //   const tvl = await manager.getTVL();
-  //   const onPlatformByx = userSBYX && userSBYX.mul(tvl).div(totalStokenSupply);
-  //   const valueStaked = manager.amountStaked;
-  //   const pendingRewards = onPlatformByx && onPlatformByx.minus(valueStaked);
-
-  //   pendingRewards && setPendingRewards(tokenRound(pendingRewards).toFixed());
-  // }, [manager, sToken]);
-
   useEffect(() => {
-    if (manager) {
-      manager.getPoolInfo().then((data) => {
-        data && setTvl(data.tvl);
-        data && setApr(data.apr);
-      });
+    if (ethContractManager && user.address) {
+      getEthApr(ethContractManager)
+        .then((_apr) => {
+          setApr(_apr);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+
+      getEthTVL(ethContractManager)
+        .then((_tvl) => {
+          setTvl(_tvl);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      getEthUserInfo(ethContractManager, user.address)
+        .then((_info) => {
+          setEthAmountStaked(_info.ethAmountStaked);
+          setPendingRewards(_info.pendingRewards);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-  }, [manager]);
+  }, [ethContractManager, user]);
+
+  const handleStake = async (value) => {
+    stakeEth(ethContractManager, user.address, value);
+    onToggleModal();
+  };
 
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
       <Modal isOpen={isOpen} onClose={onToggleModal} width={"50%"} height={"70%"}>
         {modalType === "stake" ? (
-          <StakeModal
-            token={name}
-            tokenBalance={token.balance}
-            getBalance={token.getBalance}
-            getSBalance={sToken.getBalance}
-            onToggleModal={onToggleModal}
-            manager={manager}
-          />
+          <StakeModalEth token={name} balance={userBalance} handleStake={handleStake} />
         ) : (
-          <WithdrawModal
+          <WithdrawModalEth
             token={"sbyx"}
-            tokenBalance={token.balance}
-            sTokenBalance={sToken.balance}
-            getBalance={token.getBalance}
-            getSBalance={sToken.getBalance}
-            onToggleModal={onToggleModal}
-            manager={manager}
-            sManager={sManager}
+            // tokenBalance={token.balance}
+            // sTokenBalance={sToken.balance}
+            // getBalance={token.getBalance}
+            // getSBalance={sToken.getBalance}
+            // onToggleModal={onToggleModal}
+            // manager={manager}
+            // sManager={sManager}
           />
         )}
       </Modal>
 
       <SimpleGrid columns={5} justify="center" align="center">
         <Avatar src={logo} />
-        <VaultElement>{name || "?"}</VaultElement>
+        <VaultElement>{name.toUpperCase() || "?"}</VaultElement>
         <VaultElement>{`${apr} %` || "?"}</VaultElement>
         <VaultElement>{`${tvl}` || "?"}</VaultElement>
 
@@ -133,8 +117,8 @@ export default function VaultEth({ logo, name, user }) {
           onToggleStake={onToggleModal}
           balance={userBalance}
           contractTokenAdress={"adress eth TODO"}
-          // manager={manager}
-          // pendingRewards={pendingRewards}
+          pendingRewards={pendingRewards}
+          amountStaked={ethAmountStaked}
         />
       </Collapse>
     </Box>

@@ -30,30 +30,21 @@ const VaultButton = ({ children, onClick }) => {
   );
 };
 
-const VaultDetailsEth = ({
-  token,
-  onToggleStake,
-  balance,
-  balanceSToken,
-  contractTokenAdress,
-  manager,
-  pendingRewards
-}) => {
-  // const { amountStaked } = manager;
+const VaultDetailsEth = ({ token, onToggleStake, balance, amountStaked, pendingRewards }) => {
+  const roundedBalance = tokenRound(balance);
 
-  // const NETWORK_SCAN = "etherscan.io";
-  const MY_BALANCE = balance && `${balance.toFixed()} ${token}`;
-  // const TOTAL_LOCKED = amountStaked && `${tokenRound(amountStaked)} BYX`;
+  const MY_BALANCE = balance && `${roundedBalance.toFixed()} ETH`;
+  const TOTAL_LOCKED = amountStaked && `${amountStaked} ETH`;
   // const CONTRACT_ETHERSCAN = contractTokenAdress && `https://${NETWORK_SCAN}/address/${contractTokenAdress}`;
 
-  // const canWithDraw = balanceSToken && balanceSToken.gt(0);
+  const canWithDraw = amountStaked && amountStaked > 0;
   const canStake = balance && balance.gt(0);
 
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={2} h="100%">
       <GridItem w="100%" colSpan={1} py={5}>
         <VaultInfo title="MyBalance:">{MY_BALANCE}</VaultInfo>
-        {/* <VaultInfo title="Total staked:">{TOTAL_LOCKED}</VaultInfo> */}
+        <VaultInfo title="Total staked:">{TOTAL_LOCKED}</VaultInfo>
         {/* <VaultLink link={CONTRACT_ETHERSCAN}>View Contract</VaultLink> */}
       </GridItem>
 
@@ -73,7 +64,7 @@ const VaultDetailsEth = ({
         <Flex width="100%" height="100%" justify={"center"} align="center" p={10} direction={"column"}>
           <Fragment>
             {canStake && <VaultButton onClick={() => onToggleStake("stake")}>Stake {token}</VaultButton>}
-            {/* {canWithDraw && <VaultButton onClick={() => onToggleStake("withdraw")}>Withdraw {token}</VaultButton>} */}
+            {canWithDraw && <VaultButton onClick={() => onToggleStake("withdraw")}>Withdraw {token}</VaultButton>}
           </Fragment>
         </Flex>
       </GridItem>
