@@ -4,7 +4,6 @@ import { ApiGetBalance } from "api/token";
 import Big from "big.js";
 
 const useToken = (tokenName) => {
-  // userBalance should be lgobal, use context
   const { state, dispatch } = useEth();
   const { user, contracts } = state;
   const contractToken = contracts[tokenName];
@@ -16,10 +15,9 @@ const useToken = (tokenName) => {
     if (!contractToken || !user.address) return;
     try {
       const balance = await ApiGetBalance(contractToken, user.address);
-      //TODO: Make global function
-      const newBalance = new Big(balance);
+
       const data = {
-        [tokenName]: newBalance
+        [tokenName]: new Big(balance)
       };
       dispatch({ type: "SET_USER_BALANCE", data });
     } catch (error) {
