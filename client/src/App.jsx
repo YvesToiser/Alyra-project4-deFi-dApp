@@ -11,7 +11,7 @@ function UserInformations({ address, balance, network }) {
     <Box borderWidth="1px" p={8} borderRadius="20" my={20} width="30%">
       <Text>{address}</Text>
       <Text>{network}</Text>
-      <Text>{balance.eth} ETH</Text>
+      <Text>{balance.eth.toFixed()} ETH</Text>
     </Box>
   );
 }

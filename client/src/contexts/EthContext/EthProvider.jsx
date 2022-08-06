@@ -5,13 +5,17 @@ import { reducer, actions, initialState } from "./state";
 import { getBalance } from "api/web3";
 
 import { networks } from "helpers/chainId";
+import { Big } from "big.js";
 
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setUser = useCallback(
     async (address) => {
-      const balance = await getBalance(state.web3, address);
+      let balance = await getBalance(state.web3, address);
+      console.log(balance);
+      balance = balance ? new Big(balance) : new Big(0);
+      // console.log(new Big(balance));
       dispatch({ type: "SET_USER", data: { address: address, balance: { eth: balance } } });
     },
     [state.web3]

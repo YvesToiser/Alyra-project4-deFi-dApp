@@ -1,15 +1,14 @@
-import "./VaultItem.scss";
+import "./VaultEth.scss";
 import { useState } from "react";
 import { Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Collapse } from "@chakra-ui/react";
 import Modal from "components/Modal/Modal";
 import { StakeModal, WithdrawModal } from "components/StakeModal/StakeModal";
-
 import useToken from "../../hooks/useToken";
 import useTokenManager from "../../hooks/useTokenManager";
 import React from "react";
 import { tokenRound } from "../../helpers/calculation";
 import { useEffect, useCallback } from "react";
-import VaultDetails from "components/VaultDetails/VaultDetails";
+import VaultDetailsEth from "components/VaultDetailsEth/VaultDetailsEth";
 
 const VaultElement = ({ children }) => {
   return (
@@ -21,13 +20,15 @@ const VaultElement = ({ children }) => {
   );
 };
 
-export default function VaultItem({ logo, name, user }) {
+export default function VaultEth({ logo, name, user }) {
   const [showDetails, setShowDetails] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [tvl, setTvl] = useState(null);
   const [apr, setApr] = useState(null);
   const [pendingRewards, setPendingRewards] = useState(null);
+
+  const userBalance = user && user?.balance?.eth;
 
   const token = useToken(name.toLowerCase());
   const sToken = useToken("sbyx");
@@ -46,42 +47,38 @@ export default function VaultItem({ logo, name, user }) {
     setIsOpen((_isOpen) => !_isOpen);
   };
 
-  useEffect(() => {
-    !manager.amountStaked && manager.getUserTotalStake();
-  }, [manager]);
+  // useEffect(() => {
+  //   !manager.amountStaked && manager.getUserTotalStake();
+  // }, [manager]);
 
-  useEffect(() => {
-    !token.balance && token.getBalance();
-  }, [token]);
+  // useEffect(() => {
+  //   !sToken.balance && sToken.getBalance();
+  // }, [sToken]);
 
-  useEffect(() => {
-    !sToken.balance && sToken.getBalance();
-  }, [sToken]);
+  // useEffect(() => {
+  //   if (manager) {
+  //     getPendingRewards();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [manager]);
 
-  useEffect(() => {
-    if (manager) {
-      getPendingRewards();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manager]);
+  // const getPendingRewards = useCallback(async () => {
+  //   if (!manager || !sToken) return;
 
-  const getPendingRewards = useCallback(async () => {
-    if (!manager || !sToken) return;
+  //   const userSBYX = await sToken.balance;
+  //   if (!userSBYX) {
+  //     setPendingRewards(0);
+  //     return;
+  //   }
 
-    const userSBYX = await sToken.balance;
-    if (!userSBYX) {
-      setPendingRewards(0);
-      return;
-    }
+  //   const totalStokenSupply = await sToken.getTotalSupply();
+  //   const tvl = await manager.getTVL();
+  //   const onPlatformByx = userSBYX && userSBYX.mul(tvl).div(totalStokenSupply);
+  //   const valueStaked = manager.amountStaked;
+  //   const pendingRewards = onPlatformByx && onPlatformByx.minus(valueStaked);
 
-    const totalStokenSupply = await sToken.getTotalSupply();
-    const tvl = await manager.getTVL();
-    const onPlatformByx = userSBYX && userSBYX.mul(tvl).div(totalStokenSupply);
-    const valueStaked = manager.amountStaked;
-    const pendingRewards = onPlatformByx && onPlatformByx.minus(valueStaked);
-
-    pendingRewards && setPendingRewards(tokenRound(pendingRewards).toFixed());
-  }, [manager, sToken]);
+  //   pendingRewards && setPendingRewards(tokenRound(pendingRewards).toFixed());
+  // }, [manager, sToken]);
 
   useEffect(() => {
     if (manager) {
@@ -131,14 +128,13 @@ export default function VaultItem({ logo, name, user }) {
         )}
       </SimpleGrid>
       <Collapse in={showDetails} animateOpacity>
-        <VaultDetails
+        <VaultDetailsEth
           token={name}
           onToggleStake={onToggleModal}
-          balance={token.balance}
-          balanceSToken={sToken.balance}
-          contractTokenAdress={token.contractTokenAdress}
-          manager={manager}
-          pendingRewards={pendingRewards}
+          balance={userBalance}
+          contractTokenAdress={"adress eth TODO"}
+          // manager={manager}
+          // pendingRewards={pendingRewards}
         />
       </Collapse>
     </Box>
