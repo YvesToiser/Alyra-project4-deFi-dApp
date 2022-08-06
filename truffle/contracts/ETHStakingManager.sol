@@ -44,19 +44,19 @@ contract ETHStakingManager is Ownable {
         lastBlockUpdate = block.number;
     }
 
-//    /**
-//    * @dev receive function will emit event in case of ether sent to the contract.
-//    */
-//    receive() external payable {
-//        emit LogDepot(msg.sender, msg.value);
-//    }
-//
-//    /**
-//     * @dev fallback function will emit event in case of bad call of the contract.
-//     */
-//    fallback() external {
-//        emit LogBadCall(msg.sender);
-//    }
+    /**
+    * @dev receive function will emit event in case of ether sent to the contract.
+    */
+    receive() external payable {
+        emit LogDepot(msg.sender, msg.value);
+    }
+
+    /**
+     * @dev fallback function will emit event in case of bad call of the contract.
+     */
+    fallback() external {
+        emit LogBadCall(msg.sender);
+    }
 
     /*************************************************************************************************/
     /*                                          VIEW FUNCTIONS                                       */
