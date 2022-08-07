@@ -1,6 +1,6 @@
 import "./VaultItem.scss";
 import { useState } from "react";
-import { Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Collapse } from "@chakra-ui/react";
+import { Box, Collapse } from "@chakra-ui/react";
 import Modal from "components/Modal/Modal";
 import { StakeModal, WithdrawModal } from "components/StakeModal/StakeModal";
 
@@ -10,16 +10,8 @@ import React from "react";
 import { tokenRound } from "../../helpers/calculation";
 import { useEffect, useCallback } from "react";
 import VaultDetails from "components/VaultDetails/VaultDetails";
-
-const VaultElement = ({ children }) => {
-  return (
-    <Flex>
-      <Center>
-        <Text fontSize={16}>{children}</Text>
-      </Center>
-    </Flex>
-  );
-};
+import VaultMainInfo from "../VaultMainInfo/VaultMainInfo";
+import { Big } from "big.js";
 
 export default function VaultItem({ logo, name, user }) {
   const [showDetails, setShowDetails] = useState(false);
@@ -86,8 +78,8 @@ export default function VaultItem({ logo, name, user }) {
   useEffect(() => {
     if (manager) {
       manager.getPoolInfo().then((data) => {
-        data && setTvl(data.tvl);
-        data && setApr(data.apr);
+        data && setTvl(new Big(data.tvl));
+        data && setApr(new Big(data.apr));
       });
     }
   }, [manager]);
@@ -118,18 +110,8 @@ export default function VaultItem({ logo, name, user }) {
         )}
       </Modal>
 
-      <SimpleGrid columns={5} justify="center" align="center">
-        <Avatar src={logo} />
-        <VaultElement>{name || "?"}</VaultElement>
-        <VaultElement>{`${apr} %` || "?"}</VaultElement>
-        <VaultElement>{`${tvl}` || "?"}</VaultElement>
+      <VaultMainInfo logo={logo} name={name} apr={apr} tvl={tvl} isAuth={isAuth} onToggleDetails={onToggleDetails} />
 
-        {isAuth && (
-          <Button colorScheme="teal" size="md" onClick={onToggleDetails} my="auto">
-            Details
-          </Button>
-        )}
-      </SimpleGrid>
       <Collapse in={showDetails} animateOpacity>
         <VaultDetails
           token={name}

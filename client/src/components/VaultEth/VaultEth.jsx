@@ -1,24 +1,15 @@
 import "./VaultEth.scss";
 import { Big } from "big.js";
-import { Box, Avatar, Center, SimpleGrid, Flex, Text, Button, Collapse } from "@chakra-ui/react";
+import { Box, Collapse } from "@chakra-ui/react";
 import { getEthApr, getEthTVL, getEthUserInfo, stakeEth, withdrawEth } from "api/tokenManagerEth";
 import { StakeModalEth, WithdrawModalEth } from "components/StakeModalEth/StakeModalEth";
-import { tokenRound } from "../../helpers/calculation";
+
 import { useState, useCallback, useEffect } from "react";
 import Modal from "components/Modal/Modal";
 import React from "react";
 import useEth from "hooks/useEth";
 import VaultDetailsEth from "components/VaultDetailsEth/VaultDetailsEth";
-
-const VaultElement = ({ children }) => {
-  return (
-    <Flex>
-      <Center>
-        <Text fontSize={16}>{children}</Text>
-      </Center>
-    </Flex>
-  );
-};
+import VaultMainInfo from "../VaultMainInfo/VaultMainInfo";
 
 export default function VaultEth({ logo, name, user, setUser }) {
   const [apr, setApr] = useState(null);
@@ -119,18 +110,8 @@ export default function VaultEth({ logo, name, user, setUser }) {
         )}
       </Modal>
 
-      <SimpleGrid columns={5} justify="center" align="center">
-        <Avatar src={logo} />
-        <VaultElement>{name.toUpperCase() || "?"}</VaultElement>
-        <VaultElement>{`${apr} %` || "?"}</VaultElement>
-        <VaultElement>{`${tvl && tokenRound(tvl).toFixed()}` || "?"}</VaultElement>
+      <VaultMainInfo logo={logo} name={name} apr={apr} tvl={tvl} isAuth={isAuth} onToggleDetails={onToggleDetails} />
 
-        {isAuth && (
-          <Button colorScheme="teal" size="md" onClick={onToggleDetails} my="auto">
-            Details
-          </Button>
-        )}
-      </SimpleGrid>
       <Collapse in={showDetails} animateOpacity>
         <VaultDetailsEth
           token={name}
