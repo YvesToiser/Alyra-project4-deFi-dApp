@@ -36,6 +36,7 @@ This is the final project from the Alyra training for blockchain developer.
 ### dApp 
  - https://yvestoiser.github.io/Alyra-project4-deFi-dApp/
 ### Video Demo
+ - https://www.youtube.com/watch?v=cbOqCeMYKNE
 
 ## Contract adresses (kovan)
 BYX : 0xf52B44BCa485518684d5f1c5aEfe7086829b218C   
@@ -46,18 +47,17 @@ PriceProvider : 0x08F85fd74de3275D810C882F2a1e0C70bcD44caD
 
 ## Tests
 ### Manual Test
-You can test this dApp on Kovan network.
+You can test this dApp on Kovan network.   
+If you need to deploy locally, change the Price provider in deploy.js
 
-### Unit tests
-You can find below the documentation of these tests.
-
-
-## How to
+## Unit tests
+### How to
 - You need to have node.js installed
 - run a local blockchain server
 ```sh
 ganache
 ```
+- If you need to deploy locally, change the Price provider in deploy.js
 - in another terminal run the test script
 ```sh
 truffle test
