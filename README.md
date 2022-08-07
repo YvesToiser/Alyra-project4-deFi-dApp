@@ -34,7 +34,7 @@ This is the final project from the Alyra training for blockchain developer.
 
 ## Links
 ### dApp 
- - https://YvesToiser.github.io/Alyra-project4-deFi-dApp/
+ - https://yvestoiser.github.io/Alyra-project4-deFi-dApp/
 ### Video Demo
 
 ## Contract adresses (kovan)
