@@ -7,6 +7,7 @@ import "./interfaces/IPriceProvider.sol";
 
 contract ETHStakingManager is Ownable {
 
+    /// External contract
     IERC20 BYX;
     IPriceProvider PriceProvider;
 
@@ -17,19 +18,22 @@ contract ETHStakingManager is Ownable {
     uint ETHPrice;
     uint BYXPrice;
 
+    /// User Info
     struct User {
         uint pendingRewards;   // in BYX
         uint ethAmountStaked;  // in ETH
     }
-
+    /// User retrievers
     mapping(address => User) users;
     address[] userList;
 
+    /// Events for activity tracking
     event Stake(address user, uint amount);
     event WithdrawStake(address user, uint amount);
     event RewardsClaimed(address user, uint amount);
     event PoolUpdate();
 
+    /// Events emitted in case of bad call or unexpected depot on the contract
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
 
@@ -37,6 +41,15 @@ contract ETHStakingManager is Ownable {
     /*                                        SPECIAL FUNCTIONS                                      */
     /*************************************************************************************************/
 
+    /**
+     * @notice constructor
+     *
+     * @dev constructor
+     *
+     * @param _byxAddress. The address of BYX contract.
+     *
+     * @param _PPAddress. The address of Price Provider contract.
+     */
     constructor(address _byxAddress, address _PPAddress) {
         // inject BYX address and price provider address in the deploy.
         BYX = IERC20(_byxAddress);
@@ -62,6 +75,19 @@ contract ETHStakingManager is Ownable {
     /*                                          VIEW FUNCTIONS                                       */
     /*************************************************************************************************/
 
+    /**
+     * @notice Get User Info.
+     *
+     * @dev Get User Info.
+     *     struct User {
+     *      uint pendingRewards;   // in BYX
+     *      uint ethAmountStaked;  // in ETH
+     *     }
+     *
+     * @param _user the address of the user.
+     *
+     * @return User memory. A User (struct described above).
+     */
     function getUserInfo(address _user) external view returns(User memory){
         return users[_user];
     }
@@ -81,6 +107,11 @@ contract ETHStakingManager is Ownable {
         msg.sender.call{value: _amount}("");
     }
 
+    /**
+     * @notice staking function. Deposit ETH in the contract for staking.
+     *
+     * @dev staking function. Amount staked is in msg.value.
+     */
     function depositStake() external payable {
         // We set a mimimum amount to stake to protect potential DOS vulnerability in loop in _updateRewards() function.
         require(msg.value >= 1 * 10 ** 17, 'Minimum stake is 0.1 ETH.');
@@ -92,15 +123,47 @@ contract ETHStakingManager is Ownable {
         emit Stake(msg.sender, msg.value);
     }
 
+    /**
+     * @notice unstake function.
+     *
+     * @dev unstake function.
+     *
+     * @param _amount the amount to withdraw.
+     */
     function withdrawStake(uint _amount) external {
-        require(_amount <= users[msg.sender].ethAmountStaked, 'Not enough ETH staked.');
+        _withdrawStake(_amount);
+    }
+
+    /**
+     * @notice claim function.
+     *
+     * @dev claim function.
+     */
+    function claimRewards() external {
+        _claimRewards();
+    }
+
+    /*************************************************************************************************/
+    /*                                        INTERNAL FUNCTIONS                                     */
+    /*************************************************************************************************/
+
+    /**
+     * @dev unstake function.
+     *
+     * @param _amount the amount to withdraw.
+     */
+    function _withdrawStake(uint _amount) internal {
         _updateRewards();
+        require(_amount <= users[msg.sender].ethAmountStaked, 'Not enough ETH staked.');
         users[msg.sender].ethAmountStaked -= _amount;
         msg.sender.call{value: _amount}("");
         emit WithdrawStake(msg.sender, _amount);
     }
 
-    function claimRewards() external {
+    /**
+     * @dev claim function.
+     */
+    function _claimRewards() internal {
         _updateRewards();
         require(users[msg.sender].pendingRewards > 0, 'You have no rewards to claim.');
         uint _amount = users[msg.sender].pendingRewards;
@@ -109,15 +172,14 @@ contract ETHStakingManager is Ownable {
         emit RewardsClaimed(msg.sender, _amount);
     }
 
-    /*************************************************************************************************/
-    /*                                        INTERNAL FUNCTIONS                                     */
-    /*************************************************************************************************/
-
+    /**
+     * @dev update function.
+     */
     function _updateRewards() internal {
         // We decide to update rewards only if it has not been updated for 1 day.
         if (block.number > lastBlockUpdate + 6400) {
             _updatePrices();
-            uint BYXYearlyRewardPerETH = ETHPrice * APR / BYXPrice;
+            uint BYXYearlyRewardPerETH = APR * ETHPrice / BYXPrice;
             uint nbOfBlockToUpdate = block.number - lastBlockUpdate;
             // Risk for DDOS is minimum as potential attacker needs to stake ETH to add an entry in the array
             // Therefore, we add a minimum amount to stake to protect this potential vulnerability
@@ -131,6 +193,12 @@ contract ETHStakingManager is Ownable {
         }
     }
 
+    /**
+     * @dev update ETH & BYX Prices.
+     * Prices are get from PriceProvider which get them from Chainlink data feed.
+     *
+     * !!! Use appropriate Price Provider depending on deployed network !!!
+     */
     function _updatePrices() internal {
         ETHPrice = uint(PriceProvider.getLatestETHUSDPrice());
         BYXPrice = uint(PriceProvider.getLatestBYXUSDPrice());

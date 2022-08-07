@@ -37,20 +37,20 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.14;\n\ninterface IPriceProvider{\n\n    /**\n     * @dev give last ETHUSD price.\n     */\n    function getLatestETHUSDPrice() external view returns (int256);\n\n    /**\n     * @dev give last BYXUSD price\n     */\n    function getLatestBYXUSDPrice() external view returns (int256);\n\n}\n\n",
-  "sourcePath": "/Users/rey/Code/Alyra/6_Defi/Alyra-project4-deFi-dApp/truffle/contracts/interfaces/IPriceProvider.sol",
+  "sourcePath": "/home/jack/Dev/PROJEX/4_Alyra_Projet_deFi_Staking_App/truffle/contracts/interfaces/IPriceProvider.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IPriceProvider.sol",
     "exportedSymbols": {
       "IPriceProvider": [
-        2052
+        2084
       ]
     },
-    "id": 2053,
+    "id": 2085,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2039,
+        "id": 2071,
         "literals": [
           "solidity",
           "0.8",
@@ -66,9 +66,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 2052,
+        "id": 2084,
         "linearizedBaseContracts": [
-          2052
+          2084
         ],
         "name": "IPriceProvider",
         "nameLocation": "67:14:12",
@@ -76,13 +76,13 @@
         "nodes": [
           {
             "documentation": {
-              "id": 2040,
+              "id": 2072,
               "nodeType": "StructuredDocumentation",
               "src": "88:47:12",
               "text": " @dev give last ETHUSD price."
             },
             "functionSelector": "6aa83fea",
-            "id": 2045,
+            "id": 2077,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -90,23 +90,23 @@
             "nameLocation": "149:20:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2041,
+              "id": 2073,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "169:2:12"
             },
             "returnParameters": {
-              "id": 2044,
+              "id": 2076,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2043,
+                  "id": 2075,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2045,
+                  "scope": 2077,
                   "src": "195:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -115,7 +115,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 2042,
+                    "id": 2074,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "195:6:12",
@@ -129,7 +129,7 @@
               ],
               "src": "194:8:12"
             },
-            "scope": 2052,
+            "scope": 2084,
             "src": "140:63:12",
             "stateMutability": "view",
             "virtual": false,
@@ -137,13 +137,13 @@
           },
           {
             "documentation": {
-              "id": 2046,
+              "id": 2078,
               "nodeType": "StructuredDocumentation",
               "src": "209:46:12",
               "text": " @dev give last BYXUSD price"
             },
             "functionSelector": "9f1eaa17",
-            "id": 2051,
+            "id": 2083,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -151,23 +151,23 @@
             "nameLocation": "269:20:12",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2047,
+              "id": 2079,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "289:2:12"
             },
             "returnParameters": {
-              "id": 2050,
+              "id": 2082,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2049,
+                  "id": 2081,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2051,
+                  "scope": 2083,
                   "src": "315:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -176,7 +176,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 2048,
+                    "id": 2080,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "315:6:12",
@@ -190,14 +190,14 @@
               ],
               "src": "314:8:12"
             },
-            "scope": 2052,
+            "scope": 2084,
             "src": "260:63:12",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2053,
+        "scope": 2085,
         "src": "57:269:12",
         "usedErrors": []
       }
@@ -210,7 +210,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-08-06T21:20:55.761Z",
+  "updatedAt": "2022-08-07T08:14:37.205Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

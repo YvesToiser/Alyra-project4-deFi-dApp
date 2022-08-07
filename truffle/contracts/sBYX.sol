@@ -8,9 +8,10 @@ import "./interfaces/IERC20MintableAndBurnable.sol";
 
 contract sBYX is Ownable, ERC20, IERC20MintableAndBurnable{
 
+    /// if true, addresses will be authorized to mint sBYX.
     mapping (address => bool) authorizedAddress;
 
-    // Custom Events
+    /// Events emitted in case of bad call or unexpected depot on the contract
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
 
@@ -87,26 +88,26 @@ contract sBYX is Ownable, ERC20, IERC20MintableAndBurnable{
 
     /**
     * @dev Destroys `amount` tokens from the caller.
-    *
     * See {ERC20-_burn}.
+    *
+    * @param _amount.
     */
-    function burn(uint256 amount) public onlyOwner {
-        _burn(_msgSender(), amount);
+    function burn(uint256 _amount) public onlyOwner {
+        _burn(_msgSender(), _amount);
     }
 
     /**
-     * @dev Destroys `amount` tokens from `account`, deducting from the caller's
-     * allowance.
-     *
+     * @dev Destroys `amount` tokens from `account`, deducting from the caller's allowance.
      * See {ERC20-_burn} and {ERC20-allowance}.
-     *
      * Requirements:
+     * - the caller must have allowance for ``accounts``'s tokens of at least `amount`.
      *
-     * - the caller must have allowance for ``accounts``'s tokens of at least
-     * `amount`.
+     * @param _account.
+     *
+     * @param _amount.
      */
-    function burnFrom(address account, uint256 amount) public onlyAuthorized {
-        _burn(account, amount);
+    function burnFrom(address _account, uint256 _amount) public onlyAuthorized {
+        _burn(_account, _amount);
     }
 
 }
