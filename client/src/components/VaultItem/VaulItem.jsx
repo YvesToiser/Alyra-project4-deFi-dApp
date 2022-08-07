@@ -85,6 +85,31 @@ export default function VaultItem({ logo, name, user }) {
     }
   }, [tvl, manager.contractTokenManager, manager]);
 
+  const updateInfo = useCallback(async () => {
+    if (manager) {
+      await token.getBalance();
+      await sToken.getBalance();
+      await manager.getUserTotalStake();
+      manager.getPoolInfo().then((data) => {
+        data && setTvl(new Big(data.tvl));
+        data && setApr(new Big(data.apr));
+      });
+    }
+  }, [manager, token, sToken]);
+
+  const handleStake = async (percent) => {
+    await manager.stake(token.balance.mul(percent / 100).round(), token);
+    onToggleModal();
+    await updateInfo();
+  };
+
+  const handleWithdraw = async (percent) => {
+    await manager.withdraw(sToken.balance.mul(percent / 100).round(), token);
+    onToggleModal();
+    setPendingRewards(0);
+    await updateInfo();
+  };
+
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
       <Modal isOpen={isOpen} onClose={onToggleModal} width={"50%"} height={"70%"}>
@@ -96,6 +121,7 @@ export default function VaultItem({ logo, name, user }) {
             getSBalance={sToken.getBalance}
             onToggleModal={onToggleModal}
             manager={manager}
+            handleStake={handleStake}
           />
         ) : (
           <WithdrawModal
@@ -107,6 +133,7 @@ export default function VaultItem({ logo, name, user }) {
             onToggleModal={onToggleModal}
             manager={manager}
             sManager={sManager}
+            handleWithdraw={handleWithdraw}
           />
         )}
       </Modal>

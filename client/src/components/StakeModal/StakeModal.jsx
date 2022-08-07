@@ -29,9 +29,9 @@ const StakeModalBody = styled.div`
   padding: 2rem;
 `;
 
-export const StakeModal = ({ tokenBalance, getBalance, getSBalance, token, onToggleModal, manager }) => {
+export const StakeModal = ({ tokenBalance, token, manager, handleStake }) => {
   const { getColor, theme } = useChakraColor();
-  const { stake, getApproval } = manager;
+  const { getApproval } = manager;
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
   const [stakeValue, setStakeValue] = useState(0);
@@ -59,13 +59,6 @@ export const StakeModal = ({ tokenBalance, getBalance, getSBalance, token, onTog
     } catch (error) {
       setApproved(false);
     }
-  };
-
-  const handleStake = async () => {
-    await stake(tokenBalance.mul(stakeValuePercentage / 100).round(), token);
-    await getBalance();
-    await getSBalance();
-    onToggleModal();
   };
 
   return (
@@ -100,7 +93,7 @@ export const StakeModal = ({ tokenBalance, getBalance, getSBalance, token, onTog
           <Button width={200} onClick={handleApproval} disabled={approved}>
             Approve
           </Button>
-          <Button width={200} onClick={handleStake} disabled={!approved}>
+          <Button width={200} onClick={() => handleStake(stakeValuePercentage)} disabled={!approved}>
             Stake
           </Button>
         </Flex>
@@ -109,18 +102,9 @@ export const StakeModal = ({ tokenBalance, getBalance, getSBalance, token, onTog
   );
 };
 
-export const WithdrawModal = ({
-  tokenBalance,
-  sTokenBalance,
-  getBalance,
-  getSBalance,
-  token,
-  onToggleModal,
-  manager,
-  sManager
-}) => {
+export const WithdrawModal = ({ sTokenBalance, token, sManager, handleWithdraw }) => {
   const { getColor, theme } = useChakraColor();
-  const { withdraw, getApproval } = sManager;
+  const { getApproval } = sManager;
   const [approved, setApproved] = useState(false);
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
@@ -148,15 +132,6 @@ export const WithdrawModal = ({
     } catch (error) {
       setApproved(false);
     }
-  };
-
-  const handleWithdraw = async () => {
-    await withdraw(sTokenBalance.mul(stakeValuePercentage / 100).round(), token);
-    await getBalance();
-    await getSBalance();
-    await manager.getUserTotalStake();
-
-    onToggleModal();
   };
 
   return (
@@ -191,7 +166,7 @@ export const WithdrawModal = ({
           <Button width={200} onClick={handleApproval} disabled={approved}>
             Approve
           </Button>
-          <Button width={200} onClick={handleWithdraw} disabled={!approved}>
+          <Button width={200} onClick={() => handleWithdraw(stakeValuePercentage)} disabled={!approved}>
             WithDraw
           </Button>
         </Flex>
