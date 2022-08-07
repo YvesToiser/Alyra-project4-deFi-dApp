@@ -34,8 +34,15 @@ This is the final project from the Alyra training for blockchain developer.
 
 ## Links
 ### dApp 
- - https://yvestoiser.github.io/Alyra-project4-deFi-dApp/
+ - https://YvesToiser.github.io/Alyra-project4-deFi-dApp/
 ### Video Demo
+
+## Contract adresses (kovan)
+BYX : 0xf52B44BCa485518684d5f1c5aEfe7086829b218C   
+BYXStakingManager : 0xFd6ee7D57862C3c5Bf86d3c1f063dC12c337AE75    
+sBYX : 0x8D2dBcdDb23EEaAA6A5EeAf424BE2AdB4189C92A    
+ETHStakingManager : 0x6fDce2f9E93BA900581DbdB8e63c36E4254e3387     
+PriceProvider : 0x08F85fd74de3275D810C882F2a1e0C70bcD44caD    
 
 ## Tests
 ### Manual Test
