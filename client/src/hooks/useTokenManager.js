@@ -1,8 +1,7 @@
 import useEth from "hooks/useEth";
 import { depositStake, allowance, approve, userTotalStake, withdrawStake, getApr, getTvl } from "api/tokenManager";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Big from "big.js";
-import { tokenRound } from "../helpers/calculation";
 
 const useTokenManager = (tokenName) => {
   const { state, dispatch } = useEth();
@@ -92,12 +91,11 @@ const useTokenManager = (tokenName) => {
   }, [contractTokenManager, user.address]);
 
   const getPoolInfo = useCallback(async () => {
-    if (!contractTokenManager) return;
     try {
       const tvl = await getTvl(contractTokenManager);
       const apr = await getApr(contractTokenManager);
       return {
-        tvl: tokenRound(new Big(tvl)).toFixed(),
+        tvl: new Big(tvl),
         apr: apr / 100
       };
     } catch (error) {
@@ -106,6 +104,7 @@ const useTokenManager = (tokenName) => {
   }, [contractTokenManager]);
 
   return {
+    contractTokenManager,
     getAllowance,
     getApproval,
     getUserTotalStake,

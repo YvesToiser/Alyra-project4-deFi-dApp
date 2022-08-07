@@ -44,6 +44,8 @@ const VaultDetails = ({
   const NETWORK_SCAN = "etherscan.io";
   const MY_BALANCE = balance && `${tokenRound(balance)} ${token}`;
   const TOTAL_LOCKED = amountStaked && `${tokenRound(amountStaked)} BYX`;
+
+  const REWARDS = pendingRewards && `${tokenRound(pendingRewards)} BYX`;
   const CONTRACT_ETHERSCAN = contractTokenAdress && `https://${NETWORK_SCAN}/address/${contractTokenAdress}`;
 
   const canWithDraw = balanceSToken && balanceSToken.gt(0);
@@ -62,7 +64,7 @@ const VaultDetails = ({
           <Box borderWidth="1px" borderRadius="20" width="80%" height="80%" p={8}>
             <Text fontSize={16}>BIX Earned</Text>
             <Text fontSize={16} fontWeight="bold">
-              {pendingRewards}
+              {REWARDS}
             </Text>
             {/* <Text fontSize={16}>{REWARD_IN_USD}</Text> */}
           </Box>

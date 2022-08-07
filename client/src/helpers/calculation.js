@@ -17,6 +17,7 @@ export function tokenDecimalMul(number, decimal = 18) {
 }
 
 export function tokenRound(number, decimal = 18) {
+  if (typeof number === "number" || typeof number === "string") return number;
   try {
     return number.div(10 ** decimal).round(2, Big.roundDown);
   } catch (error) {

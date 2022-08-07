@@ -30,6 +30,7 @@ export default function VaultItem({ logo, name, user }) {
   const isAuth = !!user.address;
 
   const onToggleDetails = async () => {
+    getPendingRewards();
     setShowDetails((_showDetails) => !_showDetails);
   };
 
@@ -50,19 +51,19 @@ export default function VaultItem({ logo, name, user }) {
     !sToken.balance && sToken.getBalance();
   }, [sToken]);
 
-  useEffect(() => {
-    if (manager) {
-      getPendingRewards();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manager]);
+  // useEffect(() => {
+  //   if (manager) {
+  //     getPendingRewards();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [manager]);
 
   const getPendingRewards = useCallback(async () => {
     if (!manager || !sToken) return;
 
     const userSBYX = await sToken.balance;
     if (!userSBYX) {
-      setPendingRewards(0);
+      setPendingRewards(new Big(0));
       return;
     }
 
@@ -76,13 +77,13 @@ export default function VaultItem({ logo, name, user }) {
   }, [manager, sToken]);
 
   useEffect(() => {
-    if (manager) {
+    if (manager && !tvl && manager.contractTokenManager) {
       manager.getPoolInfo().then((data) => {
         data && setTvl(new Big(data.tvl));
         data && setApr(new Big(data.apr));
       });
     }
-  }, [manager]);
+  }, [tvl, manager.contractTokenManager, manager]);
 
   return (
     <Box borderWidth="2px" borderRadius="20" p={5}>
