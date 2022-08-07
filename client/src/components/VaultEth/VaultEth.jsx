@@ -37,7 +37,7 @@ export default function VaultEth({ logo, name, user, setUser }) {
   const getInfo = useCallback(() => {
     getEthApr(ethContractManager)
       .then((_apr) => {
-        setApr(_apr);
+        setApr(parseInt(_apr) / 100);
       })
       .catch((err) => {
         console.error(err);
