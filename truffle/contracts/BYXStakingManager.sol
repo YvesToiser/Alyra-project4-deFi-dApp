@@ -7,6 +7,7 @@ import "./interfaces/IERC20MintableAndBurnable.sol";
 
 contract BYXStakingManager is Ownable {
 
+    /// Tokens contracts
     IERC20 BYX;
     IERC20MintableAndBurnable sBYX;
 
@@ -16,10 +17,10 @@ contract BYXStakingManager is Ownable {
     uint public BYXPool;
     /// BYX reward per block
     uint BYXRewardPerBlock = 5 * 10 ** 18; // 5 tokens
-
+    /// Block management
     uint lastBlockUpdate;
     uint lastBlockReward;
-
+    /// Events emitted in case of bad call or unexpected depot on the contract
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
     /**
@@ -34,6 +35,15 @@ contract BYXStakingManager is Ownable {
     /*                                        SPECIAL FUNCTIONS                                      */
     /*************************************************************************************************/
 
+    /**
+     * @notice constructor
+     *
+     * @dev constructor
+     *
+     * @param _byxAddress. The address of BYX contract.
+     *
+     * @param _sbyxAddress. The address of staked BYX contract.
+     */
     constructor(address _byxAddress, address _sbyxAddress) {
         // inject BYX address in the deploy
         BYX = IERC20(_byxAddress);

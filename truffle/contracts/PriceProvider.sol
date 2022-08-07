@@ -7,9 +7,11 @@ import "./interfaces/IPriceProvider.sol";
 
 contract PriceProvider is Ownable, IPriceProvider {
 
+    /// Chainlink Price feed
     AggregatorV3Interface internal ethPriceFeed;
     AggregatorV3Interface internal byxPriceFeed;
 
+    /// Events emitted in case of bad call or unexpected depot on the contract
     event LogBadCall(address user);
     event LogDepot(address user, uint quantity);
 
@@ -17,7 +19,9 @@ contract PriceProvider is Ownable, IPriceProvider {
     /*                                        SPECIAL FUNCTIONS                                      */
     /*************************************************************************************************/
 
-    /** * Network: Kovan
+    /**
+     * @dev
+     * Network: Kovan
      * Aggregator: ETH/USD
      * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331
      *
@@ -54,7 +58,6 @@ contract PriceProvider is Ownable, IPriceProvider {
     /*************************************************************************************************/
 
     /**
-     *
      * @dev Return ETHUSD price
      *
      * @return Returns the latest price
@@ -70,7 +73,6 @@ contract PriceProvider is Ownable, IPriceProvider {
     }
 
     /**
-    *
     * @dev Return BYXUSD price
     *
     * @return Returns the latest price
@@ -112,12 +114,12 @@ contract PriceProvider is Ownable, IPriceProvider {
     }
 
     /**
-    * @notice set BYXUSD pair address
-    *
-    * @dev to set the adress of BYXUSD pair on chainlink data feed
-    *
-    * @param _pair the address of the BYXUSD pair
-    */
+     * @notice set BYXUSD pair address
+     *
+     * @dev to set the adress of BYXUSD pair on chainlink data feed
+     *
+     * @param _pair the address of the BYXUSD pair
+     */
     function setByxAddr(address _pair) external onlyOwner {
         byxPriceFeed = AggregatorV3Interface(_pair);
     }

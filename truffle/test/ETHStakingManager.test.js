@@ -86,6 +86,7 @@ contract("ETHStakingManager", function (accounts) {
     });
 
     // Due to simulation of big amounts of blocks this test suite is very time consuming.
+    // You can comment the last 2 tests to save time if needed.
     describe('Rewards', () => {
 
         it("should not claim rewards if none available", async function () {
