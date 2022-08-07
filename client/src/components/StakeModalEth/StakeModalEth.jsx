@@ -29,23 +29,37 @@ const StakeModalBody = styled.div`
   padding: 2rem;
 `;
 
+const checkNumberAfterComma = (number) => {
+  if (number.toString().includes(".")) {
+    return number.toString().split(".")[1].length;
+  }
+  return 0;
+};
+
 export const StakeModalEth = ({ balance, onToggleModal, handleStake }) => {
   const { getColor, theme } = useChakraColor();
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [stakeValue, setStakeValue] = useState(0);
+  const [stakeValue, setStakeValue] = useState("");
 
   const roundedBalance = tokenRound(balance);
   const MY_BALANCE = balance && `${roundedBalance} ETH`;
 
   const handleStakeInputValueChange = (val) => {
+    if (isNaN(val) || val === "") {
+      setStakeValuePercentage("");
+      setStakeValue("");
+      return;
+    }
+    if (checkNumberAfterComma(val) > 2) return;
+
     setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance);
     setStakeValue(val);
   };
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
-    setStakeValue((roundedBalance * val) / 100);
+    setStakeValue(roundNumbers((roundedBalance * val) / 100));
   };
 
   return (
@@ -68,7 +82,7 @@ export const StakeModalEth = ({ balance, onToggleModal, handleStake }) => {
             <Input
               type="text"
               placeholder="Value"
-              value={roundNumbers(stakeValue)}
+              value={stakeValue}
               onChange={(e) => handleStakeInputValueChange(e.target.value)}
             />
           </InputGroup>
@@ -96,11 +110,17 @@ export const WithdrawModalEth = ({ token, handleWithdraw, balance, pendingReward
   const { getColor, theme } = useChakraColor();
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [withdrawValue, setWithdrawValue] = useState(0);
+  const [withdrawValue, setWithdrawValue] = useState("");
 
   const roundedBalance = balance && tokenRound(balance);
 
   const handleStakeValueChange = (val) => {
+    if (isNaN(val) || val === "") {
+      setStakeValuePercentage("");
+      setWithdrawValue("");
+      return;
+    }
+    if (checkNumberAfterComma(val) > 2) return;
     setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance);
     setWithdrawValue(val);
   };
@@ -130,7 +150,7 @@ export const WithdrawModalEth = ({ token, handleWithdraw, balance, pendingReward
             <Input
               type="text"
               placeholder="Value"
-              value={roundNumbers(withdrawValue)}
+              value={withdrawValue}
               onChange={(e) => handleStakeValueChange(e.target.value)}
             />
           </InputGroup>

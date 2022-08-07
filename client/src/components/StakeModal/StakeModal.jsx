@@ -28,19 +28,32 @@ const StakeModalBody = styled.div`
   width: 100%;
   padding: 2rem;
 `;
-
+const checkNumberAfterComma = (number) => {
+  if (number.toString().includes(".")) {
+    return number.toString().split(".")[1].length;
+  }
+  return 0;
+};
 export const StakeModal = ({ tokenBalance, token, manager, handleStake }) => {
   const { getColor, theme } = useChakraColor();
   const { getApproval } = manager;
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [stakeValue, setStakeValue] = useState(0);
+  const [stakeValue, setStakeValue] = useState("");
   const [approved, setApproved] = useState(false);
 
   const roundedBalance = tokenRound(tokenBalance);
   const MY_BALANCE = tokenBalance && `${roundedBalance} ${token}`;
 
   const handleStakeInputValueChange = (val) => {
+    if (isNaN(val) || val === "") {
+      setStakeValuePercentage("");
+      setStakeValue("");
+      return;
+    }
+
+    if (checkNumberAfterComma(val) > 2) return;
+
     setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance);
     setStakeValue(val);
     setApproved(false);
@@ -48,7 +61,7 @@ export const StakeModal = ({ tokenBalance, token, manager, handleStake }) => {
 
   const handleStakeValuePercentageChange = (val) => {
     setStakeValuePercentage(val);
-    setStakeValue((roundedBalance * val) / 100);
+    setStakeValue(roundNumbers((roundedBalance * val) / 100));
     setApproved(false);
   };
 
@@ -79,9 +92,10 @@ export const StakeModal = ({ tokenBalance, token, manager, handleStake }) => {
           <InputGroup width={"30%"}>
             <InputLeftAddon children={<GrMoney />} />
             <Input
+              step="0.1"
               type="text"
               placeholder="Value"
-              value={roundNumbers(stakeValue)}
+              value={stakeValue}
               onChange={(e) => handleStakeInputValueChange(e.target.value)}
             />
           </InputGroup>
@@ -108,12 +122,18 @@ export const WithdrawModal = ({ sTokenBalance, token, sManager, handleWithdraw }
   const [approved, setApproved] = useState(false);
 
   const [stakeValuePercentage, setStakeValuePercentage] = useState(0);
-  const [withdrawValue, setWithdrawValue] = useState(0);
+  const [withdrawValue, setWithdrawValue] = useState("");
 
   const roundedBalance = sTokenBalance && tokenRound(sTokenBalance);
   const MY_BALANCE = sTokenBalance && `${roundedBalance} ${token}`;
 
   const handleStakeValueChange = (val) => {
+    if (isNaN(val) || val === "") {
+      setStakeValuePercentage("");
+      setWithdrawValue("");
+      return;
+    }
+    if (checkNumberAfterComma(val) > 2) return;
     setStakeValuePercentage((parseFloat(val) * 100) / roundedBalance);
     setWithdrawValue(val);
     setApproved(false);
@@ -152,7 +172,7 @@ export const WithdrawModal = ({ sTokenBalance, token, sManager, handleWithdraw }
           <InputGroup width={"30%"}>
             <InputLeftAddon children={<GrMoney />} />
             <Input
-              type="text"
+              type="number"
               placeholder="Value"
               value={roundNumbers(withdrawValue)}
               onChange={(e) => handleStakeValueChange(e.target.value)}
