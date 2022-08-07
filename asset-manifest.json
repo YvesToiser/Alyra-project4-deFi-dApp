@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Alyra-project4-deFi-dApp/static/css/main.7816e8cc.chunk.css",
+    "main.js": "/Alyra-project4-deFi-dApp/static/js/main.719d8277.chunk.js",
+    "main.js.map": "/Alyra-project4-deFi-dApp/static/js/main.719d8277.chunk.js.map",
+    "runtime-main.js": "/Alyra-project4-deFi-dApp/static/js/runtime-main.5d0c6d47.js",
+    "runtime-main.js.map": "/Alyra-project4-deFi-dApp/static/js/runtime-main.5d0c6d47.js.map",
+    "static/css/2.b8fe46b5.chunk.css": "/Alyra-project4-deFi-dApp/static/css/2.b8fe46b5.chunk.css",
+    "static/js/2.fac17e17.chunk.js": "/Alyra-project4-deFi-dApp/static/js/2.fac17e17.chunk.js",
+    "static/js/2.fac17e17.chunk.js.map": "/Alyra-project4-deFi-dApp/static/js/2.fac17e17.chunk.js.map",
+    "index.html": "/Alyra-project4-deFi-dApp/index.html",
+    "static/css/2.b8fe46b5.chunk.css.map": "/Alyra-project4-deFi-dApp/static/css/2.b8fe46b5.chunk.css.map",
+    "static/css/main.7816e8cc.chunk.css.map": "/Alyra-project4-deFi-dApp/static/css/main.7816e8cc.chunk.css.map",
+    "static/js/2.fac17e17.chunk.js.LICENSE.txt": "/Alyra-project4-deFi-dApp/static/js/2.fac17e17.chunk.js.LICENSE.txt",
+    "static/media/logo-byx.31ff9835.png": "/Alyra-project4-deFi-dApp/static/media/logo-byx.31ff9835.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5d0c6d47.js",
+    "static/css/2.b8fe46b5.chunk.css",
+    "static/js/2.fac17e17.chunk.js",
+    "static/css/main.7816e8cc.chunk.css",
+    "static/js/main.719d8277.chunk.js"
+  ]
+}
