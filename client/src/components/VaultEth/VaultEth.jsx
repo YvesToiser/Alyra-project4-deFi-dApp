@@ -59,6 +59,9 @@ export default function VaultEth({ logo, name, user, setUser }) {
       .catch((err) => {
         console.error(err);
       });
+  }, [ethContractManager]);
+
+  const userInfo = useCallback(() => {
     getEthUserInfo(ethContractManager, user.address)
       .then((_info) => {
         setEthAmountStaked(new Big(_info.ethAmountStaked));
@@ -70,10 +73,13 @@ export default function VaultEth({ logo, name, user, setUser }) {
   }, [ethContractManager, user.address]);
 
   useEffect(() => {
-    if (ethContractManager && user.address) {
+    if (!tvl && !apr && ethContractManager) {
       getInfo();
     }
-  }, [ethContractManager, getInfo, user.address]);
+    if (ethContractManager && user.address) {
+      userInfo();
+    }
+  }, [apr, ethContractManager, getInfo, tvl, user.address, userInfo]);
 
   const handleStake = async (value) => {
     try {
